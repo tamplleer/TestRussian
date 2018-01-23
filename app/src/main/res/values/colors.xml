@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="CHETO">#DFFF5F</color>
+    <color name="Moccasin">	#FFE4B5</color>
+    <color name="Khaki">#F0E68C</color>
+    <color name="DarkSlateGray">#2F4F4F</color>
+    <color name="FireBrick">#B22222</color>
+
+
+</resources>
