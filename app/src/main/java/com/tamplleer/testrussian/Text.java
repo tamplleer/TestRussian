@@ -36,8 +36,8 @@ public class Text extends MainActivity {
         S.charTextV.setY(y);
         S.charTextV.setBackgroundResource(R.color.DarkSlateGray);
         S.charTextV.setTextColor(Color.rgb(255, 228, 181));
-        S.charTextV.setScaleX(1.5f); // изменение размеров в 1.5 раза
-        S.charTextV.setScaleY(1.5f);
+        S.charTextV.setScaleX(2f); // изменение размеров в 1.5 раза
+        S.charTextV.setScaleY(2f);
         S.charTextV.setText("" + count);
         ru = count;
         S.type = type;

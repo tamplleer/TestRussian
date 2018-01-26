@@ -163,8 +163,8 @@ t.setText("");
         int x=0;
         for (int i = 0; i < strToArray.length; i++) {
 
-            x = x1 *i+30;
-            if (i==0)x=30;
+            x = x1 *i+60;
+            if (i==0)x=60;
 
             text[i] = new Text(this, x, y, strToArray[i],30,i);
         }
