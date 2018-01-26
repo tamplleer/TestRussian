@@ -74,9 +74,17 @@ public class MainActivity extends AppCompatActivity {
         S.click = false;
         S.win=0;
         int maxLength=30;
+        int rundom=0;
+        int banWord[]=new int[maxLength];
         lengthINscore=maxLength;
         for (int i = 1; i < maxLength; i++){
-           word1[i]=word1[(int) (Math.random()*word1.length)];
+            rundom=(int) (Math.random()*word1.length);
+            for (int j = 1; j < maxLength; j++){
+                if (banWord[j]==rundom) rundom=(int) (Math.random()*word1.length);
+            }
+
+           word1[i]=word1[rundom];
+            banWord[i]=rundom;
         }
 
         point.setText(S.win+"/"+lengthINscore);
