@@ -23,7 +23,7 @@ public class Text extends MainActivity {
     ConstraintLayout constraintLayout;
     float alpha = 1; // размер картинки, врещение, прозрачность
 
-    Text(MainActivity main, int x, int y, char count, int size, int type) {
+    Text(MainActivity main, int x, int y, final char count, int size, final int type) {
         this.x = x;
         context = main;
         this.y = y;
@@ -47,7 +47,11 @@ public class Text extends MainActivity {
         main.addContentView(S.charTextV, new RelativeLayout.LayoutParams(size * 4, size));
         S.charTextV.setOnClickListener(new View.OnClickListener() {  // вешаем слушателя на клик
             public void onClick(View v) {
-                touched(); // метод-обработчик нажатия
+                for (int i = 0; i < a.length; i++) {
+                    if (count==a[i])
+                        touched();
+                }
+                // метод-обработчик нажатия
             }
         });
     }
