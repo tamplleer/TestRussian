@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Ударения</string>
+    <string name="yourScore">YOUR SCORE</string>
+    <string name="WORD">ALL WORD</string>
+    <string name="word30">30 WORD</string>
+    <string name="NEXT">NEXT</string>
+    <string name="GOVER">GAME OVER  </string>
+    <string name="TRAG">    TRY AGAIN</string>
 </resources>
