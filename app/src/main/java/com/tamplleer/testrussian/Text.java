@@ -26,10 +26,7 @@ import java.io.IOException;
 
 public class Text extends MainActivity {
 
-    public SoundPool mSoundPoolQ;
-    public AssetManager mAssetManagerQ;
-    public int mCatSound, winSound,winALL, prav, praveso, neprav,anvilSound,aS,iS,eS,oS,yS,ieS,iaS,iyS,ieaS;
-    public int mStreamIDQ;
+
 
     TextView t;
     char ru;
@@ -81,7 +78,7 @@ public class Text extends MainActivity {
         m= new MainActivity();
         playSound(aS);
         switch (count) {
-            case 'А':  playSoundQ(aS);
+            case 'А':  playSound(R.raw.anvil);
                 break;
             case 'И': playSound(iS);
                 break;
@@ -116,83 +113,40 @@ public class Text extends MainActivity {
 
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void createNewSoundPoolQ() {
+    public void createNewSoundPool() {
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build();
-        mSoundPoolQ = new SoundPool.Builder()
+        mSoundPool = new SoundPool.Builder()
                 .setAudioAttributes(attributes)
                 .build();
     }
 
     @SuppressWarnings("deprecation")
-    public void createOldSoundPoolQ() {
-        mSoundPoolQ = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+    public void createOldSoundPool() {
+        mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
     }
 
-    public int playSoundQ(int sound) {
+    public int playSound(int sound) {
         if (sound > 0) {
-            mStreamIDQ = mSoundPoolQ.play(sound, 1, 1, 1, 0, 1);
+            mStreamID = mSoundPool.play(sound, 1, 1, 1, 0, 1);
         }
-        return mStreamIDQ;
+        return mStreamID;
     }
 
-    public int loadSoundQ(String fileName) {
+    public int loadSound(String fileName) {
         AssetFileDescriptor afd;
         try {
-            afd = mAssetManagerQ.openFd(fileName);
+            afd = mAssetManager.openFd(fileName);
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "Не могу загрузить файл " + fileName,
                     Toast.LENGTH_SHORT).show();
             return -1;
         }
-        return mSoundPoolQ.load(afd, 1);
+        return mSoundPool.load(afd, 1);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            // Для устройств до Android 5
-            createOldSoundPoolQ();
-        } else {
-            // Для новых устройств
-            createNewSoundPoolQ();
-        }
-
-        mAssetManagerQ = getAssets();
-
-        // получим идентификаторы
-        anvilSound = loadSound("anvil.mp3");
-        winSound = loadSound("uhuu.mp3");
-        winALL = loadSound("eea.mp3");
-        //   mDogSound = loadSound("dog.ogg");
-        //   mDuckSound = loadSound("duck.ogg");
-        //   mSheepSound = loadSound("sheep.ogg");
-        aS = loadSoundQ("a.mp3");
-        S.x=aS;
-        iS = loadSoundQ("i.mp3");
-        eS = loadSound("e.mp3");
-        oS = loadSound("o.mp3");
-        yS = loadSound("y.mp3");
-        ieS = loadSound("ie.mp3");
-        iaS = loadSound("ia.mp3");
-        iyS = loadSound("iy.mp3");
-        ieaS = loadSound("iea.mp3");
-
-        prav = loadSound("right.mp3");
-        praveso = loadSound("righteso.mp3");
-        neprav = loadSound("nea.mp3");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mSoundPoolQ.release();
-        mSoundPoolQ = null;
-    }
 }

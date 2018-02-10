@@ -1,6 +1,7 @@
 package com.tamplleer.testrussian;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioAttributes;
@@ -111,12 +112,14 @@ public class MainActivity extends AppCompatActivity {
         S.steps=0;
         S.clickWord=true;
         lengthINscore = word1.length;
+        S.lengsInScore= word1.length;
+
+
         word1 = S.allWord.split(",");
         point.setText(S.steps + "/" + lengthINscore);
         S.changeWord = 1;
         setWordinMas();
-        constraintLayout.setBackgroundColor(ContextCompat
-                .getColor(this, R.color.Khaki));
+        constraintLayout.setBackgroundResource(R.drawable.fon);
         t.setText("");
         playSound(anvilSound);
     }
@@ -128,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         S.steps=0;
         S.clickWord=true;
         int maxLength = 30;
+        S.lengsInScore= word1.length;
         int rundom = 0;
         int banWord[] = new int[maxLength];
         lengthINscore = maxLength;
@@ -144,21 +148,18 @@ public class MainActivity extends AppCompatActivity {
         point.setText(S.win + "/" + lengthINscore);
         S.changeWord = 1;
         setWordinMas();
-        constraintLayout.setBackgroundColor(ContextCompat
-                .getColor(this, R.color.Khaki));
+        constraintLayout.setBackgroundResource(R.drawable.fon);
 
         t.setText("");
 
     }
 
     public void next(View view) {
-
         if (S.click == true || S.someClick == true) {
             S.steps++;
             S.changeWord++;
             point.setText(S.steps + "/" + lengthINscore);
-            constraintLayout.setBackgroundColor(ContextCompat
-                    .getColor(this, R.color.Khaki));
+            constraintLayout.setBackgroundResource(R.drawable.fon);
             if (S.right == true) {
                 if (S.pravi>0)playSound(praveso);
                 else  playSound(prav);
@@ -168,19 +169,22 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 playSound(neprav);
                 S.pravi=0;
-                constraintLayout.setBackgroundColor(ContextCompat
-                        .getColor(this, R.color.FireBrick));
+                constraintLayout.setBackgroundResource(R.drawable.fonred);
             }
             S.right=false;
             t.setText("" + S.wordtoscreen);
             setWordinMas();
             if (S.steps == lengthINscore) {
-                t.setText(""+R.string.GOVER+ S.win + "  OF  " + lengthINscore + R.string.TRAG);
+                t.setText(S.win + "  OF  " + lengthINscore );
                 S.click = false;
                 S.someClick = false;
                 S.clickWord=false;
+               // if (S.win<10) playSound(winSound);
                 if (S.win>=25)playSound(winSound);
                 if (S.win==lengthINscore)playSound(winALL);
+                Intent intent = new Intent(MainActivity.this,
+                        endGame.class);
+                startActivity(intent);
             }
         }
     }
@@ -318,13 +322,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        mSoundPool.release();
-        mSoundPool = null;
+    protected void onDestroy() {
+        super.onDestroy();
+       // mSoundPool.release();
+       // mSoundPool = null;
     }
-public void asdf(){
-    playSound(aS);
-}
 }
 

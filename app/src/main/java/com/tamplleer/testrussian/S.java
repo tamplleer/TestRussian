@@ -15,6 +15,7 @@ public class S {
     public static TextView charTextV;
     public static int delet = 0;
     public static int type;
+    public static int lengsInScore;
     public static int steps=0;
     public static int win = 0;
     public static boolean right = false;
@@ -23,6 +24,7 @@ public class S {
     public static int pravi = 0;
     public static int x = 0;
 
+    public static int aS = 0;
 
 
     public static String allWord =
