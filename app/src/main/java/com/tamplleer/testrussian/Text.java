@@ -76,31 +76,31 @@ public class Text extends MainActivity {
         t.setText("" + count + " ?");
         MainActivity m;
         m= new MainActivity();
-        playSound(aS);
+        audio=new Audio(0);
+      //  audio.playSound(5);
         switch (count) {
-            case 'А':  playSound(R.raw.anvil);
+            case 'А':    audio.playSound(4);
                 break;
-            case 'И': playSound(iS);
+            case 'И':   audio.playSound(5);
                 break;
-            case 'Е': playSound(eS);
+            case 'Е':   audio.playSound(6);
                 break;
-            case  'О':  playSound(oS);
+            case  'О':   audio.playSound(7);
                 break;
-            case  'У':  playSound(yS);
+            case  'У':    audio.playSound(8);
                 break;
-            case 'Ы':  playSound(iaS);
+            case 'Ы':    audio.playSound(9);
                 break;
-            case 'Э': playSound(ieS);
+            case 'Э':   audio.playSound(10);
                 break;
-            case 'Ю': playSound(iyS);
+            case 'Ю':   audio.playSound(11);
                 break;
-            case 'Я': playSound(ieaS);
+            case 'Я':   audio.playSound(12);
                 break;
-            default: playSound(winALL);
+            default:   audio.playSound(1);
                 break;
         }
-        if (count=='А'){
-            playSound(aS);}
+
         if (type == S.delet) {
             S.win++;
             S.right = true;
@@ -112,41 +112,7 @@ public class Text extends MainActivity {
     }
 
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void createNewSoundPool() {
-        AudioAttributes attributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build();
-        mSoundPool = new SoundPool.Builder()
-                .setAudioAttributes(attributes)
-                .build();
-    }
 
-    @SuppressWarnings("deprecation")
-    public void createOldSoundPool() {
-        mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
-    }
-
-    public int playSound(int sound) {
-        if (sound > 0) {
-            mStreamID = mSoundPool.play(sound, 1, 1, 1, 0, 1);
-        }
-        return mStreamID;
-    }
-
-    public int loadSound(String fileName) {
-        AssetFileDescriptor afd;
-        try {
-            afd = mAssetManager.openFd(fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Не могу загрузить файл " + fileName,
-                    Toast.LENGTH_SHORT).show();
-            return -1;
-        }
-        return mSoundPool.load(afd, 1);
-    }
 
 
 }

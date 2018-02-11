@@ -2,56 +2,82 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/endloy"
+    android:label="@string/pusto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fotodena"
+
     tools:context="com.tamplleer.testrussian.endGame">
 
     <TextView
         android:id="@+id/endText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="325dp"
+        android:layout_height="81dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="TextView"
+        android:textSize="50dp"
+        android:textColor="@color/Khaki"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.727"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.097" />
+
     <ImageButton
         android:id="@+id/endexit"
-        android:layout_width="50dp"
-        android:layout_height="42dp"
-        android:onClick="endexit"
-        android:background="@drawable/battonshape"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="216dp"
+        android:layout_height="52dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/battonshape"
+        android:onClick="endexit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.974"
-        app:layout_constraintVertical_bias="0.068" />
+        app:layout_constraintTop_toBottomOf="@+id/tt"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintVertical_bias="0.147" />
 
     <TextView
         android:id="@+id/tt"
-        android:layout_width="299dp"
-        android:layout_height="54dp"
+        android:layout_width="158dp"
+        android:layout_height="64dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:autoText="false"
         android:text="14/3"
+        android:textColor="@color/Khaki"
         android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.131" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="3dp"
+        tools:layout_editor_absoluteY="35dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="55dp"
+        android:layout_height="23dp"
+        android:text=""
+        tools:layout_editor_absoluteX="292dp"
+        tools:layout_editor_absoluteY="35dp" />
 
 </android.support.constraint.ConstraintLayout>

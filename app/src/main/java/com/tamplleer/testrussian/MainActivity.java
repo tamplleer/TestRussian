@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout constraintLayout;
    static char a[] = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
     String word1[];
-
+Audio audio;
+    DialogInMenu dialog;
 
 
 
@@ -61,11 +62,12 @@ public class MainActivity extends AppCompatActivity {
         point = (TextView) findViewById(R.id.points);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constrainlayout);
         getScreenSize();
+        audio=new Audio(0);
 
 
 
         sounD=new sound();
-
+        audio.playSound(16);
 
 
         start = (Button) findViewById(R.id.start);
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });*/
+
     }
 
 
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         setWordinMas();
         constraintLayout.setBackgroundResource(R.drawable.fon);
         t.setText("");
-        playSound(anvilSound);
+        audio.playSound(1);
     }
 
     public void someword(View view) {
@@ -131,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         S.steps=0;
         S.clickWord=true;
         int maxLength = 30;
-        S.lengsInScore= word1.length;
+        S.lengsInScore= 30;
         int rundom = 0;
         int banWord[] = new int[maxLength];
         lengthINscore = maxLength;
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 1; j < maxLength; j++) {
                 if (banWord[j] == rundom) rundom = (int) (Math.random() * word1.length);
             }
-            playSound(winALL);
+            audio.playSound(1);
             word1[i] = word1[rundom];
             banWord[i] = rundom;
         }
@@ -161,13 +164,13 @@ public class MainActivity extends AppCompatActivity {
             point.setText(S.steps + "/" + lengthINscore);
             constraintLayout.setBackgroundResource(R.drawable.fon);
             if (S.right == true) {
-                if (S.pravi>0)playSound(praveso);
-                else  playSound(prav);
+                if (S.pravi>0)audio.playSound(14);
+                else  audio.playSound(13);
                 S.pravi++;
                 //point.setText(S.win + "/" + lengthINscore);
 
             } else {
-                playSound(neprav);
+                audio.playSound(15);
                 S.pravi=0;
                 constraintLayout.setBackgroundResource(R.drawable.fonred);
             }
@@ -179,12 +182,13 @@ public class MainActivity extends AppCompatActivity {
                 S.click = false;
                 S.someClick = false;
                 S.clickWord=false;
-               // if (S.win<10) playSound(winSound);
-                if (S.win>=25)playSound(winSound);
-                if (S.win==lengthINscore)playSound(winALL);
-                Intent intent = new Intent(MainActivity.this,
-                        endGame.class);
-                startActivity(intent);
+                if (S.win<10) audio.playSound(winSound);
+                if (S.win>=25)audio.playSound(winSound);
+                if (S.win==lengthINscore)audio.playSound(winALL);
+               Intent intent = new Intent(MainActivity.this,
+                      endGame.class);
+              startActivity(intent);
+
             }
         }
     }
@@ -247,41 +251,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void createNewSoundPool() {
-        AudioAttributes attributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build();
-        mSoundPool = new SoundPool.Builder()
-                .setAudioAttributes(attributes)
-                .build();
-    }
 
-    @SuppressWarnings("deprecation")
-    public void createOldSoundPool() {
-        mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
-    }
-
-    public int playSound(int sound) {
-        if (sound > 0) {
-            mStreamID = mSoundPool.play(sound, 1, 1, 1, 0, 1);
-        }
-        return mStreamID;
-    }
-
-    public int loadSound(String fileName) {
-        AssetFileDescriptor afd;
-        try {
-            afd = mAssetManager.openFd(fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Не могу загрузить файл " + fileName,
-                    Toast.LENGTH_SHORT).show();
-            return -1;
-        }
-        return mSoundPool.load(afd, 1);
-    }
 
     @Override
     protected void onResume() {
@@ -289,43 +259,53 @@ public class MainActivity extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // Для устройств до Android 5
-            createOldSoundPool();
+            audio.createOldSoundPool();
         } else {
             // Для новых устройств
-            createNewSoundPool();
+            audio.createNewSoundPool();
         }
 
-        mAssetManager = getAssets();
+        S.mAssetManager = getAssets();
 
         // получим идентификаторы
-        anvilSound = loadSound("anvil.mp3");
-        winSound = loadSound("uhuu.mp3");
-       winALL = loadSound("eea.mp3");
-     //   mDogSound = loadSound("dog.ogg");
-     //   mDuckSound = loadSound("duck.ogg");
-     //   mSheepSound = loadSound("sheep.ogg");
-        aS = loadSound("a.mp3");
-        S.x=aS;
-        iS = loadSound("i.mp3");
-        eS = loadSound("e.mp3");
-        oS = loadSound("o.mp3");
-        yS = loadSound("y.mp3");
-        ieS = loadSound("ie.mp3");
-        iaS = loadSound("ia.mp3");
-        iyS = loadSound("iy.mp3");
-        ieaS = loadSound("iea.mp3");
+        S.anvilSound = audio.loadSound("anvil.mp3");
+        S.winSound = audio.loadSound("uhuu.mp3");
+        S.winALL = audio.loadSound("eea.mp3");
+        //   mDogSound = loadSound("dog.ogg");
+        //   mDuckSound = loadSound("duck.ogg");
+        //   mSheepSound = loadSound("sheep.ogg");
+        S.aS =  audio.loadSound("a.mp3");
 
-        prav = loadSound("right.mp3");
-        praveso = loadSound("righteso.mp3");
-        neprav = loadSound("nea.mp3");
+        S.iS =  audio.loadSound("i.mp3");
+        S.eS =  audio.loadSound("e.mp3");
+        S.oS =  audio.loadSound("o.mp3");
+        S.yS =  audio.loadSound("y.mp3");
+        S.ieS =  audio.loadSound("ie.mp3");
+        S.ieaS =  audio.loadSound("iea.mp3");
+        S.iyS =  audio.loadSound("iy.mp3");
+        S.iaS =  audio.loadSound("ia.mp3");
+
+
+        S.prav =  audio.loadSound("right.mp3");
+        S.praveso =  audio.loadSound("righteso.mp3");
+        S.neprav =  audio.loadSound("nea.mp3");
+     S.nedovol =  audio.loadSound("nedovol.mp3");
+        audio.playSound(S.winALL);
 
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-       // mSoundPool.release();
-       // mSoundPool = null;
+    protected void onPause() {
+        super.onPause();
+       // Toast.makeText(this, "Не могу загрузить файл ",
+        //        Toast.LENGTH_SHORT).show();
+        //   mSoundPool.release();
+        //  mSoundPool = null;
+    }
+
+    public void vopros(View view) {
+        dialog = new DialogInMenu(this);
+        dialog.ad.show();
     }
 }
 

@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".endGame"
-            android:theme="@style/Theme.AppCompat.Dialog">
+            android:theme="@style/Theme.AppCompat.Dialog.Alert">
 
         </activity>
     </application>

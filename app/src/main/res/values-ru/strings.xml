@@ -6,4 +6,6 @@
     <string name="WORD">ВСЕ СЛОВА</string>
     <string name="word30">30 СЛОВ</string>
     <string name="yourScore">ТВОЙ СЧЕТ</string>
+    <string name="close">Закрыть</string>
+    <string name="instruct">Инструкция</string>
 </resources>

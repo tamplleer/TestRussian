@@ -6,4 +6,8 @@
     <string name="NEXT">NEXT</string>
     <string name="GOVER">GAME OVER  </string>
     <string name="TRAG">    TRY AGAIN</string>
+    <string name="vopros" translatable="false">Все очень просто:\n Выберите количество слов, для проверки (можно выбрать или 30 случайных слов из списка или все слова по алфавиту), а далее нажиамйте на букву, по вашему мнению куда падает ударение, и жмите далее.</string>
+    <string name="instruct">Инструкция </string>
+    <string name="close">Close</string>
+    <string name="pusto" translatable="false"> </string>
 </resources>

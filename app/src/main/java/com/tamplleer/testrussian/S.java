@@ -1,5 +1,7 @@
 package com.tamplleer.testrussian;
 
+import android.content.res.AssetManager;
+import android.media.SoundPool;
 import android.widget.TextView;
 
 /**
@@ -23,8 +25,13 @@ public class S {
     public static boolean pause = true;
     public static int pravi = 0;
     public static int x = 0;
+    public static int selectActivity=0;
 
-    public static int aS = 0;
+
+    public static SoundPool mSoundPool;
+    public static AssetManager mAssetManager;
+    public static int mCatSound, winSound,winALL, prav, praveso, neprav,anvilSound,aS,iS,eS,oS,yS,ieS,iaS,iyS,ieaS,hor,nedovol;
+    public static int mStreamID;
 
 
     public static String allWord =
