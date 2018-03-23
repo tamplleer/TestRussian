@@ -31,22 +31,28 @@ public class Text extends MainActivity {
     TextView t;
     char ru;
     Context context;
-    int x, y, size, type;
+    int x, y,type;
     char count;
+    int shir;
     ConstraintLayout constraintLayout;
-    float alpha = 1; // размер картинки, врещение, прозрачность
+
+    //MainActivity main;
+    float alpha = 1;
+    double  size; // размер картинки, врещение, прозрачность
     Text(MainActivity main, int x, int y, final char count, int size, final int type) {
+     //  main= new MainActivity();
+       // if (activity==0)
         this.x = x;
         context = main;
         this.y = y;
         this.size = size;
         this.type = type;
         this.count = count;
-        S.charTextV = new TextView(main);
+        S.charTextV = new TextView(context);
         S.charTextV.setAlpha(alpha);
         S.charTextV.setX(x); // координаты
         S.charTextV.setY(y);
-        S.charTextV.setBackgroundResource(R.drawable.wordshape);
+        S.charTextV.setBackgroundResource(R.color.DarkSlateGray);
         S.charTextV.setTextColor(Color.rgb(255, 228, 181));
         S.charTextV.setScaleX(2f); // изменение размеров в 1.5 раза
         S.charTextV.setScaleY(2f);
@@ -58,7 +64,13 @@ public class Text extends MainActivity {
         t = (TextView) main.findViewById(R.id.text);
         constraintLayout = (ConstraintLayout) main.findViewById(R.id.constrainlayout);
         //      constraintLayout = (ConstraintLayout) findViewById(R.id.constrainlayout);
-        main.addContentView(S.charTextV, new RelativeLayout.LayoutParams(size * 4, size));
+       // setSize();
+
+         shir=size*3;
+
+        if (size>50){shir=shir-size;}
+        if (type==100)shir=1000;
+        main.addContentView(S.charTextV, new RelativeLayout.LayoutParams(shir , size));
        S.charTextV.setOnClickListener(new View.OnClickListener() {  // вешаем слушателя на клик
             public void onClick(View v) {
                 for (int i = 0; i < a.length; i++) {
@@ -69,13 +81,20 @@ public class Text extends MainActivity {
             }
         });}
 
+public void setSize(){
+    if (screenWidth>10 || screenHeight>1280){
+        size=size*2;
+        shir=shir-20;
+    }
 
+}
     void touched() {
         //     MainActivity main1 = new MainActivity();
         //    main1.getWindow().setBackgroundDrawableResource(R.drawable.fotodena);
         t.setText("" + count + " ?");
-        MainActivity m;
-        m= new MainActivity();
+       // S.charTextV.setBackgroundResource(R.color.Khaki);
+      //  S.charTextV.setTextColor(Color.rgb(47,79,79));
+       // main= new MainActivity();
         audio=new Audio(0);
       //  audio.playSound(5);
         switch (count) {
@@ -102,7 +121,7 @@ public class Text extends MainActivity {
         }
 
         if (type == S.delet) {
-            S.win++;
+
             S.right = true;
             //constraintLayout.setBackgroundColor(ContextCompat
             //    .getColor(context, R.color.CHETO));

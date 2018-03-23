@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/endloy"
     android:label="@string/pusto"
-
+android:background="@color/DarkSlateGray"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -12,22 +12,22 @@
 
     <TextView
         android:id="@+id/endText"
-        android:layout_width="325dp"
-        android:layout_height="81dp"
+        android:layout_width="109dp"
+        android:layout_height="162dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="TextView"
-        android:textSize="50dp"
-        android:textColor="@color/Khaki"
+        android:textColor="@color/DarkSlateGray"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.727"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintVertical_bias="0.606"
+        app:layout_constraintHorizontal_bias="0.965" />
 
     <ImageButton
         android:id="@+id/endexit"
@@ -44,7 +44,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tt"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-        app:layout_constraintVertical_bias="0.147" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tt"
@@ -53,17 +53,17 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:autoText="false"
-        android:text="14/3"
+        android:text="14/30"
         android:textColor="@color/Khaki"
         android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endText"
-        app:layout_constraintVertical_bias="0.131" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="0.821"
+        app:layout_constraintHorizontal_bias="0.607" />
 
     <TextView
         android:id="@+id/textView"

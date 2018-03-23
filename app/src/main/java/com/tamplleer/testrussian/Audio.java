@@ -81,7 +81,9 @@ public Audio(int activity){
 
     public int playSound(int sound) {
         if (sound > 0) {
-            S.mStreamID = S.mSoundPool.play(sound, 1, 1, 1, 0, 1);
+            S.mStreamID = S.mSoundPool.play(sound, S.volL,S.volL, 1, 0, 1);
+
+
         }
         return S.mStreamID;
     }

@@ -2,6 +2,7 @@ package com.tamplleer.testrussian;
 
 
   import android.annotation.TargetApi;
+  import android.content.Context;
   import android.content.Intent;
   import android.content.res.AssetFileDescriptor;
   import android.content.res.AssetManager;
@@ -30,6 +31,7 @@ public class SpleshScreenactivity extends AppCompatActivity {
           setContentView(R.layout.activity_splesh_screenactivity);
        // S.mAssetManager =getAssets();
         audio=new Audio(1);
+        S.mSettings = getSharedPreferences(S.APP_PREFERENCES1, Context.MODE_PRIVATE);
      //   audio.playSound(1);
         handler1();
         handler();
@@ -63,7 +65,9 @@ public class SpleshScreenactivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (S.mSettings.contains(S.APP_PREFERENCES_silence)) {
+            S.volL = S.mSettings.getInt(S.APP_PREFERENCES_silence, 0);
+        }
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // Для устройств до Android 5
             audio.createOldSoundPool();

@@ -26,8 +26,8 @@ public class DialogInMenu {
         //"confirm exit";
 
 
-        ad = new AlertDialog.Builder(context);
-        ad.setTitle(selectTitle(type));  // заголовок
+        ad = new AlertDialog.Builder(context,R.style.AlertDialogTheme);
+        ad.setTitle(selectTitle(type));// заголовок
         ad.setMessage(selectMessage(type)); // сообщение
         ad.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
