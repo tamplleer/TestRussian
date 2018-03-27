@@ -41,7 +41,7 @@ public class TextSlabak extends endGame {
         S.charTextV.setY(y);
        // S.charTextV.setBackgroundResource(R.drawable.wordshape);
         if (type==true)S.charTextV.setTextColor(Color.rgb(50,205, 50));
-
+//
         else S.charTextV.setTextColor(Color.rgb(255, 0, 0));
        // S.charTextV.setScaleX(2f); // изменение размеров в 1.5 раза
       //  S.charTextV.setScaleY(2f);
