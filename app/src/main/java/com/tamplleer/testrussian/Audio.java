@@ -23,7 +23,7 @@ public Audio(int activity){
     SpleshScreenactivity spleshScreenactivity=new SpleshScreenactivity();
     if (activity==0)context=main;
     if (activity==2)context=endGamE;
-    if (activity==1)context=spleshScreenactivity;
+   if (activity==1)context=spleshScreenactivity;
 
 /*
 

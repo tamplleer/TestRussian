@@ -23,6 +23,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Adapter;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +38,11 @@ TextView t,tt;
     int screenWidth,screenHeight;
     ConstraintLayout constraintLayout;
     int lose=30-S.win;
+    int y,x;
     int textplus=0;
+    TextSlabak text1[];
+    int wordpokaz=0;
+
 
 
     @Override
@@ -55,19 +62,20 @@ TextView t,tt;
         t = (TextView) findViewById(R.id.endText);
         tt = (TextView) findViewById(R.id.tt);
         //t.setText(R.string.GOVER);
-        int x=screenWidth/3+screenWidth/10;
-        int y=screenHeight/30;
-        TextSlabak text1[]=new TextSlabak[S.wordMassive.length];
-        for (int i = 0; i < S.wordMassive.length; i++) {
+         x=screenWidth/3+screenWidth/10;
+         y=screenHeight/30;
+         text1=new TextSlabak[S.wordMassive.length];
+        for (int i = 0; i < 30; i++) {
 
             text1[i]=new TextSlabak(this,x,y, S.wordMassive[i],screenHeight/30, S.vernoORno[i]);
             y+=screenHeight/43;
 
         }
+
         S.coins=S.coins+S.win;
         tt.setText(""+S.win+" / "+S.lengsInScore);
         if (S.win<20 && S.steps==S.lengsInScore) audio.playSound(S.nedovol);
-        if (S.win>=20)audio.playSound(S.winSound);
+       if (S.win>=20)audio.playSound(S.winSound);
         if (S.win==S.lengsInScore)audio.playSound(S.winALL);
         Log.d("шибка","coins = "+S.coins);
 
@@ -109,4 +117,18 @@ TextView t,tt;
         if (S.mSettings.contains(S.APP_PREFERENCES_coins)) {
             S.coins = S.mSettings.getInt(S.APP_PREFERENCES_coins, 0);
     }}
+
+    public void nextClick(View view) {
+        if (30< S.wordMassive.length ){
+            y=screenHeight/30;
+            wordpokaz+=1;
+            int s=0;
+        for (int i = 0; i < 30; i++) {
+            s=i+wordpokaz*30;
+            if ( S.wordMassive.length>s){
+            text1[i]=new TextSlabak(this,x,y, S.wordMassive[s],screenHeight/30, S.vernoORno[s]);
+            y+=screenHeight/43;}
+
+        }}
+    }
 }

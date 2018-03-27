@@ -93,6 +93,7 @@ int esootstup=0;
         picture.setX(4000);
         picture.setY(4000);
         button= (Button)findViewById(R.id.startGA);
+
        // button.setX(screenWidth/2);
        // button.setY(screenHeight/2);
         men= new Men(this);
@@ -266,6 +267,7 @@ int esootstup=0;
             S.right=false;
             t.setText("" + S.wordtoscreen);
             setWordinMas();
+            S.steps=lengthINscore;
             if (S.steps == lengthINscore) {
                // t.setText(S.win + "  OF  " + lengthINscore );
                 S.click = false;

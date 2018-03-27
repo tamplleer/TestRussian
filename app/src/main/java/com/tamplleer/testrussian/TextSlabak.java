@@ -35,6 +35,7 @@ public class TextSlabak extends endGame {
         this.type = type;
         this.count = count;
         S.charTextV = new TextView(context);
+        S.charTextV.setBackgroundResource(R.color.DarkSlateGray);
         S.charTextV.setAlpha(alpha);
         S.charTextV.setX(x); // координаты
         S.charTextV.setY(y);

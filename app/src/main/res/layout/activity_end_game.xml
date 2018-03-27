@@ -27,7 +27,9 @@ android:background="@color/DarkSlateGray"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.606"
-        app:layout_constraintHorizontal_bias="0.965" />
+        app:layout_constraintHorizontal_bias="0.965"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <ImageButton
         android:id="@+id/endexit"
@@ -44,7 +46,9 @@ android:background="@color/DarkSlateGray"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tt"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/tt"
@@ -63,7 +67,9 @@ android:background="@color/DarkSlateGray"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         app:layout_constraintVertical_bias="0.821"
-        app:layout_constraintHorizontal_bias="0.607" />
+        app:layout_constraintHorizontal_bias="0.607"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -79,5 +85,14 @@ android:background="@color/DarkSlateGray"
         android:text=""
         tools:layout_editor_absoluteX="292dp"
         tools:layout_editor_absoluteY="35dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="56dp"
+        android:onClick="nextClick"
+        android:layout_height="52dp"
+        app:srcCompat="@android:drawable/ic_media_ff"
+        tools:layout_editor_absoluteY="277dp"
+        tools:layout_editor_absoluteX="256dp" />
 
 </android.support.constraint.ConstraintLayout>
