@@ -2,8 +2,11 @@ package com.tamplleer.testrussian;
 
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.media.SoundPool;
 import android.widget.TextView;
+
+import java.lang.reflect.Type;
 
 /**
  * Created by tampl on 22.01.2018.
@@ -31,6 +34,8 @@ public class S {
     public static boolean vernoORno[];
     public static int bukvMassive[];
     public static int bukvLEngth;
+    public static Typeface fon2;
+    public static boolean reclam = true;
 
 
     public static SoundPool mSoundPool;
@@ -47,7 +52,7 @@ public class S {
 
     public static  String APP_PREFERENCES1 = "mysettings";
     public static  String APP_PREFERENCES_silence="silence";
-    public static  String APP_PREFERENCES_coins="coins";
+    public static  String APP_PREFERENCES_ADD="ads";
     public static SharedPreferences mSettings;
 
 

@@ -20,14 +20,9 @@ public class TextSlabak extends endGame {
     boolean type=false;
     String count;
     int shir;
-    ConstraintLayout constraintLayout;
-
-    //MainActivity main;
     float alpha = 1;
     double  size; // размер картинки, врещение, прозрачность
-    TextSlabak(endGame endGame, int x, int y,  String count, int size, final boolean type) {
-        //  main= new MainActivity();
-        // if (activity==0)
+    TextSlabak(endGame endGame, int x, int y,  String count, int size, final boolean type,boolean zero) {
         this.x = x;
         context = endGame;
         this.y = y;
@@ -35,10 +30,13 @@ public class TextSlabak extends endGame {
         this.type = type;
         this.count = count;
         S.charTextV = new TextView(context);
-        S.charTextV.setBackgroundResource(R.color.DarkSlateGray);
+        if (zero==true) S.charTextV.setBackgroundResource(R.color.DarkSlateGray);
         S.charTextV.setAlpha(alpha);
         S.charTextV.setX(x); // координаты
         S.charTextV.setY(y);
+        S.charTextV.setTypeface(S.fon2);
+        t = new TextView(context);
+        t = S.charTextV;
        // S.charTextV.setBackgroundResource(R.drawable.wordshape);
         if (type==true)S.charTextV.setTextColor(Color.rgb(50,205, 50));
 //

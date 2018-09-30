@@ -7,14 +7,17 @@
     <string name="GOVER">GAME OVER  </string>
     <string name="TRAG">    TRY AGAIN</string>
     <string name="vopros" translatable="false">Все очень просто:\n Выберите количество слов, для проверки (можно выбрать 30 случайных слов из списка или все слова по алфавиту), далее выберите букву, на которую падает ударение и жмите далее.</string>
-    <string name="instruct">Инструкция </string>
+    <string name="open">ДА!</string>
+    <string name="instruct">Инструкция</string>
+    <string name="deletADS">Отключение рекламмы</string>
+    <string name="deletADStext">Готовы отключить релкамму навсегда за просмотр короткого ролика?</string>
     <string name="close">Close</string>
     <string name="pusto" translatable="false"> </string>
     <string name="Start">START NEW TEST</string>
-    <string name="banner_ad_unit_id">ca-app-pub-8909727970839097/3598917903</string>
-    <string name="banner_ad_unit_id1">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="large_text">
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-8909727970839097/3598917903</string>
+    <string name="banner_ad_unit_id1" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="title_activity_scrolling" translatable="false">ScrollingActivity</string>
+    <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -103,7 +106,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
 
 
 </resources>

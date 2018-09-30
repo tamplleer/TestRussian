@@ -15,21 +15,24 @@ package com.tamplleer.testrussian;
 
 public class DialogInMenu {
     AlertDialog.Builder ad;
-    Context context;
-    int type;
+    endGame endgame;
 
 
-    public DialogInMenu(MainActivity main){
 
-        context = main;
+    public DialogInMenu(Context context,int type){
 
         //"confirm exit";
-
-
+        endgame = new endGame();
         ad = new AlertDialog.Builder(context,R.style.AlertDialogTheme);
         ad.setTitle(selectTitle(type));// заголовок
         ad.setMessage(selectMessage(type)); // сообщение
-        ad.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+        if (type == 1){
+        ad.setNegativeButton(R.string.open, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                endgame.loadAd();
+            }
+        });}
+        ad.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 dialog.cancel();
             }
@@ -47,8 +50,7 @@ public class DialogInMenu {
     public int selectTitle(int type){
         switch (type) {
             case 1:
-                return
-                        R.string.GOVER;
+                return R.string.deletADS;
             case 2:
                 return R.string.TRAG;
             default:
@@ -57,10 +59,11 @@ public class DialogInMenu {
 
         }
     }
+
     public int selectMessage(int type){
         switch (type){
             case 1:
-                return R.string.GOVER;
+                return R.string.deletADStext;
             case 2:
                 return R.string.GOVER;
             default:

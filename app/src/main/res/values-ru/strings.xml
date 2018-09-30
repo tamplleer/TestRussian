@@ -7,6 +7,9 @@
     <string name="word30">30 СЛОВ</string>
     <string name="yourScore">ТВОЙ СЧЕТ</string>
     <string name="close">Закрыть</string>
+    <string name="open">ДА!</string>
     <string name="instruct">Инструкция</string>
+    <string name="deletADS">Отключение рекламмы</string>
+    <string name="deletADStext">Готовы отключить релкамму навсегда за просмотр короткого ролика?</string>
     <string name="Start">НАЧАТЬ НОВЫЙ ТЕСТ</string>
 </resources>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/endloy"
-    android:label="@string/pusto"
-android:background="@color/DarkSlateGray"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/DarkSlateGray"
+    android:label="@string/pusto"
 
     tools:context="com.tamplleer.testrussian.endGame">
 
@@ -23,21 +24,39 @@ android:background="@color/DarkSlateGray"
         android:textColor="@color/DarkSlateGray"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.302"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606"
-        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintVertical_bias="0.228" />
+
+    <ImageButton
+        android:id="@+id/right"
+        android:layout_width="62dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginTop="8dp"
+        android:background="@drawable/battonshape"
+        android:onClick="nextClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.808"
+        app:srcCompat="@android:drawable/ic_media_ff" />
 
     <ImageButton
         android:id="@+id/endexit"
         android:layout_width="216dp"
         android:layout_height="52dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/battonshape"
         android:onClick="endexit"
@@ -45,31 +64,26 @@ android:background="@color/DarkSlateGray"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tt"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintVertical_bias="1.0"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
     <TextView
         android:id="@+id/tt"
-        android:layout_width="158dp"
-        android:layout_height="64dp"
+        android:layout_width="178dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:autoText="false"
-        android:text="14/30"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="144/30"
         android:textColor="@color/Khaki"
-        android:textSize="50dp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintVertical_bias="0.821"
-        app:layout_constraintHorizontal_bias="0.607"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintVertical_bias="0.81" />
 
     <TextView
         android:id="@+id/textView"
@@ -87,12 +101,40 @@ android:background="@color/DarkSlateGray"
         tools:layout_editor_absoluteY="35dp" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="56dp"
-        android:onClick="nextClick"
-        android:layout_height="52dp"
-        app:srcCompat="@android:drawable/ic_media_ff"
-        tools:layout_editor_absoluteY="277dp"
-        tools:layout_editor_absoluteX="256dp" />
+        android:id="@+id/left"
+        android:layout_width="62dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/battonshape"
+        android:onClick="iBack"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.007"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.808"
+        app:srcCompat="@android:drawable/ic_media_rew" />
+
+    <ImageButton
+        android:id="@+id/mButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0.6"
+        android:background="@drawable/ads"
+        android:onClick="mButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </android.support.constraint.ConstraintLayout>

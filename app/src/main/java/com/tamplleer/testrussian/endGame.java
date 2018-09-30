@@ -1,14 +1,17 @@
 package com.tamplleer.testrussian;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.Image;
 import android.media.SoundPool;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
@@ -24,69 +27,105 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+
 import java.io.IOException;
 
-public class endGame extends AppCompatActivity {
-TextView t,tt;
-    String textend="";
+public class endGame extends AppCompatActivity implements RewardedVideoAdListener {
+    TextView t, tt;
     Audio audio;
-    int screenWidth,screenHeight;
+    int screenWidth, screenHeight;
     ConstraintLayout constraintLayout;
-    int lose=30-S.win;
-    int y,x;
-    int textplus=0;
+    int lose = 30 - S.win;
+    int y, x;
     TextSlabak text1[];
-    int wordpokaz=0;
-
+    int wordpokaz = 0;
+    int s = 0;
+    boolean reclam;
+    public static RewardedVideoAd mAd;
+    ImageButton mButton;
+    Typeface font1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-       getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_end_game);
         getScreenSize();
+        MobileAds.initialize(this, "ca-app-pub-8909727970839097/9184677267");
+        mAd = MobileAds.getRewardedVideoAdInstance(this);
+        mAd.setRewardedVideoAdListener(this);
+        mAd.loadAd("ca-app-pub-8909727970839097/9184677267",
+                new AdRequest.Builder()
+                        .addTestDevice("E60B48CB85290BEBD01F19B878272929")
+                        .build());
+        //"ca-app-pub-3940256099942544/5224354917",
+
+
         setTitle(" ");
-        constraintLayout= (ConstraintLayout) findViewById(R.id.endloy);
-       // constraintLayout.setMinHeight(350);
-      //  constraintLayout.setMaxWidth(100);
-        audio=new Audio(2);
+        constraintLayout = (ConstraintLayout) findViewById(R.id.endloy);
+        // constraintLayout.setMinHeight(350);
+        //  constraintLayout.setMaxWidth(100);
+        audio = new Audio(2);
+
+        try {
+            font1 = Typeface.createFromAsset(getAssets(), "font12.ttf");
+        } catch (Exception e) {
+            Log.e("scot", "Could not get typeface: "+e.getMessage());
+
+        }
         t = (TextView) findViewById(R.id.endText);
         tt = (TextView) findViewById(R.id.tt);
+        mButton = (ImageButton)findViewById(R.id.mButton);
+        mButton.setEnabled(false);
+        t.setTypeface(font1);
+        tt.setTypeface(font1);
         //t.setText(R.string.GOVER);
-         x=screenWidth/3+screenWidth/10;
-         y=screenHeight/30;
-         text1=new TextSlabak[S.wordMassive.length];
+        x = screenWidth / 3 + screenWidth / 10;
+        y = screenHeight / 30;
+        text1 = new TextSlabak[S.wordMassive.length];
         for (int i = 0; i < 30; i++) {
 
-            text1[i]=new TextSlabak(this,x,y, S.wordMassive[i],screenHeight/30, S.vernoORno[i]);
-            y+=screenHeight/43;
+            text1[i] = new TextSlabak(this, x, y, S.wordMassive[i], screenHeight / 30, S.vernoORno[i], false);
+            y += screenHeight / 43;
+
 
         }
 
-        S.coins=S.coins+S.win;
-        tt.setText(""+S.win+" / "+S.lengsInScore);
-        if (S.win<20 && S.steps==S.lengsInScore) audio.playSound(S.nedovol);
-       if (S.win>=20)audio.playSound(S.winSound);
-        if (S.win==S.lengsInScore)audio.playSound(S.winALL);
-        Log.d("шибка","coins = "+S.coins);
+        S.coins = S.coins + S.win;
+        tt.setText("" + S.win + " / " + S.lengsInScore);
 
+        // if (S.lengsInScore>100)tt.setX(tt.getX()-30);
+        // if (S.win>10)tt.setX(tt.getX()-30);
+        if (S.win < 20 && S.steps == S.lengsInScore) audio.playSound(S.nedovol);
+        if (S.win >= 20) audio.playSound(S.winSound);
+        if (S.win == S.lengsInScore) audio.playSound(S.winALL);
+        Log.d("шибка", "coins = " + S.coins);
 
 
     }
 
     public void endexit(View view) {
-        S.secund=5;
+        S.secund = 5;
         Intent intent = new Intent(endGame.this,
-               MainActivity.class);
+                MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -104,9 +143,10 @@ TextView t,tt;
         super.onPause();
         save();
     }
-    public void save(){
+
+    public void save() {
         SharedPreferences.Editor editor = S.mSettings.edit();
-        editor.putInt(S.APP_PREFERENCES_coins,S.coins );
+        editor.putBoolean(S.APP_PREFERENCES_ADD, reclam);
         editor.apply();
 
     }
@@ -114,21 +154,103 @@ TextView t,tt;
     @Override
     protected void onResume() {
         super.onResume();
-        if (S.mSettings.contains(S.APP_PREFERENCES_coins)) {
-            S.coins = S.mSettings.getInt(S.APP_PREFERENCES_coins, 0);
-    }}
+        if (S.mSettings.contains(S.APP_PREFERENCES_ADD)) {
+            S.reclam = S.mSettings.getBoolean(S.APP_PREFERENCES_ADD, true);
+        }
+    }
+
+    void nextBack() {
+        s = 0;
+        for (int i = 0; i < 30; i++) {
+            text1[i] = new TextSlabak(this, x, y, "        ", screenHeight / 30, S.vernoORno[s], true);
+            y += screenHeight / 43;
+        }
+        y = screenHeight / 30;
+        for (int i = 0; i < 30; i++) {
+            s = i + wordpokaz * 30;
+            // if (s>S.wordMassive.length)
+            if (S.wordMassive.length > s) {
+
+                text1[i] = new TextSlabak(this, x, y, S.wordMassive[s], screenHeight / 30, S.vernoORno[s], false);
+                y += screenHeight / 43;
+            }
+
+        }
+    }
 
     public void nextClick(View view) {
-        if (30< S.wordMassive.length ){
-            y=screenHeight/30;
-            wordpokaz+=1;
-            int s=0;
-        for (int i = 0; i < 30; i++) {
-            s=i+wordpokaz*30;
-            if ( S.wordMassive.length>s){
-            text1[i]=new TextSlabak(this,x,y, S.wordMassive[s],screenHeight/30, S.vernoORno[s]);
-            y+=screenHeight/43;}
-
-        }}
+        YoYo.with(Techniques.FadeInRight)
+                .duration(200)
+                .repeat(0)
+                .playOn(findViewById(R.id.right));
+        if (30 < S.wordMassive.length && s < S.wordMassive.length) {
+            y = screenHeight / 30;
+            wordpokaz += 1;
+            nextBack();
+        }
     }
+
+    public void iBack(View view) {
+        YoYo.with(Techniques.FadeInLeft)
+                .duration(200)
+                .repeat(0)
+                .playOn(findViewById(R.id.left));
+        if (30 < S.wordMassive.length && wordpokaz != 0) {
+            y = screenHeight / 30;
+            wordpokaz -= 1;
+            nextBack();
+        }
+    }
+    public void mButton(View view) {
+        DialogInMenu dialog;
+        dialog = new DialogInMenu(this,1);
+        dialog.ad.show();}
+
+    public  void loadAd(){
+         mAd.show();
+    }
+
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        Toast.makeText(this, "Load",
+                Toast.LENGTH_SHORT).show();
+        mButton.setEnabled(true);
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        mButton.setEnabled(false);
+        reclam = false;
+        Toast.makeText(this, "Вы больше не увидите рекламму!",
+                      Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+        Toast.makeText(this, "Вы не посмотрели рекламму!",
+                Toast.LENGTH_LONG).show();
+    }
+
+
 }
