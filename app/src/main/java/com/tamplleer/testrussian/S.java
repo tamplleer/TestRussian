@@ -24,7 +24,7 @@ public class S {
     public static int lengsInScore;
     public static int steps = 0;
     public static int win = 0;
-    public static boolean right = false;
+    public static boolean right = true;
     public static boolean clickWord = false;
     public static boolean pause = true;
     public static int pravi = 0;

@@ -1,5 +1,6 @@
 package com.tamplleer.testrussian;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,44 +25,42 @@ public class Text extends MainActivity {
     Context context;
     int x, y, type;
     char count;
+    private TextView charTV;//charTextV
     int shir;
-    Typeface fon2=null;
+    Typeface fon2 = null;
     //int idWord = 0;
     ConstraintLayout constraintLayout;
     float alpha = 1;
     double size; // размер картинки, врещение, прозрачность
 
-    Text(MainActivity main, int x, int y, final char count, int size, final int type,int idWord) {
+    Text(Context context, int x, int y, final char count, int size, final int type, int idWord) {
         try {
             fon2 = font1;
         } catch (Exception e) {
-            Log.e("scot", "Could not get typeface: "+e.getMessage());
+            Log.e("scot", "Could not get typeface: " + e.getMessage());
 
         }
         this.x = x;
-        context = main;
         this.y = y;
         this.size = size;
         this.type = type;
         this.count = count;
-        S.charTextV = new TextView(context);
-        S.charTextV.setAlpha(alpha);
-        S.charTextV.setX(x); // координаты
-        S.charTextV.setY(y);
-        S.charTextV.setId(idWord);
-        S.charTextV.setBackgroundResource(R.color.DarkSlateGray);
-        S.charTextV.setTextColor(Color.rgb(255, 228, 181));
-        S.charTextV.setScaleX(2f); // изменение размеров в 1.5 раза
-        S.charTextV.setScaleY(2f);
-        S.charTextV.setText("" + count);
-       // S.charTextV.setTypeface(S.fon2);
+        charTV = new TextView(context);
+        charTV.setTypeface(font1,Typeface.BOLD);
+        charTV.setAlpha(alpha);
+        charTV.setX(x); // координаты
+        charTV.setY(y);
+        charTV.setId(idWord);
+        //charTV.setBackgroundResource(R.color.DarkSlateGray);
+        charTV.setScaleX(2f); // изменение размеров в 1.5 раза
+        charTV.setScaleY(2f);
+        // charTV.setTypeface(S.fon2);
         ru = count;
         S.type = type;
 
 
-
-        t = (TextView) main.findViewById(R.id.text);
-        constraintLayout = (ConstraintLayout) main.findViewById(R.id.constrainlayout);
+        t = ((Activity) context).findViewById(R.id.text);
+        constraintLayout = (ConstraintLayout) ((Activity) context).findViewById(R.id.constrainlayout);
         //      constraintLayout = (ConstraintLayout) findViewById(R.id.constrainlayout);
         // setSize();
 
@@ -70,18 +70,42 @@ public class Text extends MainActivity {
             shir = shir - size;
         }
         if (type == 100) shir = 1000;
-        main.addContentView(S.charTextV, new RelativeLayout.LayoutParams(shir, size));
-        S.charTextV.setOnClickListener(new View.OnClickListener() {  // вешаем слушателя на клик
+        ((Activity) context).addContentView(charTV, new RelativeLayout.LayoutParams(shir, size));
+        charTV.setOnClickListener(new View.OnClickListener() {  // вешаем слушателя на клик
             public void onClick(View v) {
                 for (int i = 0; i < a.length; i++) {
-                    if (count == a[i] && S.clickWord == true){
-                    touched();
-
-                   }
+                    if (count == a[i] && S.clickWord) {
+                        touched();
+                        paintLetter();
+                    }
                 }
                 // метод-обработчик нажатия
             }
         });
+    }
+
+    public void setPick() {
+        charTV.setText("" + count);
+    }
+    public void deletPick(){
+        FrameLayout parent = (FrameLayout) charTV.getParent();
+        parent.removeView(charTV);
+    }
+    private void paintLetter(){
+        if(S.right){
+            charTV.setTextColor(Color.rgb(178, 34, 34));
+        }
+        else{
+            charTV.setTextColor(Color.rgb(47, 79, 79));
+        }
+    }
+    public void paintWord(){
+        if(S.right){
+            charTV.setTextColor(Color.rgb(47, 79, 79));
+        }
+        else{
+            charTV.setTextColor(Color.rgb(255, 228, 181));
+        }
     }
 
 //public void setSize(){
@@ -96,8 +120,8 @@ public class Text extends MainActivity {
         //     MainActivity main1 = new MainActivity();
         //    main1.getWindow().setBackgroundDrawableResource(R.drawable.fotodena);
         t.setText("" + count + " ?");
-        // S.charTextV.setBackgroundResource(R.color.Khaki);
-        //  S.charTextV.setTextColor(Color.rgb(47,79,79));
+        // charTV.setBackgroundResource(R.color.Khaki);
+        //  charTV.setTextColor(Color.rgb(47,79,79));
         // main= new MainActivity();
         audio = new Audio(0);
         //  audio.playSound(5);
@@ -137,8 +161,8 @@ public class Text extends MainActivity {
         //constraintLayout.setBackgroundColor(ContextCompat
 //    .getColor(context, R.color.CHETO));
         S.right = type == S.delet;
-        //  FrameLayout parent = (FrameLayout) S.charTextV.getParent();
-        // parent.removeView(S.charTextV);
+        //  FrameLayout parent = (FrameLayout) charTV.getParent();
+        // parent.removeView(charTV);
     }
 
 

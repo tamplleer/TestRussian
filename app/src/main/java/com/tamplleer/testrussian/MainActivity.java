@@ -30,20 +30,17 @@ import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity {
     TextView t, point;
-    char strToArray[];
     int screenWidth, screenHeight;
     int lengthINscore = 0;
     Button button, bmstart30, bmnext;
     ImageButton bminfo;
     ConstraintLayout constraintLayout;
-    static char a[] = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
     String word1[];
+    static char[] a = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
     Audio audio;
     DialogInMenu dialog;
     ImageView picture;
     AdRequest adRequest;
-
-    int size;
     private static final String TAG = "MainActivity";
 
     private AdView mAdView;
@@ -51,13 +48,9 @@ public class MainActivity extends AppCompatActivity {
     public Button start;
     ImageButton exit;
     private Handler handler = new Handler();
-
     int esootstup = 0;
     Typeface font1 = null;
-    // TextView texNew;
-    int polozenie = 0;
-    int otstup;
-
+    MakeWord makeWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         exit = (ImageButton) findViewById(R.id.exit);
         bmnext = (Button) findViewById(R.id.next);
         bmnext.setVisibility(View.INVISIBLE);
+        makeWord = new MakeWord(this, screenWidth, screenHeight, picture);
 
 
         try {
@@ -197,7 +191,8 @@ public class MainActivity extends AppCompatActivity {
         S.wordMassive = S.allWord.split(",");
         point.setText(S.steps + "/" + lengthINscore);
         S.changeWord = 1;
-        setWordinMas();
+        // setWordinMas();
+        makeWord.setWordinMas();
         constraintLayout.setBackgroundResource(R.drawable.fon);
         t.setText("");
         audio.playSound(1);
@@ -255,7 +250,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         S.changeWord = 1;
-        setWordinMas();
+        //setWordinMas();
+        makeWord.setWordinMas();
         constraintLayout.setBackgroundResource(R.drawable.fon);
 
         t.setText("");
@@ -264,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void next(View view) {
+
         bmnext.setVisibility(View.VISIBLE);
         handler.post(new Runnable() {
             @Override
@@ -276,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        if (S.click == true || S.someClick == true) {
+        if (S.click || S.someClick) {
             S.steps++;
             S.changeWord++;
             handler.post(new Runnable() {
@@ -286,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             constraintLayout.setBackgroundResource(R.drawable.fon);
-            if (S.right == true) {
+            if (S.right) {
                 S.win++;
                 t.setTextColor(getResources().getColor(R.color.DarkSlateGray));
                 if (S.pravi > 0) audio.playSound(14);
@@ -310,12 +307,14 @@ public class MainActivity extends AppCompatActivity {
                 constraintLayout.setBackgroundResource(R.drawable.fonred);
                 S.vernoORno[S.steps - 1] = false;
             }
-            S.right = false;
+
 
             t.setText("" + S.wordtoscreen);
 
 
-            setWordinMas();
+            //setWordinMas();
+            makeWord.setWordinMas();
+            S.right = false;
             if (S.steps == lengthINscore) {
                 // t.setText(S.win + "  OF  " + lengthINscore );
                 S.click = false;
@@ -333,80 +332,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    public void setWordinMas() {
-        String word[] = new String[S.wordMassive.length];
-        for (int i = 0; i < S.wordMassive.length; i++) {
-            word[i] = S.wordMassive[i];
-            if (S.changeWord == i + 1) {
-                S.stringTOchar = S.wordMassive[i];
-                S.wordtoscreen = S.wordMassive[i];
-                createWord();
-                S.bukvMassive[i] = S.bukvLEngth;
-            }
-        }
-
-    }
-
     public void rextV(View view) {
         t.setText("!!!!!!!!!!!!");
     }
-
-    public void createWord() {
-        strToArray = S.stringTOchar.toCharArray();
-        S.bukvLEngth = strToArray.length;
-        for (int i = 0; i < strToArray.length; i++) {
-            if (strToArray[i] == a[0] ||
-                    strToArray[i] == a[1] ||
-                    strToArray[i] == a[2] ||
-                    strToArray[i] == a[3] ||
-                    strToArray[i] == a[4] ||
-                    strToArray[i] == a[5] ||
-                    strToArray[i] == a[6] ||
-                    strToArray[i] == a[7] ||
-                    strToArray[i] == a[8] ||
-                    strToArray[i] == a[9]) S.delet = i;
-            if (Character.isLowerCase(strToArray[i]))
-                strToArray[i] = Character.toUpperCase(strToArray[i]);
-            if (strToArray[i] == 'Ё') strToArray[i] = 'Е';
-        }
-        Text text[] = new Text[strToArray.length + 1];
-        Text textpusto[] = new Text[1];
-
-        int x1 = screenWidth / strToArray.length;
-        int y = screenHeight / 2;
-        int x = 0;
-        size = screenHeight / 30;
-        textpusto[0] = new Text(this, screenWidth / (screenHeight / 128), y, ' ', size, 100, 30);
-        for (int i = 0; i < strToArray.length; i++) {
-
-            if (strToArray.length > 9) {
-                x = x1 * i + screenWidth / (screenHeight / 128);
-            } else {
-                x = x1 * i + screenWidth / (screenHeight / 160);
-            }  //screenHeight/160 -otstup
-            if (screenWidth < 500) {
-                x = x1 * i + 55;
-            }
-            if (screenWidth < 500 && strToArray.length > 9) {
-                x = x1 * i + 45;
-            }
-            // if (i == 0) x =  esootstup;
-
-            text[i] = new Text(this, x, y, strToArray[i], size, i, i);
-
-
-        }
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) picture.getLayoutParams();
-        picture.setX(-400);
-        picture.setY(screenHeight / 2 - (screenHeight / 64) - 1);
-        params.width = screenWidth;
-        params.height = size * 2;
-        // setNewWord();
-
-
-    }
-
 
     @Override
     protected void onResume() {
