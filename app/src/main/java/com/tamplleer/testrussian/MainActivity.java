@@ -3,15 +3,14 @@ package com.tamplleer.testrussian;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
-import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -54,11 +53,10 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler = new Handler();
 
     int esootstup = 0;
-    Typeface  font1=null;
+    Typeface font1 = null;
     // TextView texNew;
     int polozenie = 0;
     int otstup;
-
 
 
     @Override
@@ -92,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             font1 = Typeface.createFromAsset(getAssets(), "font12.ttf");
-            S.fon2=font1;
+            S.fon2 = font1;
         } catch (Exception e) {
-            Log.e(TAG, "Could not get typeface: "+e.getMessage());
+            Log.e(TAG, "Could not get typeface: " + e.getMessage());
 
         }
         start.setTypeface(font1);
@@ -118,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         MobileAds.initialize(this, "ca-app-pub-8909727970839097~4345378585");
         mAdView = (AdView) findViewById(R.id.adView);
-         adRequest = new AdRequest.Builder()
+        adRequest = new AdRequest.Builder()
                 .addTestDevice("E60B48CB85290BEBD01F19B878272929")
                 .build();
        /* start.setOnTouchListener(new View.OnTouchListener() {
@@ -153,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });*/
-       // MyTimer timer = new MyTimer();
-      //  timer.start();
+        // MyTimer timer = new MyTimer();
+        //  timer.start();
     }
 
 
@@ -231,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         int maxLength = 30;
         S.lengsInScore = 30;
         int rundom = 0;
-        int banWord[] = new int[maxLength];
+        int[] banWord = new int[maxLength];
         lengthINscore = maxLength;
         for (int i = 0; i < maxLength; i++) {
             rundom = (int) (Math.random() * word1.length);
@@ -421,10 +419,10 @@ public class MainActivity extends AppCompatActivity {
             } else exit.setBackgroundResource(R.drawable.thetyo);
         }
         if (S.mSettings.contains(S.APP_PREFERENCES_ADD)) {
-            S.reclam = S.mSettings.getBoolean(S.APP_PREFERENCES_ADD,false);
+            S.reclam = S.mSettings.getBoolean(S.APP_PREFERENCES_ADD, false);
         }
-        if (S.reclam==true) mAdView.loadAd(adRequest);
-        Log.e(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa "+S.reclam);
+        if (S.reclam == true) mAdView.loadAd(adRequest);
+        Log.e(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa " + S.reclam);
 
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // Для устройств до Android 5
@@ -476,7 +474,7 @@ public class MainActivity extends AppCompatActivity {
     public void save() {
         SharedPreferences.Editor editor = S.mSettings.edit();
         editor.putInt(S.APP_PREFERENCES_silence, S.volL);
-        editor.putBoolean(S.APP_PREFERENCES_ADD,S.reclam);
+        editor.putBoolean(S.APP_PREFERENCES_ADD, S.reclam);
         editor.apply();
 
     }
@@ -487,34 +485,34 @@ public class MainActivity extends AppCompatActivity {
                 .repeat(0)
                 .playOn(findViewById(R.id.vopros));
 
-        dialog = new DialogInMenu(this,0);
+        dialog = new DialogInMenu(this, 0);
         dialog.ad.show();
     }
 
-  //  public void updateTime1() {
-        //  men.move();
-   // }
+    //  public void updateTime1() {
+    //  men.move();
+    // }
 
     public void starGA(View view) {
         bmnext.setVisibility(View.VISIBLE);
         trisiWORD();
     }
 
-   // class MyTimer extends CountDownTimer {
+    // class MyTimer extends CountDownTimer {
     //    MyTimer() {
-     //       super(Integer.MAX_VALUE, 100);// продолжительность работы таймера в милисекундах, интервал срабатывания
+    //       super(Integer.MAX_VALUE, 100);// продолжительность работы таймера в милисекундах, интервал срабатывания
 
-   //     }
+    //     }
 
-      //  @Override
-      //  public void onTick(long millisUntilFinished) {
-      //      updateTime1(); //если не пауза, то обновляем ERROR!!!!!!!!!!!!!!!!!!!
-     //   }
+    //  @Override
+    //  public void onTick(long millisUntilFinished) {
+    //      updateTime1(); //если не пауза, то обновляем ERROR!!!!!!!!!!!!!!!!!!!
+    //   }
 
-      //  @Override
-     //   public void onFinish() {
+    //  @Override
+    //   public void onFinish() {
 
-  //      }
- //   }
+    //      }
+    //   }
 }
 

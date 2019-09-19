@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 public class Men {
-    private int x, y, vx, vy; //координаты в массиве, приращение пути
+  /*  private int x, y, vx, vy; //координаты в массиве, приращение пути
     private int destinationX, destinationY; // клетка, куда нужно попасть
     private boolean move; // true-идёт или false-стоит человек
     private int steps, stepsTotal; // сделано шагов и общее количество шагов для перехода в др. клетку
@@ -83,5 +83,5 @@ MainActivity main=new MainActivity();
         //        image = null;
         // }
     }
-
+*/
 }// копируем лабиринт в двоичный

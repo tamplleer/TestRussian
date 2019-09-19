@@ -2,8 +2,6 @@ package com.tamplleer.testrussian;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.constraint.ConstraintLayout;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 

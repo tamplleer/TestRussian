@@ -1,28 +1,15 @@
 package com.tamplleer.testrussian;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Build;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
-
-import java.io.IOException;
 
 /**
  * Created by tampl on 22.01.2018.
