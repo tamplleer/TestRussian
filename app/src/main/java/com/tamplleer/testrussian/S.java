@@ -25,8 +25,6 @@ public class S {
     public static boolean clickWord = false; // nenado!
     public static boolean pause = true;
     public static int pravi = 0;
-    public static int x = 0;
-    public static int selectActivity = 0;
     public static String wordMassive[];
     public static boolean vernoORno[]; // array which contain boolean variable of true or false of answer
     public static boolean reclam = true;

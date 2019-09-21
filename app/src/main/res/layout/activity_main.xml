@@ -111,7 +111,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="2dp"
         android:background="@drawable/battonshape"
-        android:onClick="someword"
+        android:onClick="randomWords"
         android:shadowColor="#42A8A1"
         android:shadowDx="3"
         android:shadowDy="1"

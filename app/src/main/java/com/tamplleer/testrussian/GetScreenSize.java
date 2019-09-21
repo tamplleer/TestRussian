@@ -4,29 +4,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.WindowManager;
 
-import static java.security.AccessController.getContext;
-
-public class GetScreenSize {
+class GetScreenSize {
     Context context;
-    Display display;
-    DisplayMetrics metrics;
-    int screenWidth = 0;
-    int screenHeight = 0;
+    private DisplayMetrics metrics;
 
     GetScreenSize(Context context) {
-        display = ((Activity) context).getWindowManager().getDefaultDisplay();
+        Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
         metrics = new DisplayMetrics();
         display.getMetrics(metrics);
     }
 
-    public int getScreenWidth() {
-        return metrics.widthPixels;
+    int getScreenWidth() {
+        return metrics.widthPixels; //screenWidth
     }
 
-    public int getScreenHeight() {
-        return metrics.heightPixels;
+    int getScreenHeight() {
+        return metrics.heightPixels; //screenHeight
     }
 
 }

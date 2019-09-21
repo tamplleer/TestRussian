@@ -4,16 +4,12 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import java.util.Vector;
 
 public class MakeWord {
-    TextView t, point;
     private char[] strToArray;
     private int screenWidth, screenHeight;
     private static char[] a = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
-    String[] word1;
     private ImageView picture;
     private Context context;
     private Vector<Text> textt = new Vector<Text>();
@@ -87,13 +83,5 @@ public class MakeWord {
             textt.elementAt(i).setPick();
             textt.elementAt(i).paintWord();
         }
-      /*  ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) picture.getLayoutParams();
-        picture.setX(-400);
-        picture.setY(screenHeight / 2 - (screenHeight / 64) - 1);
-        params.width = screenWidth;
-        params.height = size * 2;*/
-        // setNewWord();
-
-
     }
 }
