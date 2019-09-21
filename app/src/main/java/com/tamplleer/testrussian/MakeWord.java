@@ -19,6 +19,8 @@ public class MakeWord {
     private Vector<Text> textt = new Vector<Text>();
     private int size;
     private static final String TAG = "MainActivity";
+    // new variables
+    String wordtoscreen = "";
 
     MakeWord(Context context, int screenWidth, int screenHeight, ImageView picture) {
         this.context = context;
@@ -28,23 +30,21 @@ public class MakeWord {
 
     }
 
-    public void setWordinMas() {
+    public String setWordinMas() {
         String word[] = new String[S.wordMassive.length];
         for (int i = 0; i < S.wordMassive.length; i++) {
             word[i] = S.wordMassive[i];
             if (S.changeWord == i + 1) {
                 S.stringTOchar = S.wordMassive[i];
-                S.wordtoscreen = S.wordMassive[i];
+                wordtoscreen = S.wordMassive[i];
                 createWord();
-                S.bukvMassive[i] = S.bukvLEngth;
             }
         }
-
+        return wordtoscreen;
     }
 
     public void createWord() {
         strToArray = S.stringTOchar.toCharArray();
-        S.bukvLEngth = strToArray.length;
         for (int i = 0; i < strToArray.length; i++) {
             if (strToArray[i] == a[0] ||
                     strToArray[i] == a[1] ||
@@ -83,7 +83,7 @@ public class MakeWord {
             if (screenWidth < 500 && strToArray.length > 9) {
                 x = x1 * i + 45;
             }
-            textt.addElement(new Text(context, x, y, strToArray[i], size, i, i));
+            textt.addElement(new Text(context, x, y, strToArray[i], size, i));
             textt.elementAt(i).setPick();
             textt.elementAt(i).paintWord();
         }

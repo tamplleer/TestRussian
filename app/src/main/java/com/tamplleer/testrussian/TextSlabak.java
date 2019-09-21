@@ -12,53 +12,51 @@ import android.widget.TextView;
 public class TextSlabak extends endGame {
 
     TextView t;
-
+    Font font;
     Context context;
     int x, y;
-    boolean type=false;
+    boolean type = false;
     String count;
     int shir;
     float alpha = 1;
-    double  size; // размер картинки, врещение, прозрачность
-    TextSlabak(endGame endGame, int x, int y,  String count, int size, final boolean type,boolean zero) {
+    double size; // размер картинки, врещение, прозрачность
+
+    TextSlabak(endGame endGame, int x, int y, String count, int size, final boolean type, boolean zero) {
         this.x = x;
         context = endGame;
         this.y = y;
         this.size = size;
         this.type = type;
         this.count = count;
+        font = new Font(context);
         S.charTextV = new TextView(context);
-        if (zero==true) S.charTextV.setBackgroundResource(R.color.DarkSlateGray);
+        if (zero) S.charTextV.setBackgroundResource(R.color.DarkSlateGray);
         S.charTextV.setAlpha(alpha);
         S.charTextV.setX(x); // координаты
         S.charTextV.setY(y);
-        S.charTextV.setTypeface(S.fon2);
+        S.charTextV.setTypeface(font.getFont1());
         t = new TextView(context);
         t = S.charTextV;
-       // S.charTextV.setBackgroundResource(R.drawable.wordshape);
-        if (type==true)S.charTextV.setTextColor(Color.rgb(50,205, 50));
+        // S.charTextV.setBackgroundResource(R.drawable.wordshape);
+        if (type) S.charTextV.setTextColor(Color.rgb(50, 205, 50));
 //
         else S.charTextV.setTextColor(Color.rgb(255, 0, 0));
-       // S.charTextV.setScaleX(2f); // изменение размеров в 1.5 раза
-      //  S.charTextV.setScaleY(2f);
+        // S.charTextV.setScaleX(2f); // изменение размеров в 1.5 раза
+        //  S.charTextV.setScaleY(2f);
         S.charTextV.setText("" + count);
 
 
-        shir=size*8;
-        endGame.addContentView(S.charTextV, new RelativeLayout.LayoutParams(shir , size));
-  }
+        shir = size * 8;
+        endGame.addContentView(S.charTextV, new RelativeLayout.LayoutParams(shir, size));
+    }
 
-    public void setSize(){
-        if (screenWidth>10 || screenHeight>1280){
-            size=size*2;
-            shir=shir-20;
+    public void setSize() {
+        if (screenWidth > 10 || screenHeight > 1280) {
+            size = size * 2;
+            shir = shir - 20;
         }
 
     }
-
-
-
-
 
 
 }

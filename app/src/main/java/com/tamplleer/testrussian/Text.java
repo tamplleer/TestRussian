@@ -17,9 +17,10 @@ import android.widget.TextView;
  * Created by tampl on 22.01.2018.
  */
 
-public class Text extends MainActivity {
-
-
+public class Text {
+    Audio audio;
+    Font font;
+    private static char[] a = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
     TextView t;
     char ru;
     Context context;
@@ -27,30 +28,24 @@ public class Text extends MainActivity {
     char count;
     private TextView charTV;//charTextV
     int shir;
-    Typeface fon2 = null;
     //int idWord = 0;
     ConstraintLayout constraintLayout;
     float alpha = 1;
     double size; // размер картинки, врещение, прозрачность
 
-    Text(Context context, int x, int y, final char count, int size, final int type, int idWord) {
-        try {
-            fon2 = font1;
-        } catch (Exception e) {
-            Log.e("scot", "Could not get typeface: " + e.getMessage());
-
-        }
+    Text(Context context, int x, int y, final char count, int size, final int type) {
+        font = new Font(context);
+        audio = new Audio(0);
         this.x = x;
         this.y = y;
         this.size = size;
         this.type = type;
         this.count = count;
         charTV = new TextView(context);
-        charTV.setTypeface(font1,Typeface.BOLD);
+        charTV.setTypeface(null, Typeface.BOLD);
         charTV.setAlpha(alpha);
         charTV.setX(x); // координаты
         charTV.setY(y);
-        charTV.setId(idWord);
         //charTV.setBackgroundResource(R.color.DarkSlateGray);
         charTV.setScaleX(2f); // изменение размеров в 1.5 раза
         charTV.setScaleY(2f);
@@ -61,9 +56,6 @@ public class Text extends MainActivity {
 
         t = ((Activity) context).findViewById(R.id.text);
         constraintLayout = (ConstraintLayout) ((Activity) context).findViewById(R.id.constrainlayout);
-        //      constraintLayout = (ConstraintLayout) findViewById(R.id.constrainlayout);
-        // setSize();
-
         shir = size * 3;
 
         if (size > 50) {
@@ -87,23 +79,24 @@ public class Text extends MainActivity {
     public void setPick() {
         charTV.setText("" + count);
     }
-    public void deletPick(){
+
+    public void deletPick() {
         FrameLayout parent = (FrameLayout) charTV.getParent();
         parent.removeView(charTV);
     }
-    private void paintLetter(){
-        if(S.right){
+
+    private void paintLetter() {
+        if (S.right) {
             charTV.setTextColor(Color.rgb(178, 34, 34));
-        }
-        else{
+        } else {
             charTV.setTextColor(Color.rgb(47, 79, 79));
         }
     }
-    public void paintWord(){
-        if(S.right){
+
+    public void paintWord() {
+        if (S.right) {
             charTV.setTextColor(Color.rgb(47, 79, 79));
-        }
-        else{
+        } else {
             charTV.setTextColor(Color.rgb(255, 228, 181));
         }
     }
@@ -116,13 +109,7 @@ public class Text extends MainActivity {
 
     //}
     void touched() {
-
-        //     MainActivity main1 = new MainActivity();
-        //    main1.getWindow().setBackgroundDrawableResource(R.drawable.fotodena);
         t.setText("" + count + " ?");
-        // charTV.setBackgroundResource(R.color.Khaki);
-        //  charTV.setTextColor(Color.rgb(47,79,79));
-        // main= new MainActivity();
         audio = new Audio(0);
         //  audio.playSound(5);
         switch (count) {

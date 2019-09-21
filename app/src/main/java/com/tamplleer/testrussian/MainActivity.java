@@ -3,7 +3,6 @@ package com.tamplleer.testrussian;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +10,7 @@ import android.os.Handler;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,14 +25,18 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     TextView t, point;
-    int screenWidth, screenHeight;
+    GetScreenSize getScreenSize;
+    int screenWidth;
+    int screenHeight;
     int lengthINscore = 0;
     Button button, bmstart30, bmnext;
     ImageButton bminfo;
     ConstraintLayout constraintLayout;
-    String word1[];
+    String[] word1;
     static char[] a = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
     Audio audio;
     DialogInMenu dialog;
@@ -49,63 +50,56 @@ public class MainActivity extends AppCompatActivity {
     ImageButton exit;
     private Handler handler = new Handler();
     int esootstup = 0;
-    Typeface font1 = null;
+    //Typeface font1 = null;
     MakeWord makeWord;
+    // new variables
+    String wordtoscreen = "";
+    boolean click = false;
+    Font font;
+    TestWords testWords;
+    boolean allWords = false;
+    boolean rundomWords = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         S.mSettings = getSharedPreferences(S.APP_PREFERENCES1, Context.MODE_PRIVATE);
+        getScreenSize = new GetScreenSize(this);
+        screenWidth = getScreenSize.getScreenWidth();
+        screenHeight = getScreenSize.getScreenHeight();
+        font = new Font(this);
         word1 = S.allWord.split(",");
-        t = (TextView) findViewById(R.id.text);
-        point = (TextView) findViewById(R.id.points);
-        constraintLayout = (ConstraintLayout) findViewById(R.id.constrainlayout);
-        getScreenSize();
+        t = findViewById(R.id.text);
+        point = findViewById(R.id.points);
+        constraintLayout = findViewById(R.id.constrainlayout);
         t.setTextSize(screenWidth / 25);
         esootstup = screenWidth / 8;
         audio = new Audio(0);
-        picture = (ImageView) findViewById(R.id.imageView);
+        picture = findViewById(R.id.imageView);
         picture.setX(0);
         picture.setY(0);
-        button = (Button) findViewById(R.id.startGA);
-        bminfo = (ImageButton) findViewById(R.id.vopros);
-        bmstart30 = (Button) findViewById(R.id.start30);
-        start = (Button) findViewById(R.id.start);
-        exit = (ImageButton) findViewById(R.id.exit);
-        bmnext = (Button) findViewById(R.id.next);
+        button = findViewById(R.id.startGA);
+        bminfo = findViewById(R.id.vopros);
+        bmstart30 = findViewById(R.id.start30);
+        start = findViewById(R.id.start);
+        exit = findViewById(R.id.exit);
+        bmnext = findViewById(R.id.next);
         bmnext.setVisibility(View.INVISIBLE);
         makeWord = new MakeWord(this, screenWidth, screenHeight, picture);
+        testWords = new TestWords();
 
-
-        try {
-            font1 = Typeface.createFromAsset(getAssets(), "font12.ttf");
-            S.fon2 = font1;
-        } catch (Exception e) {
-            Log.e(TAG, "Could not get typeface: " + e.getMessage());
-
-        }
-        start.setTypeface(font1);
-        t.setTypeface(font1);
-        point.setTypeface(font1);
-        button.setTypeface(font1);
-        bmnext.setTypeface(font1);
-        bmstart30.setTypeface(font1);
-
-        // button.setX(screenWidth/2);
-        // button.setY(screenHeight/2);
-
-        if (5 != S.secund) {
-            //audio.playSound(16);
-        }
-
-        // texNew=(TextView)findViewById(R.id.newWorld);
-
-
+        start.setTypeface(font.getFont1());
+        t.setTypeface(font.getFont1());
+        point.setTypeface(font.getFont1());
+        button.setTypeface(font.getFont1());
+        bmnext.setTypeface(font.getFont1());
+        bmstart30.setTypeface(font.getFont1());
+        button.setVisibility(View.VISIBLE);
         AppRater.app_launched(this);
 
         MobileAds.initialize(this, "ca-app-pub-8909727970839097~4345378585");
@@ -113,53 +107,9 @@ public class MainActivity extends AppCompatActivity {
         adRequest = new AdRequest.Builder()
                 .addTestDevice("E60B48CB85290BEBD01F19B878272929")
                 .build();
-       /* start.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-                int eventAction = event.getAction();
-                if (eventAction == MotionEvent.ACTION_UP) {
-                    // Отпускаем палец
-                    if (mStreamID > 0)
-                        mSoundPool.stop(mStreamID);
-                }
-                if (eventAction == MotionEvent.ACTION_DOWN) {
-                    // Нажимаем на кнопку
-                    mStreamID = playSound(anvilSound);
-                }
-                if (event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    mSoundPool.stop(mStreamID);
-                }
-                return true;
-            }
-        });*/
-
-     /*   texNew.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction()==MotionEvent.ACTION_DOWN) {
-                        Log.d("шибка","x"+motionEvent.getRawX());
-                    polozenie=(int)motionEvent.getRawX();
-
-                    touched1();
-                }
-                return true;
-            }
-        });*/
-        // MyTimer timer = new MyTimer();
-        //  timer.start();
     }
 
-
-    protected void getScreenSize() {
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-        screenWidth = metrics.widthPixels;
-        screenHeight = metrics.heightPixels;
-    }
-
-
-    public void exit(View view) {
+    public void exit(View view) {// audio button
         if (S.volL == 1) {
             S.volL = 0;
             exit.setBackgroundResource(R.drawable.thetyo);
@@ -171,33 +121,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start(View view) {
-        bmnext.setVisibility(View.VISIBLE);
         YoYo.with(Techniques.Bounce)
                 .duration(700)
                 .repeat(0)
                 .playOn(findViewById(R.id.start));
+        // testWords.start(allWords);
+
+
+        bmnext.setVisibility(View.VISIBLE);
         t.setTextColor(getResources().getColor(R.color.DarkSlateGray));
-        S.click = true;
-        S.someClick = false;
+        click = true;
+        //S.someClick = false;
         S.win = 0;
         S.steps = 0;
         S.clickWord = true;
         lengthINscore = word1.length;
         S.lengsInScore = word1.length;
         S.wordMassive = new String[word1.length];
-        S.bukvMassive = new int[word1.length];
         S.vernoORno = new boolean[word1.length];
 
         S.wordMassive = S.allWord.split(",");
-        point.setText(S.steps + "/" + lengthINscore);
+        point.setText(S.steps + 1 + "/" + lengthINscore);
         S.changeWord = 1;
         // setWordinMas();
-        makeWord.setWordinMas();
+        wordtoscreen = makeWord.setWordinMas();
         constraintLayout.setBackgroundResource(R.drawable.fon);
         t.setText("");
         audio.playSound(1);
-        button.setX(4000);
-        button.setY(4000);
+        button.setVisibility(View.INVISIBLE);
+
 
     }
 
@@ -207,81 +159,58 @@ public class MainActivity extends AppCompatActivity {
                 .duration(1000)
                 .repeat(0)
                 .playOn(findViewById(R.id.start30));
-
-        trisiWORD();
+        // testWords.start(allWords);
+        rundomWords();
     }
 
-    public void trisiWORD() {
+    /**
+     * Get 30 words from list
+     */
+    public void rundomWords() {
         t.setTextColor(getResources().getColor(R.color.DarkSlateGray));
+        String[] wordMassive = new String[30];
         S.wordMassive = new String[30];
-        S.bukvMassive = new int[30];
+        String[] wordTmprArray = word1;
+        int maxLength = 30;
+        int rundom = 0;
+
         S.vernoORno = new boolean[30];
-        S.someClick = true;
-        S.click = false;
+        //S.someClick = true;
+        click = true;
         S.win = 0;
         S.steps = 0;
         S.clickWord = true;
-        int maxLength = 30;
         S.lengsInScore = 30;
-        int rundom = 0;
-        int[] banWord = new int[maxLength];
         lengthINscore = maxLength;
+
         for (int i = 0; i < maxLength; i++) {
             rundom = (int) (Math.random() * word1.length);
-
-            for (int j = 1; j < maxLength; j++) {
-                if (banWord[j] == rundom) rundom = (int) (Math.random() * word1.length);
-            }
-            for (int j = 1; j < maxLength; j++) {
-                if (banWord[j] == rundom) rundom = (int) (Math.random() * word1.length);
-            }
-
-
-            word1[i] = word1[rundom];
-            S.wordMassive[i] = word1[i];
-            banWord[i] = rundom;
+            while (wordTmprArray[rundom].equals("0")) rundom = (int) (Math.random() * word1.length);
+            S.wordMassive[i] = wordTmprArray[rundom];
+            wordTmprArray[rundom] = "0";
         }
+
+
         audio.playSound(1);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                point.setText(S.steps + 1 + "/" + lengthINscore);
-            }
-        });
+        handler.post(() -> point.setText(S.steps + 1 + "/" + lengthINscore));
 
         S.changeWord = 1;
-        //setWordinMas();
-        makeWord.setWordinMas();
+        wordtoscreen = makeWord.setWordinMas();
         constraintLayout.setBackgroundResource(R.drawable.fon);
-
-        t.setText("");
-        button.setX(4000);
-        button.setY(4000);
+        button.setVisibility(View.INVISIBLE);
     }
 
     public void next(View view) {
+        handler.post(() -> YoYo.with(Techniques.BounceInUp)
+                .duration(500)
+                .repeat(0)
+                .playOn(findViewById(R.id.next)));
 
-        bmnext.setVisibility(View.VISIBLE);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                YoYo.with(Techniques.BounceInUp)
-                        .duration(500)
-                        .repeat(0)
-                        .playOn(findViewById(R.id.next));
-            }
-        });
-
-
-        if (S.click || S.someClick) {
+        //bmnext.setVisibility(View.VISIBLE);
+        if (click) {
             S.steps++;
             S.changeWord++;
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    point.setText(S.steps + 1 + "/" + lengthINscore);
-                }
-            });
+            handler.post(() -> point.setText(S.steps + 1 + "/" + lengthINscore));
             constraintLayout.setBackgroundResource(R.drawable.fon);
             if (S.right) {
                 S.win++;
@@ -309,16 +238,16 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-            t.setText("" + S.wordtoscreen);
+            t.setText("" + wordtoscreen);
 
 
             //setWordinMas();
-            makeWord.setWordinMas();
+            wordtoscreen = makeWord.setWordinMas();
             S.right = false;
             if (S.steps == lengthINscore) {
                 // t.setText(S.win + "  OF  " + lengthINscore );
-                S.click = false;
-                S.someClick = false;
+                click = false;
+                // S.someClick = false;
                 S.clickWord = false;
                 // if (S.win<10) audio.playSound(winSound);
                 // if (S.win>=25)audio.playSound(winSound);
@@ -349,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         if (S.mSettings.contains(S.APP_PREFERENCES_ADD)) {
             S.reclam = S.mSettings.getBoolean(S.APP_PREFERENCES_ADD, false);
         }
-        if (S.reclam == true) mAdView.loadAd(adRequest);
+        if (S.reclam) mAdView.loadAd(adRequest);
         Log.e(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa " + S.reclam);
 
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -423,7 +352,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void starGA(View view) {
         bmnext.setVisibility(View.VISIBLE);
-        trisiWORD();
+        //testWords.start(allWords);
+        rundomWords();
     }
 
     // class MyTimer extends CountDownTimer {
@@ -442,5 +372,46 @@ public class MainActivity extends AppCompatActivity {
 
     //      }
     //   }
+/*    public void rundomWords1() {
+        t.setTextColor(getResources().getColor(R.color.DarkSlateGray));
+        S.wordMassive = new String[30];
+        S.bukvMassive = new int[30];
+        S.vernoORno = new boolean[30];
+        S.someClick = true;
+        S.click = false;
+        S.win = 0;
+        S.steps = 0;
+        S.clickWord = true;
+        int maxLength = 30;
+        S.lengsInScore = 30;
+        int rundom = 0;
+        int[] banWord = new int[maxLength];
+        lengthINscore = maxLength;
+        for (int i = 0; i < maxLength; i++) {
+            rundom = (int) (Math.random() * word1.length);
+
+            for (int j = 1; j < maxLength; j++) {
+                if (banWord[j] == rundom) rundom = (int) (Math.random() * word1.length);
+            }
+            for (int j = 1; j < maxLength; j++) {
+                if (banWord[j] == rundom) rundom = (int) (Math.random() * word1.length);
+            }
+
+
+            word1[i] = word1[rundom];
+            S.wordMassive[i] = word1[i];
+            banWord[i] = rundom;
+        }
+        audio.playSound(1);
+        handler.post(() -> point.setText(S.steps + 1 + "/" + lengthINscore));
+
+        S.changeWord = 1;
+        //setWordinMas();
+        makeWord.setWordinMas();
+        constraintLayout.setBackgroundResource(R.drawable.fon);
+
+        t.setText("");
+        button.setVisibility(View.INVISIBLE);
+    }*/
 }
 

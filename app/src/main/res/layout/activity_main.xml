@@ -48,7 +48,8 @@
         android:background="@drawable/soubdee"
         android:onClick="exit"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/start"
@@ -173,7 +174,8 @@
         android:layout_height="wrap_content"
         app:srcCompat="@color/DarkSlateGray"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-69dp" />
+        tools:layout_editor_absoluteY="-69dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/startGA"

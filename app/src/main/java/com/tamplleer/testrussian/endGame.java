@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,9 +26,12 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
+import java.util.Objects;
+
 public class endGame extends AppCompatActivity implements RewardedVideoAdListener {
     TextView t, tt;
     Audio audio;
+    GetScreenSize getScreenSize;
     int screenWidth, screenHeight;
     ConstraintLayout constraintLayout;
     int lose = 30 - S.win;
@@ -38,18 +42,22 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
     boolean reclam;
     public static RewardedVideoAd mAd;
     ImageButton mButton;
-    Typeface font1;
+    // new variables
+    Font font;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_end_game);
-        getScreenSize();
+        getScreenSize = new GetScreenSize(this);
+        screenWidth = getScreenSize.getScreenWidth();
+        screenHeight = getScreenSize.getScreenHeight();
+        font = new Font(this);
         MobileAds.initialize(this, "ca-app-pub-8909727970839097/9184677267");
         mAd = MobileAds.getRewardedVideoAdInstance(this);
         mAd.setRewardedVideoAdListener(this);
@@ -66,19 +74,12 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         //  constraintLayout.setMaxWidth(100);
         audio = new Audio(2);
 
-        try {
-            font1 = Typeface.createFromAsset(getAssets(), "font12.ttf");
-        } catch (Exception e) {
-            Log.e("scot", "Could not get typeface: "+e.getMessage());
-
-        }
-        t = (TextView) findViewById(R.id.endText);
-        tt = (TextView) findViewById(R.id.tt);
-        mButton = (ImageButton)findViewById(R.id.mButton);
+        t = findViewById(R.id.endText);
+        tt = findViewById(R.id.tt);
+        mButton = findViewById(R.id.mButton);
         mButton.setEnabled(false);
-        t.setTypeface(font1);
-        tt.setTypeface(font1);
-        //t.setText(R.string.GOVER);
+        t.setTypeface(font.getFont1());
+        tt.setTypeface(font.getFont1());
         x = screenWidth / 3 + screenWidth / 10;
         y = screenHeight / 30;
         text1 = new TextSlabak[S.wordMassive.length];
@@ -109,14 +110,6 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
                 MainActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    protected void getScreenSize() {
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-        screenWidth = metrics.widthPixels;
-        screenHeight = metrics.heightPixels;
     }
 
     @Override
@@ -182,31 +175,30 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
             nextBack();
         }
     }
+
     public void mButton(View view) {
         DialogInMenu dialog;
-        dialog = new DialogInMenu(this,1);
-        dialog.ad.show();}
+        dialog = new DialogInMenu(this, 1);
+        dialog.ad.show();
+    }
 
-    public  void loadAd(){
-         mAd.show();
+    public void loadAd() {
+        mAd.show();
     }
 
 
     @Override
     public void onRewardedVideoAdLoaded() {
-        Toast.makeText(this, "Load",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Load", Toast.LENGTH_SHORT).show();
         mButton.setEnabled(true);
     }
 
     @Override
     public void onRewardedVideoAdOpened() {
-
     }
 
     @Override
     public void onRewardedVideoStarted() {
-
     }
 
     @Override
@@ -214,17 +206,15 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         mButton.setEnabled(false);
         reclam = false;
         Toast.makeText(this, "Вы больше не увидите рекламму!",
-                      Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onRewarded(RewardItem rewardItem) {
-
     }
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
-
     }
 
     @Override
@@ -232,9 +222,9 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         Toast.makeText(this, "Вы не посмотрели рекламму!",
                 Toast.LENGTH_LONG).show();
     }
+
     @Override
     public void onRewardedVideoCompleted() {
-
     }
 
 
