@@ -4,15 +4,15 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.Log;
 
-class Font {
+public class Font {
     private Typeface font1 = null;
     Context context;
 
-    Font(Context context) {
+    public Font(Context context) {
         this.context = context;
     }
 
-    Typeface getFont1() {
+    public Typeface getFont1() {
         try {
             font1 = Typeface.createFromAsset(context.getAssets(), "font12.ttf");
         } catch (Exception e) {

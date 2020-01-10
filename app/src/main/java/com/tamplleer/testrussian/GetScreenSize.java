@@ -15,12 +15,20 @@ class GetScreenSize {
         display.getMetrics(metrics);
     }
 
+    /**
+     *
+     * @return screenWidth
+     */
     int getScreenWidth() {
-        return metrics.widthPixels; //screenWidth
+        return metrics.widthPixels;
     }
 
+    /**
+     *
+     * @return screenHeight
+     */
     int getScreenHeight() {
-        return metrics.heightPixels; //screenHeight
+        return metrics.heightPixels;
     }
 
 }

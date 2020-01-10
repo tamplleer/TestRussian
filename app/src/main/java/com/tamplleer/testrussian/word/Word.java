@@ -1,83 +1,67 @@
-package com.tamplleer.testrussian;
+package com.tamplleer.testrussian.word;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.util.Log;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.tamplleer.testrussian.Audio;
+import com.tamplleer.testrussian.R;
+import com.tamplleer.testrussian.S;
 
 /**
  * Created by tampl on 22.01.2018.
  */
 
-public class Text {
-    Audio audio;
-    Font font;
-    private static char[] a = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
-    TextView t;
-    char ru;
+public class Word implements IWord{
+    private Audio audio;
+    private final static char[] BIG_LETTER = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
+    private TextView t;
     Context context;
-    int x, y, type;
-    char count;
+    private int type;
+    private char count;
     private TextView charTV;//charTextV
-    int shir;
-    //int idWord = 0;
-    ConstraintLayout constraintLayout;
-    float alpha = 1;
-    double size; // размер картинки, врещение, прозрачность
+    private final static float ALPHA = 1;
 
-    Text(Context context, int x, int y, final char count, int size, final int type) {
-        font = new Font(context);
+    public Word(Context context, int x, int y, final char count, int size, final int type) {
         audio = new Audio(0);
-        this.x = x;
-        this.y = y;
-        this.size = size;
         this.type = type;
         this.count = count;
         charTV = new TextView(context);
         charTV.setTypeface(null, Typeface.BOLD);
-        charTV.setAlpha(alpha);
+        charTV.setAlpha(ALPHA);
         charTV.setX(x); // координаты
         charTV.setY(y);
-        //charTV.setBackgroundResource(R.color.DarkSlateGray);
         charTV.setScaleX(2f); // изменение размеров в 1.5 раза
         charTV.setScaleY(2f);
-        // charTV.setTypeface(S.fon2);
-        ru = count;
         S.type = type;
 
 
         t = ((Activity) context).findViewById(R.id.text);
-        constraintLayout = (ConstraintLayout) ((Activity) context).findViewById(R.id.constrainlayout);
-        shir = size * 3;
+        int shir = size * 3;
 
         if (size > 50) {
             shir = shir - size;
         }
         if (type == 100) shir = 1000;
         ((Activity) context).addContentView(charTV, new RelativeLayout.LayoutParams(shir, size));
-        charTV.setOnClickListener(new View.OnClickListener() {  // вешаем слушателя на клик
-            public void onClick(View v) {
-                for (int i = 0; i < a.length; i++) {
-                    if (count == a[i] && S.clickWord) {
-                        touched();
-                        paintLetter();
-                    }
+        // вешаем слушателя на клик
+        charTV.setOnClickListener(v -> {
+            for (char c : BIG_LETTER) {
+                if (count == c && S.clickWord) {
+                    paintLetter();
+                    touched();
                 }
-                // метод-обработчик нажатия
             }
         });
     }
 
     public void setPick() {
-        charTV.setText("" + count);
+        charTV.setText(String.valueOf(count));
     }
 
     public void deletPick() {
@@ -101,17 +85,9 @@ public class Text {
         }
     }
 
-//public void setSize(){
-    //  if (screenWidth>10 || screenHeight>1280){
-    //     size=size*2;
-    //      shir=shir-20;
-    //   }
-
-    //}
-    void touched() {
+    private void touched() {
         t.setText("" + count + " ?");
         audio = new Audio(0);
-        //  audio.playSound(5);
         switch (count) {
             case 'А':
                 audio.playSound(4);
@@ -144,13 +120,6 @@ public class Text {
                 audio.playSound(1);
                 break;
         }
-
-        //constraintLayout.setBackgroundColor(ContextCompat
-//    .getColor(context, R.color.CHETO));
-        S.right = type == S.delet;
-        //  FrameLayout parent = (FrameLayout) charTV.getParent();
-        // parent.removeView(charTV);
+        S.wordRight = type == S.delet;
     }
-
-
 }

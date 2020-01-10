@@ -2,15 +2,12 @@ package com.tamplleer.testrussian;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,6 +22,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.tamplleer.testrussian.word.WordEnd;
 
 import java.util.Objects;
 
@@ -36,7 +34,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
     ConstraintLayout constraintLayout;
     int lose = 30 - S.win;
     int y, x;
-    TextSlabak text1[];
+    WordEnd text1[];
     int wordpokaz = 0;
     int s = 0;
     boolean reclam;
@@ -82,10 +80,10 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         tt.setTypeface(font.getFont1());
         x = screenWidth / 3 + screenWidth / 10;
         y = screenHeight / 30;
-        text1 = new TextSlabak[S.wordMassive.length];
+        text1 = new WordEnd[S.wordMassive.length];
         for (int i = 0; i < 30; i++) {
 
-            text1[i] = new TextSlabak(this, x, y, S.wordMassive[i], screenHeight / 30, S.vernoORno[i], false);
+            text1[i] = new WordEnd(this, x, y, S.wordMassive[i], screenHeight / 30, S.vernoORno[i], false);
             y += screenHeight / 43;
 
 
@@ -104,7 +102,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
 
     }
 
-    public void endexit(View view) {
+    public void endExit(View view) {
         S.secund = 5;
         Intent intent = new Intent(endGame.this,
                 MainActivity.class);
@@ -136,7 +134,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
     void nextBack() {
         s = 0;
         for (int i = 0; i < 30; i++) {
-            text1[i] = new TextSlabak(this, x, y, "        ", screenHeight / 30, S.vernoORno[s], true);
+            text1[i] = new WordEnd(this, x, y, "        ", screenHeight / 30, S.vernoORno[s], true);
             y += screenHeight / 43;
         }
         y = screenHeight / 30;
@@ -145,7 +143,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
             // if (s>S.wordMassive.length)
             if (S.wordMassive.length > s) {
 
-                text1[i] = new TextSlabak(this, x, y, S.wordMassive[s], screenHeight / 30, S.vernoORno[s], false);
+                text1[i] = new WordEnd(this, x, y, S.wordMassive[s], screenHeight / 30, S.vernoORno[s], false);
                 y += screenHeight / 43;
             }
 

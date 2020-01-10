@@ -62,28 +62,24 @@ public class AppRater {
         remindLaterButton.setText("Напомнить позже");
         remindLaterButton.setTextColor(Color.rgb(47, 79, 79));
 
-        remindLaterButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (editor != null) {
-                    editor.putLong("launch_count", 0);
-                    editor.putLong("date_firstlaunch", 0);
-                    editor.commit();
-                }
-                dialog.dismiss();
+        remindLaterButton.setOnClickListener(v -> {
+            if (editor != null) {
+                editor.putLong("launch_count", 0);
+                editor.putLong("date_firstlaunch", 0);
+                editor.commit();
             }
+            dialog.dismiss();
         });
         linearLayout.addView(remindLaterButton);
 
         Button noButton = new Button(context);
         noButton.setText("Спасибо, не надо");
-        noButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (editor != null) {
-                    editor.putBoolean("dontshowagain", true);
-                    editor.commit();
-                }
-                dialog.dismiss();
+        noButton.setOnClickListener(v -> {
+            if (editor != null) {
+                editor.putBoolean("dontshowagain", true);
+                editor.commit();
             }
+            dialog.dismiss();
         });
         linearLayout.addView(noButton);
 
@@ -113,7 +109,7 @@ public class AppRater {
                 showRateDialog(context, editor);
             }
         }
-        editor.commit();
+        editor.apply();
     }
 
 

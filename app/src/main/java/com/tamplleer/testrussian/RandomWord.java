@@ -1,9 +1,7 @@
 package com.tamplleer.testrussian;
 
-import android.view.View;
-
 public class RandomWord {
-    public static final int RUNDOMARRAY = 30;
+    private static final int RUNDOMARRAY = 30;
     private String[] word1;
     private int rundom = 0;
 

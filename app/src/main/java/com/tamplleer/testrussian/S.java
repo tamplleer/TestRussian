@@ -14,25 +14,24 @@ import java.lang.reflect.Type;
 
 public class S {
     public static int changeWord = 0;
-    public static String stringTOchar = "";
-    public static TextView charTextV;
     public static int delet = 0;
     public static int type;
     public static int lengsInScore; //need to determine which audio play
     public static int steps = 0;
     public static int win = 0;
     public static boolean right = true;
+    public static boolean wordRight = false;
     public static boolean clickWord = false; // nenado!
     public static boolean pause = true;
     public static int pravi = 0;
-    public static String wordMassive[];
+    public static String[] wordMassive;
     public static boolean vernoORno[]; // array which contain boolean variable of true or false of answer
     public static boolean reclam = true;
 
 
     public static SoundPool mSoundPool;
     public static AssetManager mAssetManager;
-    public static int  winSound, winALL, prav, praveso, neprav, anvilSound, aS, iS, eS, oS, yS, ieS, iaS, iyS, ieaS, nedovol;
+    public static int winSound, winALL, prav, praveso, neprav, anvilSound, aS, iS, eS, oS, yS, ieS, iaS, iyS, ieaS, nedovol;
     public static int mStreamID;
     public static int secund = 0;
     public static int volR = 1;
@@ -47,14 +46,14 @@ public class S {
 
     public static String allWord =
             "агЕнт,алфавИт,анАтом,асимметрИя,аэропОрты," +
-                    "бАнты,бУнгало,балОванный,балУясь,баловАть,блАговест," +
+                    "бАнты,балОванный,балУясь,баловАть,блАговест," +
                     "блуднИца,бралА,бралАсь,бухгАлтеров,вЕрба,вЕчеря,вОвремя,вОгнутый,валовОй,вандАлы,вдовствО," +
                     "вернА,вероисповЕдание,ветеринАрия,взАпуски,взапертИ,взялА,взялАсь,включЁн,включЁнный,включИм," +
                     "включИт,включИшь,влилАсь,водопровОд,воздухопровОд,ворвалАсь,воспринялА,воспроизведЕние,воссоздалА," +
                     "вручИт,гЕнезис,гЕрбовый,газопровОд,гналА,гналАсь,граждАнство,грошОвый,дОверху,дОгмат,дОнизу,дОсуха," +
                     "дОсыта,давнИшний,дефИс,диспансЕр,добелА,добралА,добралАсь,довезЁнный,договОр,договорЁнность,дождалАсь,дозИровать," +
                     "дозвонИтся,дозвонЯтся,докраснА,докумЕнт,донЕльзя,досУг,дотрОнуться,дремОта,духовнИк,еретИк,жалюзИ,ждалА,жилОсь,зАгнутый,зАгодя,зАнял,зАняло,зАнятый,зАсветло,зАтемно,завИдно,задОлго,закУпорив,закУпорить,занятА," +
-                    "запертА,запломбировАть,заселЁн,звалА,звонИм,звонИт,звонИшь,зимОвщик,злОба,знАмение,знАчимость,знАчимый,зубчАтый,Издавна,Иконопись,Иксы,Искоса,Исстари,игУмен,идеОлог,иерОглиф,изОгнутый,избалОванный,избаловАть,издрЕвле," +
+                    "запертА,запломбировАть,заселЁн,звалА,звонИм,звонИт,звонИшь,зимОвщик,злОба,знАчимость,знАчимый,Издавна,Иконопись,Иксы,Искоса,Исстари,игУмен,идеОлог,иерОглиф,изОгнутый,избалОванный,избаловАть,издрЕвле," +
                     "изобретЕние,импЕрский,инАче,инсУльт,инстИнкт,исключИт,искривИться,исчЕрпать,кАмбала,кАшлянуть,кОнусы,кУхонный,каталОг,каучУк,квартАл,кедрОвый,клАла,клЕить,коклЮш,корЫсть,кормЯщий,крАлась," +
                     "крАны,красИвее,красИвейший,кремЕнь,кренИтся,кровоточАщий,кровоточИть,лЕкторы,лилА,лилАсь,ловкА,ломОта,ломОть,лубОчный,лыжнЯ,мЕльком,мЕстностей,мозаИчный,молОх,молЯщий,монолОг,мусоропровОд," +
                     "мытАрство,нАискось,нАчал,нАчали,нАчатый,нЕдруг,нЕнависть,нЕнецкий,нОгтя,наОтмашь,навЕрх,навралА,наговОр,надОлго,наделИт,надорвалАсь,нажИвший,нажитА,назвалАсь,назлО,накренИт,налИвший,налилА,намЕрение,нанЯвшийся,нарОст,нарвалА,насорИт," +

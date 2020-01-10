@@ -1,23 +1,17 @@
 package com.tamplleer.testrussian;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -66,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         AppRater.app_launched(this);
 
         MobileAds.initialize(this, "ca-app-pub-8909727970839097~4345378585");
-        mAdView = (AdView) findViewById(R.id.adView);
+        mAdView = findViewById(R.id.adView);
         adRequest = new AdRequest.Builder()
-                .addTestDevice("E60B48CB85290BEBD01F19B878272929")
+                .addTestDevice("90B58081B8CCAA1A4130F5271615A282")
                 .build();
     }
 

@@ -2,21 +2,23 @@ package com.tamplleer.testrussian;
 
 import android.content.Context;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.tamplleer.testrussian.word.Word;
 
 import java.util.Vector;
 
-public class MakeWord {
-    private char[] strToArray;
+class MakeWord {
+    private char[] charArray;
     private int screenWidth, screenHeight;
-    private static char[] a = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
+    private static char[] bigLetter = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
     private ImageView picture;
     private Context context;
-    private Vector<Text> textt = new Vector<Text>();
+    private Vector<Word> textt = new Vector<>();
     private int size;
     private static final String TAG = "MainActivity";
     // new variables
-    String wordtoscreen = "";
+    private String stringToChar;
+    private String wordtoscreen = "";
 
     MakeWord(Context context, int screenWidth, int screenHeight, ImageView picture) {
         this.context = context;
@@ -26,12 +28,12 @@ public class MakeWord {
 
     }
 
-    public String setWordinMas() {
-        String word[] = new String[S.wordMassive.length];
+    String setWordinMas() {
+        String[] word = new String[S.wordMassive.length];
         for (int i = 0; i < S.wordMassive.length; i++) {
             word[i] = S.wordMassive[i];
             if (S.changeWord == i + 1) {
-                S.stringTOchar = S.wordMassive[i];
+                stringToChar = S.wordMassive[i];
                 wordtoscreen = S.wordMassive[i];
                 createWord();
             }
@@ -39,22 +41,25 @@ public class MakeWord {
         return wordtoscreen;
     }
 
-    public void createWord() {
-        strToArray = S.stringTOchar.toCharArray();
-        for (int i = 0; i < strToArray.length; i++) {
-            if (strToArray[i] == a[0] ||
-                    strToArray[i] == a[1] ||
-                    strToArray[i] == a[2] ||
-                    strToArray[i] == a[3] ||
-                    strToArray[i] == a[4] ||
-                    strToArray[i] == a[5] ||
-                    strToArray[i] == a[6] ||
-                    strToArray[i] == a[7] ||
-                    strToArray[i] == a[8] ||
-                    strToArray[i] == a[9]) S.delet = i;
-            if (Character.isLowerCase(strToArray[i]))
-                strToArray[i] = Character.toUpperCase(strToArray[i]);
-            if (strToArray[i] == 'Ё') strToArray[i] = 'Е';
+    /**
+     * Get char array and create word
+     */
+    private void createWord() {
+        charArray = stringToChar.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            if (charArray[i] == bigLetter[0] ||
+                    charArray[i] == bigLetter[1] ||
+                    charArray[i] == bigLetter[2] ||
+                    charArray[i] == bigLetter[3] ||
+                    charArray[i] == bigLetter[4] ||
+                    charArray[i] == bigLetter[5] ||
+                    charArray[i] == bigLetter[6] ||
+                    charArray[i] == bigLetter[7] ||
+                    charArray[i] == bigLetter[8] ||
+                    charArray[i] == bigLetter[9]) S.delet = i;
+            if (Character.isLowerCase(charArray[i]))
+                charArray[i] = Character.toUpperCase(charArray[i]);
+            if (charArray[i] == 'Ё') charArray[i] = 'Е';
         }
         if (!textt.isEmpty()) {
             for (int i = 0; i < textt.size(); i++) {
@@ -62,24 +67,27 @@ public class MakeWord {
             }
         }
         textt.clear();
-        int x1 = screenWidth / strToArray.length;
+        int x1 = screenWidth / charArray.length;
         int y = screenHeight / 2;
-        int x = 0;
+        int x;
         size = screenHeight / 30;
-        for (int i = 0; i < strToArray.length; i++) {
+        for (int i = 0; i < charArray.length; i++) {
 
-            if (strToArray.length > 9) {
-                x = x1 * i + screenWidth / (screenHeight / 128);
-            } else {
-                x = x1 * i + screenWidth / (screenHeight / 160);
+            if (charArray.length > 9) {
+                x = x1 * i + screenWidth / (screenHeight / 140);
+            } else if(charArray.length <5){
+                x = x1 * i + screenWidth / (screenHeight / 250);
+            }
+            else {
+                x = x1 * i + screenWidth / (screenHeight / 180);
             }
             if (screenWidth < 500) {
                 x = x1 * i + 55;
             }
-            if (screenWidth < 500 && strToArray.length > 9) {
+            if (screenWidth < 500 && charArray.length > 9) {
                 x = x1 * i + 45;
             }
-            textt.addElement(new Text(context, x, y, strToArray[i], size, i));
+            textt.addElement(new Word(context, x, y, charArray[i], size, i));
             textt.elementAt(i).setPick();
             textt.elementAt(i).paintWord();
         }

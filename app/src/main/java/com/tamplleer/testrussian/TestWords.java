@@ -21,18 +21,18 @@ public class TestWords {
     ImageView picture;
     int screenWidth;
     int screenHeight;
-    public static final int RUNDOMARRAY = 30;
-    int lengthINscore = 0;
-    RandomWord randomWord;
+    private static final int RUNDOMARRAY = 30;
+    private int lengthINscore = 0;
+    private RandomWord randomWord;
     private boolean click = false;
-    String[] word1;
-    String wordtoscreen = "";
+    private String[] word1;
+    private String wordtoscreen = "";
     private Handler handler = new Handler();
-    MakeWord makeWord;
-    ConstraintLayout constraintLayout;
+    private MakeWord makeWord;
+    private ConstraintLayout constraintLayout;
     Context context;
-    Audio audio;
-    Font font;
+    private Audio audio;
+    private Font font;
 
     TestWords(Context context, Audio audio) {
         click = false;
@@ -65,7 +65,7 @@ public class TestWords {
         makeWord = new MakeWord(context, screenWidth, screenHeight, picture);
     }
 
-    public void start(boolean typeTest) {//typeTest 30 or all word of array 30 -true all -false
+    void start(boolean typeTest) {//typeTest 30 or all word of array 30 -true all -false
         randomWord = new RandomWord();
         bmnext.setVisibility(View.VISIBLE);
         t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
@@ -75,6 +75,7 @@ public class TestWords {
         S.clickWord = true;
         S.lengsInScore = lengthINscore;
         S.vernoORno = new boolean[word1.length];
+        S.right = true;
         if (typeTest) {
             lengthINscore = RUNDOMARRAY;
             S.wordMassive = new String[RUNDOMARRAY];
@@ -94,16 +95,18 @@ public class TestWords {
         button.setVisibility(View.INVISIBLE);
     }
 
-    public void next() {
+    void next() {
         //bmnext.setVisibility(View.VISIBLE);
         if (click) {
+            S.right = S.wordRight;
+            S.wordRight = false;
             S.steps++;
             S.changeWord++;
             handler.post(() -> score.setText(S.steps + 1 + "/" + lengthINscore));
             constraintLayout.setBackgroundResource(R.drawable.fon);
             if (S.right) {
                 S.win++;
-                t.setTextColor(((Activity) context).getResources().getColor(R.color.DarkSlateGray));
+                t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
                 if (S.pravi > 0) audio.playSound(14);
                 else audio.playSound(13);
                 S.pravi++;
@@ -115,7 +118,7 @@ public class TestWords {
                         .playOn(((Activity) context).findViewById(R.id.text));
 
             } else {
-                t.setTextColor(((Activity) context).getResources().getColor(R.color.Khaki));
+                t.setTextColor(context.getResources().getColor(R.color.Khaki));
                 YoYo.with(Techniques.Shake)
                         .duration(700)
                         .repeat(0)
@@ -132,7 +135,7 @@ public class TestWords {
 
             //setWordinMas();
             wordtoscreen = makeWord.setWordinMas();
-            S.right = false;
+            // S.right = false;
             if (S.steps == lengthINscore) {
                 // t.setText(S.win + "  OF  " + lengthINscore );
                 click = false;
@@ -141,7 +144,7 @@ public class TestWords {
                 // if (S.win<10) audio.playSound(winSound);
                 // if (S.win>=25)audio.playSound(winSound);
                 //  if (S.win==lengthINscore)audio.playSound(winALL);
-                Intent intent = new Intent((Activity) context,
+                Intent intent = new Intent(context,
                         endGame.class);
                 context.startActivity(intent);
                 ((Activity) context).finish();
