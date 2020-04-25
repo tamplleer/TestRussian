@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tamplleer.testrussian.Font;
+import com.tamplleer.testrussian.utils.Font;
 import com.tamplleer.testrussian.R;
 
 /**

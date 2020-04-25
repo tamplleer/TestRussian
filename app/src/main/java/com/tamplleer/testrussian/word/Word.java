@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tamplleer.testrussian.Audio;
+import com.tamplleer.testrussian.utils.Audio;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.S;
 

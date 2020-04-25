@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "596003598479",
+    "firebase_url": "https://testrussian-66cc0.firebaseio.com",
+    "project_id": "testrussian-66cc0",
+    "storage_bucket": "testrussian-66cc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596003598479:android:f4f27cca0b615666",
+        "android_client_info": {
+          "package_name": "com.tamplleer.testrussian"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596003598479-la2p7nbvqnv3icf2o8rnmopepm828pqe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tamplleer.testrussian",
+            "certificate_hash": "fa7ba5784618e9fca952d0d71c0a7325c70f6c19"
+          }
+        },
+        {
+          "client_id": "596003598479-0kbaeb4o1c1goh908l3cjujf8hhk0mkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuIwFsICTtfFJLnZ-qdoD6B3L0gu-ySFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596003598479-0kbaeb4o1c1goh908l3cjujf8hhk0mkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
