@@ -39,10 +39,15 @@ public class TestOperations {
     Context context;
     private Audio audio;
     private Font font;
+    boolean answerRight;
+    LetterChange letterChange;
+    private int rightStrike = 0;
+    private int wordNumber = 0;
 
     /**
      * This class make operations with word
      * if you click button start test or next word
+     *
      * @param context
      * @param audio
      */
@@ -74,11 +79,15 @@ public class TestOperations {
         bmnext.setTypeface(font.getFont1());
         bmstart30.setTypeface(font.getFont1());
         button.setVisibility(View.VISIBLE);
-        makeWord = new MakeWord(context, screenWidth, screenHeight, picture);
+        letterChange = new LetterChange(context);
+        makeWord = new MakeWord(context, screenWidth, screenHeight, picture, letterChange);
+        letterChange.setLetterColor(true);
+        bmnext.setClickable(false);
     }
 
     /**
      * Start test user 30/all words
+     *
      * @param typeTest
      */
     //todo person can change how many word learn?!
@@ -90,9 +99,11 @@ public class TestOperations {
         S.win = 0;
         S.steps = 0;
         S.clickWord = true;
+        S.wordMassive = null;
+        wordNumber = 0;
         S.lengsInScore = lengthINscore;
         S.vernoORno = new boolean[word1.length];
-        S.right = true;
+        answerRight = true;
         if (typeTest) {
             lengthINscore = RUNDOMARRAY;
             S.wordMassive = new String[RUNDOMARRAY];
@@ -104,8 +115,7 @@ public class TestOperations {
         }
 
         handler.post(() -> score.setText(S.steps + 1 + "/" + lengthINscore));
-        S.changeWord = 1;
-        wordtoscreen = makeWord.showWord(S.changeWord);
+        wordtoscreen = makeWord.showWord(wordNumber);
         constraintLayout.setBackgroundResource(R.drawable.fon);
         t.setText("");
         audio.playSound(1);
@@ -113,26 +123,24 @@ public class TestOperations {
     }
 
     public void next() {
-        //bmnext.setVisibility(View.VISIBLE);
         if (click) {
-            S.right = S.wordRight;
-            S.wordRight = false;
+            answerRight = letterChange.isLetterColor();
+            letterChange.setLetterColor(false);
             S.steps++;
-            S.changeWord++;
+            wordNumber++;
             handler.post(() -> score.setText(S.steps + 1 + "/" + lengthINscore));
             constraintLayout.setBackgroundResource(R.drawable.fon);
-            if (S.right) {
+            if (answerRight) {
                 S.win++;
                 t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
-                if (S.pravi > 0) audio.playSound(14);
+                if (rightStrike > 0) audio.playSound(14);
                 else audio.playSound(13);
-                S.pravi++;
+                rightStrike++;
                 S.vernoORno[S.steps - 1] = true;
-                //point.setText(S.win + "/" + lengthINscore);
                 YoYo.with(Techniques.StandUp)
                         .duration(700)
                         .repeat(0)
-                        .playOn(((Activity) context).findViewById(R.id.text));
+                        .playOn(t);
 
             } else {
                 t.setTextColor(context.getResources().getColor(R.color.Khaki));
@@ -141,7 +149,7 @@ public class TestOperations {
                         .repeat(0)
                         .playOn(((Activity) context).findViewById(R.id.text));
                 audio.playSound(15);
-                S.pravi = 0;
+                rightStrike = 0;
                 constraintLayout.setBackgroundResource(R.drawable.fonred);
                 S.vernoORno[S.steps - 1] = false;
             }
@@ -149,24 +157,20 @@ public class TestOperations {
 
             t.setText("" + wordtoscreen);
 
-
-            //setWordinMas();
-            wordtoscreen = makeWord.showWord(S.changeWord);
-            // S.right = false;
             if (S.steps == lengthINscore) {
-                // t.setText(S.win + "  OF  " + lengthINscore );
                 click = false;
-                // S.someClick = false;
                 S.clickWord = false;
-                // if (S.win<10) audio.playSound(winSound);
-                // if (S.win>=25)audio.playSound(winSound);
-                //  if (S.win==lengthINscore)audio.playSound(winALL);
                 Intent intent = new Intent(context,
                         endGame.class);
                 context.startActivity(intent);
                 ((Activity) context).finish();
 
+            } else {
+                letterChange.setLetterColor(answerRight);
+                wordtoscreen = makeWord.showWord(wordNumber);
             }
+            bmnext.setClickable(false);
+
         }
     }
 }

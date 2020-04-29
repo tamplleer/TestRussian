@@ -13,17 +13,10 @@ import java.lang.reflect.Type;
  */
 
 public class S {
-    public static int changeWord = 0;
-    public static int delet = 0;
-    public static int type;
     public static int lengsInScore; //need to determine which audio play
     public static int steps = 0;
     public static int win = 0;
-    public static boolean right = true;
-    public static boolean wordRight = false;
     public static boolean clickWord = false; // nenado!
-    public static boolean pause = true;
-    public static int pravi = 0;
     public static String[] wordMassive;
     public static boolean vernoORno[]; // array which contain boolean variable of true or false of answer
     public static boolean reclam = true;

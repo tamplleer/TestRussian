@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -105,18 +106,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void next(View view) {
+
         handler.post(() -> YoYo.with(Techniques.BounceInUp)
                 .duration(500)
                 .repeat(0)
                 .playOn(findViewById(R.id.next)));
         testOperations.next();
-
     }
-
-    public void rextV(View view) {
-        //t.setText("!!!!!!!!!!!!");
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -184,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         YoYo.with(Techniques.Bounce)
                 .duration(1000)
                 .repeat(0)
-                .playOn(findViewById(R.id.vopros));
+                .playOn(bminfo);
 
         dialog = new DialogInMenu(this, 0);
         dialog.ad.show();

@@ -29,7 +29,7 @@ import com.tamplleer.testrussian.utils.GetScreenSize;
 import com.tamplleer.testrussian.activities.main.MainActivity;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.S;
-import com.tamplleer.testrussian.word.WordEnd;
+import com.tamplleer.testrussian.word.LetterEnd;
 
 import java.util.Objects;
 
@@ -41,7 +41,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
     ConstraintLayout constraintLayout;
     int lose = 30 - S.win;
     int y, x;
-    WordEnd text1[];
+    LetterEnd text1[];
     int wordpokaz = 0;
     int s = 0;
     boolean reclam;
@@ -87,10 +87,10 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         tt.setTypeface(font.getFont1());
         x = screenWidth / 3 + screenWidth / 10;
         y = screenHeight / 30;
-        text1 = new WordEnd[S.wordMassive.length];
+        text1 = new LetterEnd[S.wordMassive.length];
         for (int i = 0; i < 30; i++) {
 
-            text1[i] = new WordEnd(this, x, y, S.wordMassive[i], screenHeight / 30, S.vernoORno[i], false);
+            text1[i] = new LetterEnd(this, x, y, S.wordMassive[i], screenHeight / 30, S.vernoORno[i], false);
             y += screenHeight / 43;
 
 
@@ -141,7 +141,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
     void nextBack() {
         s = 0;
         for (int i = 0; i < 30; i++) {
-            text1[i] = new WordEnd(this, x, y, "        ", screenHeight / 30, S.vernoORno[s], true);
+            text1[i] = new LetterEnd(this, x, y, "        ", screenHeight / 30, S.vernoORno[s], true);
             y += screenHeight / 43;
         }
         y = screenHeight / 30;
@@ -150,7 +150,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
             // if (s>S.wordMassive.length)
             if (S.wordMassive.length > s) {
 
-                text1[i] = new WordEnd(this, x, y, S.wordMassive[s], screenHeight / 30, S.vernoORno[s], false);
+                text1[i] = new LetterEnd(this, x, y, S.wordMassive[s], screenHeight / 30, S.vernoORno[s], false);
                 y += screenHeight / 43;
             }
 

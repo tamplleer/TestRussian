@@ -13,9 +13,9 @@ import com.tamplleer.testrussian.R;
  * Created by tampl on 13.02.2018.
  */
 
-public class WordEnd implements IWord{
+public class LetterEnd implements ILetter {
     private final static float ALPHA = 1;
-    public WordEnd(Context context, int x, int y, String count, int size, final boolean trueOrFalse, boolean zero) {
+    public LetterEnd(Context context, int x, int y, String count, int size, final boolean trueOrFalse, boolean zero) {
         Font font = new Font(context);
         TextView charTextV = new TextView(context);
         if (zero) charTextV.setBackgroundResource(R.color.DarkSlateGray);

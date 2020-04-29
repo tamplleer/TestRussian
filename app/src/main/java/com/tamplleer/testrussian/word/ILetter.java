@@ -1,4 +1,4 @@
 package com.tamplleer.testrussian.word;
 
-public interface IWord {
+public interface ILetter {
 }
