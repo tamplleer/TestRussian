@@ -121,7 +121,6 @@ public class TestOperations {
         audio.playSound(1);
         button.setVisibility(View.INVISIBLE);
     }
-
     public void next() {
         if (click) {
             answerRight = letterChange.isLetterColor();
