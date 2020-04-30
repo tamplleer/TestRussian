@@ -110,7 +110,6 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
     }
 
     public void endExit(View view) {
-        S.secund = 5;
         Intent intent = new Intent(endGame.this,
                 MainActivity.class);
         startActivity(intent);

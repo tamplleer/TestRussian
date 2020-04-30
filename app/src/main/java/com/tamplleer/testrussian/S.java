@@ -16,17 +16,13 @@ public class S {
     public static int lengsInScore; //need to determine which audio play
     public static int steps = 0;
     public static int win = 0;
-    public static boolean clickWord = false; // nenado!
     public static String[] wordMassive;
     public static boolean vernoORno[]; // array which contain boolean variable of true or false of answer
     public static boolean reclam = true;
 
-
-    public static SoundPool mSoundPool;
     public static AssetManager mAssetManager;
     public static int winSound, winALL, prav, praveso, neprav, anvilSound, aS, iS, eS, oS, yS, ieS, iaS, iyS, ieaS, nedovol;
     public static int mStreamID;
-    public static int secund = 0;
     public static int volR = 1;
     public static int volL = 1;
     public static int coins = 0;

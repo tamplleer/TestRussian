@@ -44,7 +44,7 @@ private Context context;
         bmnext.setClickable(true);
        TextView textView= letter.getLetterTextV();
         for (char c : BIG_LETTER) {
-            if (letter.getCount() == c && S.clickWord) {
+            if (letter.getCount() == c) {
                 paintLetter(letter.getLetterTextV());
                 YoYo.with(Techniques.Swing)
                         .duration(700)

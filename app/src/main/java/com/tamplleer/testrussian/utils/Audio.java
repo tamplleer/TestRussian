@@ -21,14 +21,16 @@ import java.io.IOException;
  */
 
 public class Audio {
-    Context context;
-public Audio(int activity){
-    MainActivity main=new MainActivity();
-    endGame endGamE=new endGame();
-    SpleshScreenactivity spleshScreenactivity=new SpleshScreenactivity();
-    if (activity==0)context=main;
-    if (activity==2)context=endGamE;
-   if (activity==1)context=spleshScreenactivity;
+    private Context context;
+    private static SoundPool mSoundPool;
+
+    public Audio(int activity) {
+        MainActivity main = new MainActivity();
+        endGame endGamE = new endGame();
+        SpleshScreenactivity spleshScreenactivity = new SpleshScreenactivity();
+        if (activity == 0) context = main;
+        if (activity == 2) context = endGamE;
+        if (activity == 1) context = spleshScreenactivity;
 
 /*
 
@@ -67,26 +69,27 @@ public Audio(int activity){
 */
 
 
-}
+    }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void createNewSoundPool() {
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build();
-        S.mSoundPool = new SoundPool.Builder()
+        mSoundPool = new SoundPool.Builder()
                 .setAudioAttributes(attributes)
                 .build();
     }
 
     @SuppressWarnings("deprecation")
     public void createOldSoundPool() {
-        S.mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+        mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
     }
 
     public int playSound(int sound) {
         if (sound > 0) {
-            S.mStreamID = S.mSoundPool.play(sound, S.volL,S.volL, 1, 0, 1);
+            S.mStreamID = mSoundPool.play(sound, S.volL, S.volL, 1, 0, 1);
 
 
         }
@@ -103,7 +106,7 @@ public Audio(int activity){
                     Toast.LENGTH_SHORT).show();
             return -1;
         }
-        return S.mSoundPool.load(afd, 1);
+        return mSoundPool.load(afd, 1);
     }
 
 

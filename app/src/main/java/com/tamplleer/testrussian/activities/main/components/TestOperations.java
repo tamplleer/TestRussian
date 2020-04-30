@@ -30,7 +30,7 @@ public class TestOperations {
     private static final int RUNDOMARRAY = 30;
     private int lengthINscore = 0;
     private RandomWord randomWord;
-    private boolean click = false;
+   // private boolean click = false;
     private String[] word1;
     private String wordtoscreen = "";
     private Handler handler = new Handler();
@@ -42,7 +42,7 @@ public class TestOperations {
     boolean answerRight;
     LetterChange letterChange;
     private int rightStrike = 0;
-    private int wordNumber = 0;
+    private int selectWordNumber = 0;
 
     /**
      * This class make operations with word
@@ -52,10 +52,11 @@ public class TestOperations {
      * @param audio
      */
     public TestOperations(Context context, Audio audio) {
-        click = false;
-        word1 = S.allWord.split(",");
         this.context = context;
         this.audio = audio;
+
+        word1 = S.allWord.split(",");
+
         font = new Font(context);
         getScreenSize = new GetScreenSize(context);
         screenWidth = getScreenSize.getScreenWidth();
@@ -95,12 +96,11 @@ public class TestOperations {
         randomWord = new RandomWord();
         bmnext.setVisibility(View.VISIBLE);
         t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
-        click = true;
+
         S.win = 0;
         S.steps = 0;
-        S.clickWord = true;
         S.wordMassive = null;
-        wordNumber = 0;
+        selectWordNumber = 0;
         S.lengsInScore = lengthINscore;
         S.vernoORno = new boolean[word1.length];
         answerRight = true;
@@ -115,21 +115,20 @@ public class TestOperations {
         }
 
         handler.post(() -> score.setText(S.steps + 1 + "/" + lengthINscore));
-        wordtoscreen = makeWord.showWord(wordNumber);
-        constraintLayout.setBackgroundResource(R.drawable.fon);
+        wordtoscreen = makeWord.showWord(selectWordNumber);
+        constraintLayout.setBackgroundResource(R.drawable.background);
         t.setText("");
         audio.playSound(1);
         button.setVisibility(View.INVISIBLE);
     }
     public void next() {
-        if (click) {
             answerRight = letterChange.isLetterColor();
             letterChange.setLetterColor(false);
             S.steps++;
-            wordNumber++;
+            selectWordNumber++;
             handler.post(() -> score.setText(S.steps + 1 + "/" + lengthINscore));
-            constraintLayout.setBackgroundResource(R.drawable.fon);
             if (answerRight) {
+                constraintLayout.setBackgroundResource(R.drawable.background);
                 S.win++;
                 t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
                 if (rightStrike > 0) audio.playSound(14);
@@ -149,7 +148,7 @@ public class TestOperations {
                         .playOn(((Activity) context).findViewById(R.id.text));
                 audio.playSound(15);
                 rightStrike = 0;
-                constraintLayout.setBackgroundResource(R.drawable.fonred);
+                constraintLayout.setBackgroundResource(R.drawable.background_red_2);
                 S.vernoORno[S.steps - 1] = false;
             }
 
@@ -157,8 +156,6 @@ public class TestOperations {
             t.setText("" + wordtoscreen);
 
             if (S.steps == lengthINscore) {
-                click = false;
-                S.clickWord = false;
                 Intent intent = new Intent(context,
                         endGame.class);
                 context.startActivity(intent);
@@ -166,10 +163,9 @@ public class TestOperations {
 
             } else {
                 letterChange.setLetterColor(answerRight);
-                wordtoscreen = makeWord.showWord(wordNumber);
+                wordtoscreen = makeWord.showWord(selectWordNumber);
             }
             bmnext.setClickable(false);
 
-        }
     }
 }
