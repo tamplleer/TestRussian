@@ -5,7 +5,7 @@ package com.tamplleer.testrussian.utils;
         import android.content.Context;
 
         import com.tamplleer.testrussian.R;
-        import com.tamplleer.testrussian.activities.result.endGame;
+        import com.tamplleer.testrussian.activities.result.EndGame;
 
 /**
  * Created by Den on 3/20/2017.
@@ -13,14 +13,14 @@ package com.tamplleer.testrussian.utils;
 
 public class DialogInMenu {
     public AlertDialog.Builder ad;
-    endGame endgame;
+    EndGame endgame;
 
 
 
     public DialogInMenu(Context context,int type){
 
         //"confirm exit";
-        endgame = new endGame();
+        endgame = new EndGame();
         ad = new AlertDialog.Builder(context, R.style.AlertDialogTheme);
         ad.setTitle(selectTitle(type));// заголовок
         ad.setMessage(selectMessage(type)); // сообщение

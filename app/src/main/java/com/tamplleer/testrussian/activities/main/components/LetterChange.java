@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.tamplleer.testrussian.R;
-import com.tamplleer.testrussian.S;
 import com.tamplleer.testrussian.utils.Audio;
 import com.tamplleer.testrussian.word.Letter;
 
@@ -29,8 +28,8 @@ private Context context;
 
     private final static char[] BIG_LETTER = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
 
-    LetterChange(Context context) {
-        audio = new Audio(0);
+    LetterChange(Context context,Audio audio) {
+        this.audio = audio;
         informText = ((Activity) context).findViewById(R.id.text);
         bmnext = ((Activity) context).findViewById(R.id.next);
         this.context=context;
@@ -52,6 +51,7 @@ private Context context;
                         .playOn(textView);
                 letter.setViewParam();
                 touched(letter.getCount(), letter.getUpperCaseLetter(), letter.getType());
+                break;
             }
         }
 
@@ -63,34 +63,33 @@ private Context context;
 
     private void touched(char count, int upperCaseLetter, int type) {
         informText.setText("" + count + " ?");
-        audio = new Audio(0);
         switch (count) {
             case 'А':
-                audio.playSound(4);
+                audio.playSound(audio.getSoundNumber("a"));
                 break;
             case 'И':
-                audio.playSound(5);
+                audio.playSound(audio.getSoundNumber("i"));
                 break;
             case 'Е':
-                audio.playSound(6);
+                audio.playSound(audio.getSoundNumber("e"));
                 break;
             case 'О':
-                audio.playSound(7);
+                audio.playSound(audio.getSoundNumber("o"));
                 break;
             case 'У':
-                audio.playSound(8);
+                audio.playSound(audio.getSoundNumber("y"));
                 break;
             case 'Ы':
-                audio.playSound(9);
+                audio.playSound(audio.getSoundNumber("ie"));
                 break;
             case 'Э':
-                audio.playSound(10);
+                audio.playSound(audio.getSoundNumber("iea"));
                 break;
             case 'Ю':
-                audio.playSound(11);
+                audio.playSound(audio.getSoundNumber("iy"));
                 break;
             case 'Я':
-                audio.playSound(12);
+                audio.playSound(audio.getSoundNumber("ia"));
                 break;
             default:
                 audio.playSound(1);

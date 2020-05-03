@@ -15,17 +15,13 @@ import java.lang.reflect.Type;
 public class S {
     public static int lengsInScore; //need to determine which audio play
     public static int steps = 0;
-    public static int win = 0;
+   // public static int win = 0;
     public static String[] wordMassive;
-    public static boolean vernoORno[]; // array which contain boolean variable of true or false of answer
+  //  public static boolean vernoORno[]; // array which contain boolean variable of true or false of answer
     public static boolean reclam = true;
 
-    public static AssetManager mAssetManager;
-    public static int winSound, winALL, prav, praveso, neprav, anvilSound, aS, iS, eS, oS, yS, ieS, iaS, iyS, ieaS, nedovol;
-    public static int mStreamID;
     public static int volR = 1;
     public static int volL = 1;
-    public static int coins = 0;
 
     public static String APP_PREFERENCES1 = "mysettings";
     public static String APP_PREFERENCES_silence = "silence";

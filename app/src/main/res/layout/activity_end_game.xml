@@ -9,7 +9,7 @@
     android:background="@color/DarkSlateGray"
     android:label="@string/pusto"
 
-    tools:context="com.tamplleer.testrussian.activities.result.endGame">
+    tools:context="com.tamplleer.testrussian.activities.result.EndGame">
 
     <TextView
         android:id="@+id/endText"

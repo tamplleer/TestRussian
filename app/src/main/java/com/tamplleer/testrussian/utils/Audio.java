@@ -3,6 +3,7 @@ package com.tamplleer.testrussian.utils;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -11,10 +12,12 @@ import android.widget.Toast;
 
 import com.tamplleer.testrussian.S;
 import com.tamplleer.testrussian.activities.main.MainActivity;
-import com.tamplleer.testrussian.activities.result.endGame;
+import com.tamplleer.testrussian.activities.result.EndGame;
 import com.tamplleer.testrussian.activities.splesh.SpleshScreenactivity;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by tampl on 11.02.2018.
@@ -23,52 +26,14 @@ import java.io.IOException;
 public class Audio {
     private Context context;
     private static SoundPool mSoundPool;
+    private AssetManager assetManager;
+    private Map<String, Integer> soundMap;
 
-    public Audio(int activity) {
-        MainActivity main = new MainActivity();
-        endGame endGamE = new endGame();
-        SpleshScreenactivity spleshScreenactivity = new SpleshScreenactivity();
-        if (activity == 0) context = main;
-        if (activity == 2) context = endGamE;
-        if (activity == 1) context = spleshScreenactivity;
-
-/*
-
-    if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-        // Для устройств до Android 5
-        createOldSoundPool();
-    } else {
-        // Для новых устройств
-       createNewSoundPool();
-    }
-
-
-
-    // получим идентификаторы
-    S.anvilSound = loadSound("anvil.mp3");
-    S.winSound = loadSound("uhuu.mp3");
-    S.winALL = loadSound("eea.mp3");
-    //   mDogSound = loadSound("dog.ogg");
-    //   mDuckSound = loadSound("duck.ogg");
-    //   mSheepSound = loadSound("sheep.ogg");
-    S.aS =  loadSound("a.mp3");
-
-    S.iS =  loadSound("i.mp3");
-    S.eS =  loadSound("e.mp3");
-    S.oS =  loadSound("o.mp3");
-    S.yS =  loadSound("y.mp3");
-    S.ieS =  loadSound("ie.mp3");
-    S.ieaS = loadSound("iea.mp3");
-    S.iyS =  loadSound("iy.mp3");
-    S.iaS =  loadSound("ia.mp3");
-
-
-    S.prav =  loadSound("right.mp3");
-    S.praveso = loadSound("righteso.mp3");
-    S.neprav =  loadSound("nea.mp3");
-*/
-
-
+    public Audio(Context context, AssetManager assetManager) {
+        this.assetManager = assetManager;
+        soundMap = new HashMap<>();
+        this.context = context;
+        addSound(context);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -87,19 +52,16 @@ public class Audio {
         mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
     }
 
-    public int playSound(int sound) {
+    public void playSound(int sound) {
         if (sound > 0) {
-            S.mStreamID = mSoundPool.play(sound, S.volL, S.volL, 1, 0, 1);
-
-
+            mSoundPool.play(sound, S.volL, S.volL, 1, 0, 1);
         }
-        return S.mStreamID;
     }
 
-    public int loadSound(String fileName) {
+    private int loadSound(String fileName) {
         AssetFileDescriptor afd;
         try {
-            afd = S.mAssetManager.openFd(fileName);
+            afd = assetManager.openFd(fileName);
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(context, "Не могу загрузить файл " + fileName,
@@ -107,6 +69,37 @@ public class Audio {
             return -1;
         }
         return mSoundPool.load(afd, 1);
+    }
+
+    private void addSound(Context context) {
+        createNewSoundPool();
+        soundMap.put("anvil", loadSound("anvil.mp3"));
+        if (context instanceof EndGame) {
+            soundMap.put("winSound", loadSound("uhuu.mp3"));
+            soundMap.put("TotalWin", loadSound("eea.mp3"));
+            soundMap.put("disappointed", loadSound("nedovol.mp3"));
+        } else {
+
+            soundMap.put("a", loadSound("a.mp3"));
+            soundMap.put("i", loadSound("i.mp3"));
+            soundMap.put("e", loadSound("e.mp3"));
+            soundMap.put("o", loadSound("o.mp3"));
+            soundMap.put("y", loadSound("y.mp3"));
+            soundMap.put("ie", loadSound("ie.mp3"));
+            soundMap.put("iea", loadSound("iea.mp3"));
+            soundMap.put("iy", loadSound("iy.mp3"));
+            soundMap.put("ia", loadSound("ia.mp3"));
+
+            soundMap.put("right", loadSound("right.mp3"));
+            soundMap.put("rightMore", loadSound("righteso.mp3"));
+            soundMap.put("wrong", loadSound("nea.mp3"));
+        }
+
+
+    }
+
+    public int getSoundNumber(String soundName) {
+        return soundMap.getOrDefault(soundName, 1);
     }
 
 

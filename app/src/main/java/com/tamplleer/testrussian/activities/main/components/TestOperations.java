@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,10 +16,12 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.S;
-import com.tamplleer.testrussian.activities.result.endGame;
+import com.tamplleer.testrussian.activities.result.EndGame;
 import com.tamplleer.testrussian.utils.Audio;
 import com.tamplleer.testrussian.utils.Font;
 import com.tamplleer.testrussian.utils.GetScreenSize;
+
+import java.io.Serializable;
 
 public class TestOperations {
     TextView t, score;
@@ -43,6 +46,8 @@ public class TestOperations {
     LetterChange letterChange;
     private int rightStrike = 0;
     private int selectWordNumber = 0;
+    private int winResult;
+    private boolean[] answerArray;
 
     /**
      * This class make operations with word
@@ -80,7 +85,7 @@ public class TestOperations {
         bmnext.setTypeface(font.getFont1());
         bmstart30.setTypeface(font.getFont1());
         button.setVisibility(View.VISIBLE);
-        letterChange = new LetterChange(context);
+        letterChange = new LetterChange(context,audio);
         makeWord = new MakeWord(context, screenWidth, screenHeight, picture, letterChange);
         letterChange.setLetterColor(true);
         bmnext.setClickable(false);
@@ -97,12 +102,12 @@ public class TestOperations {
         bmnext.setVisibility(View.VISIBLE);
         t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
 
-        S.win = 0;
-        S.steps = 0;
+        winResult = 0;
+        S.steps = 29;
         S.wordMassive = null;
         selectWordNumber = 0;
         S.lengsInScore = lengthINscore;
-        S.vernoORno = new boolean[word1.length];
+        answerArray = new boolean[word1.length];
         answerRight = true;
         if (typeTest) {
             lengthINscore = RUNDOMARRAY;
@@ -118,7 +123,7 @@ public class TestOperations {
         wordtoscreen = makeWord.showWord(selectWordNumber);
         constraintLayout.setBackgroundResource(R.drawable.background);
         t.setText("");
-        audio.playSound(1);
+        audio.playSound(audio.getSoundNumber("anvil"));
         button.setVisibility(View.INVISIBLE);
     }
     public void next() {
@@ -129,12 +134,12 @@ public class TestOperations {
             handler.post(() -> score.setText(S.steps + 1 + "/" + lengthINscore));
             if (answerRight) {
                 constraintLayout.setBackgroundResource(R.drawable.background);
-                S.win++;
+                winResult++;
                 t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
-                if (rightStrike > 0) audio.playSound(14);
-                else audio.playSound(13);
+                if (rightStrike > 0) audio.playSound(audio.getSoundNumber("rightMore"));
+                else audio.playSound(audio.getSoundNumber("right"));
                 rightStrike++;
-                S.vernoORno[S.steps - 1] = true;
+                answerArray[S.steps - 1] = true;
                 YoYo.with(Techniques.StandUp)
                         .duration(700)
                         .repeat(0)
@@ -146,10 +151,10 @@ public class TestOperations {
                         .duration(700)
                         .repeat(0)
                         .playOn(((Activity) context).findViewById(R.id.text));
-                audio.playSound(15);
+                audio.playSound(audio.getSoundNumber("wrong"));
                 rightStrike = 0;
                 constraintLayout.setBackgroundResource(R.drawable.background_red_2);
-                S.vernoORno[S.steps - 1] = false;
+                answerArray[S.steps - 1] = false;
             }
 
 
@@ -157,7 +162,9 @@ public class TestOperations {
 
             if (S.steps == lengthINscore) {
                 Intent intent = new Intent(context,
-                        endGame.class);
+                        EndGame.class);
+                intent.putExtra("rightAnswer",winResult);
+                intent.putExtra("arrayRight",answerArray);
                 context.startActivity(intent);
                 ((Activity) context).finish();
 

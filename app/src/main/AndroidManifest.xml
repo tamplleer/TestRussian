@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.result.endGame"
+            android:name=".activities.result.EndGame"
             android:screenOrientation="portrait">
 
         </activity>

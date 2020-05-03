@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -33,13 +34,14 @@ import com.tamplleer.testrussian.word.LetterEnd;
 
 import java.util.Objects;
 
-public class endGame extends AppCompatActivity implements RewardedVideoAdListener {
+public class EndGame extends AppCompatActivity implements RewardedVideoAdListener {
     TextView t, tt;
     Audio audio;
     GetScreenSize getScreenSize;
     int screenWidth, screenHeight;
     ConstraintLayout constraintLayout;
-    int lose = 30 - S.win;
+    private int winResult;
+    private boolean[] answerArray;
     int y, x;
     LetterEnd text1[];
     int wordpokaz = 0;
@@ -63,6 +65,9 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         screenWidth = getScreenSize.getScreenWidth();
         screenHeight = getScreenSize.getScreenHeight();
         font = new Font(this);
+        audio = new Audio(this, getAssets());
+        winResult = getIntent().getExtras().getInt("rightAnswer");
+      answerArray = getIntent().getExtras().getBooleanArray("arrayRight");
         MobileAds.initialize(this, "ca-app-pub-8909727970839097/9184677267");
         mAd = MobileAds.getRewardedVideoAdInstance(this);
         mAd.setRewardedVideoAdListener(this);
@@ -77,7 +82,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         constraintLayout = (ConstraintLayout) findViewById(R.id.endloy);
         // constraintLayout.setMinHeight(350);
         //  constraintLayout.setMaxWidth(100);
-        audio = new Audio(2);
+
 
         t = findViewById(R.id.endText);
         tt = findViewById(R.id.tt);
@@ -90,28 +95,27 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         text1 = new LetterEnd[S.wordMassive.length];
         for (int i = 0; i < 30; i++) {
 
-            text1[i] = new LetterEnd(this, x, y, S.wordMassive[i], screenHeight / 30, S.vernoORno[i], false);
+            text1[i] = new LetterEnd(this, x, y, S.wordMassive[i], screenHeight / 30, answerArray[i], false);
             y += screenHeight / 43;
 
 
         }
 
-        S.coins = S.coins + S.win;
-        tt.setText("" + S.win + " / " + S.lengsInScore);
+        tt.setText("" + winResult + " / " + S.lengsInScore);
 
-        // if (S.lengsInScore>100)tt.setX(tt.getX()-30);
-        // if (S.win>10)tt.setX(tt.getX()-30);
-        if (S.win < 20 && S.steps == S.lengsInScore) audio.playSound(S.nedovol);
-        if (S.win >= 20) audio.playSound(S.winSound);
-        if (S.win == S.lengsInScore) audio.playSound(S.winALL);
-        Log.d("шибка", "coins = " + S.coins);
+        if (winResult < 20 && S.steps == S.lengsInScore)
+            audio.playSound(audio.getSoundNumber("disappointed"));
+        if (winResult >= 20) audio.playSound(audio.getSoundNumber("winSound"));
+        if (winResult == S.lengsInScore) audio.playSound(audio.getSoundNumber("TotalWin"));
 
 
     }
 
     public void endExit(View view) {
-        Intent intent = new Intent(endGame.this,
+        Intent intent = new Intent(EndGame.this,
                 MainActivity.class);
+
+
         startActivity(intent);
         finish();
     }
@@ -140,7 +144,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
     void nextBack() {
         s = 0;
         for (int i = 0; i < 30; i++) {
-            text1[i] = new LetterEnd(this, x, y, "        ", screenHeight / 30, S.vernoORno[s], true);
+            text1[i] = new LetterEnd(this, x, y, "        ", screenHeight / 30, answerArray[s], true);
             y += screenHeight / 43;
         }
         y = screenHeight / 30;
@@ -149,7 +153,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
             // if (s>S.wordMassive.length)
             if (S.wordMassive.length > s) {
 
-                text1[i] = new LetterEnd(this, x, y, S.wordMassive[s], screenHeight / 30, S.vernoORno[s], false);
+                text1[i] = new LetterEnd(this, x, y, S.wordMassive[s], screenHeight / 30, answerArray[s], false);
                 y += screenHeight / 43;
             }
 
@@ -190,7 +194,7 @@ public class endGame extends AppCompatActivity implements RewardedVideoAdListene
         mAd.show();
     }
 
-//todo make new class for adds
+    //todo make new class for adds
     @Override
     public void onRewardedVideoAdLoaded() {
         Toast.makeText(this, "Load", Toast.LENGTH_SHORT).show();

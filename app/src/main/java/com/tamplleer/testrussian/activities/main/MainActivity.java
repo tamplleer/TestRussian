@@ -2,10 +2,10 @@ package com.tamplleer.testrussian.activities.main;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdRequest;
@@ -36,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
     AdRequest adRequest;
     private AdView mAdView;
     public Button start;
-    ImageButton exit;
+    ImageButton soundButton;
     private Handler handler = new Handler();
+    LottieAnimationView lottieAnimationView;
 
     // new variables
     Font font;
@@ -56,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
         S.mSettings = getSharedPreferences(S.APP_PREFERENCES1, Context.MODE_PRIVATE);
 
         font = new Font(this);
-        audio = new Audio(0);
+        audio = new Audio(this, getAssets());
         bminfo = findViewById(R.id.vopros);
         start = findViewById(R.id.start);
-        exit = findViewById(R.id.exit);
-
+        soundButton = findViewById(R.id.exit);
+        lottieAnimationView = findViewById(R.id.loadingAnim);
 
         testOperations = new TestOperations(this, audio);
         start.setTypeface(font.getFont1());
@@ -77,15 +79,16 @@ public class MainActivity extends AppCompatActivity {
     public void changeVolume(View view) {
         if (S.volL == 1) {
             S.volL = 0;
-            exit.setBackgroundResource(R.drawable.thetyo);
+            soundButton.setBackgroundResource(R.drawable.ic_sound_off);
         } else {
             S.volL = 1;
-            exit.setBackgroundResource(R.drawable.soubdee);
+            soundButton.setBackgroundResource(R.drawable.ic_sound_on);
 
         }
     }
 
     public void start(View view) {
+        lottieAnimationView.playAnimation();
         YoYo.with(Techniques.Bounce)
                 .duration(700)
                 .repeat(0)
@@ -113,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 .playOn(findViewById(R.id.next)));
         testOperations.next();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -120,40 +124,13 @@ public class MainActivity extends AppCompatActivity {
             S.volL = S.mSettings.getInt(S.APP_PREFERENCES_silence, 0);
 
             if (S.volL == 1) {
-                exit.setBackgroundResource(R.drawable.soubdee);
-            } else exit.setBackgroundResource(R.drawable.thetyo);
+                soundButton.setBackgroundResource(R.drawable.ic_sound_on);
+            } else soundButton.setBackgroundResource(R.drawable.ic_sound_off);
         }
         if (S.mSettings.contains(S.APP_PREFERENCES_ADD)) {
             S.reclam = S.mSettings.getBoolean(S.APP_PREFERENCES_ADD, false);
         }
         if (S.reclam) mAdView.loadAd(adRequest);
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            // Для устройств до Android 5
-            audio.createOldSoundPool();
-        } else {
-            // Для новых устройств
-            audio.createNewSoundPool();
-        }
-
-        S.mAssetManager = getAssets();
-
-        // получим идентификаторы
-        S.anvilSound = audio.loadSound("anvil.mp3");
-        S.winSound = audio.loadSound("uhuu.mp3");
-        S.winALL = audio.loadSound("eea.mp3");
-        S.aS = audio.loadSound("a.mp3");
-        S.iS = audio.loadSound("i.mp3");
-        S.eS = audio.loadSound("e.mp3");
-        S.oS = audio.loadSound("o.mp3");
-        S.yS = audio.loadSound("y.mp3");
-        S.ieS = audio.loadSound("ie.mp3");
-        S.ieaS = audio.loadSound("iea.mp3");
-        S.iyS = audio.loadSound("iy.mp3");
-        S.iaS = audio.loadSound("ia.mp3");
-        S.prav = audio.loadSound("right.mp3");
-        S.praveso = audio.loadSound("righteso.mp3");
-        S.neprav = audio.loadSound("nea.mp3");
-        S.nedovol = audio.loadSound("nedovol.mp3");
 
 
     }
