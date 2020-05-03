@@ -11,7 +11,6 @@ import java.lang.reflect.Type;
 /**
  * Created by tampl on 22.01.2018.
  */
-
 public class S {
     public static int lengsInScore; //need to determine which audio play
     public static int steps = 0;
