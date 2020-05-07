@@ -51,6 +51,8 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
     ImageButton mButton;
     // new variables
     Font font;
+    private int lengthInScore;
+    private String [] wordMassive;
 
 
     @Override
@@ -67,7 +69,10 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
         font = new Font(this);
         audio = new Audio(this, getAssets());
         winResult = getIntent().getExtras().getInt("rightAnswer");
-      answerArray = getIntent().getExtras().getBooleanArray("arrayRight");
+        answerArray = getIntent().getExtras().getBooleanArray("arrayRight");
+        lengthInScore = getIntent().getExtras().getInt("lengthInScore");
+        wordMassive=getIntent().getExtras().getStringArray("wordArray");
+
         MobileAds.initialize(this, "ca-app-pub-8909727970839097/9184677267");
         mAd = MobileAds.getRewardedVideoAdInstance(this);
         mAd.setRewardedVideoAdListener(this);
@@ -84,6 +89,7 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
         //  constraintLayout.setMaxWidth(100);
 
 
+
         t = findViewById(R.id.endText);
         tt = findViewById(R.id.tt);
         mButton = findViewById(R.id.mButton);
@@ -92,21 +98,21 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
         tt.setTypeface(font.getFont1());
         x = screenWidth / 3 + screenWidth / 10;
         y = screenHeight / 30;
-        text1 = new LetterEnd[S.wordMassive.length];
+        text1 = new LetterEnd[wordMassive.length];
         for (int i = 0; i < 30; i++) {
 
-            text1[i] = new LetterEnd(this, x, y, S.wordMassive[i], screenHeight / 30, answerArray[i], false);
+            text1[i] = new LetterEnd(this, x, y, wordMassive[i], screenHeight / 30, answerArray[i], false);
             y += screenHeight / 43;
 
 
         }
 
-        tt.setText("" + winResult + " / " + S.lengsInScore);
+        tt.setText("" + winResult + " / " + lengthInScore);
 
-        if (winResult < 20 && S.steps == S.lengsInScore)
+        if (winResult < 20)
             audio.playSound(audio.getSoundNumber("disappointed"));
         if (winResult >= 20) audio.playSound(audio.getSoundNumber("winSound"));
-        if (winResult == S.lengsInScore) audio.playSound(audio.getSoundNumber("TotalWin"));
+        if (winResult == lengthInScore) audio.playSound(audio.getSoundNumber("TotalWin"));
 
 
     }
@@ -151,9 +157,9 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
         for (int i = 0; i < 30; i++) {
             s = i + wordpokaz * 30;
             // if (s>S.wordMassive.length)
-            if (S.wordMassive.length > s) {
+            if (wordMassive.length > s) {
 
-                text1[i] = new LetterEnd(this, x, y, S.wordMassive[s], screenHeight / 30, answerArray[s], false);
+                text1[i] = new LetterEnd(this, x, y, wordMassive[s], screenHeight / 30, answerArray[s], false);
                 y += screenHeight / 43;
             }
 
@@ -165,7 +171,7 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
                 .duration(200)
                 .repeat(0)
                 .playOn(findViewById(R.id.right));
-        if (30 < S.wordMassive.length && s < S.wordMassive.length) {
+        if (30 < wordMassive.length && s < wordMassive.length) {
             y = screenHeight / 30;
             wordpokaz += 1;
             nextBack();
@@ -177,7 +183,7 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
                 .duration(200)
                 .repeat(0)
                 .playOn(findViewById(R.id.left));
-        if (30 < S.wordMassive.length && wordpokaz != 0) {
+        if (30 < wordMassive.length && wordpokaz != 0) {
             y = screenHeight / 30;
             wordpokaz -= 1;
             nextBack();

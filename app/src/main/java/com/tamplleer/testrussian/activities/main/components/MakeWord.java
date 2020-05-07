@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.tamplleer.testrussian.S;
+import com.tamplleer.testrussian.TestParam;
 import com.tamplleer.testrussian.word.Letter;
 
 import java.util.Vector;
@@ -20,19 +21,20 @@ class MakeWord {
     // new variables
     private String stringToChar;
     private String wordtoscreen = "";
+    private TestParam testParam;
 
-    MakeWord(Context context, int screenWidth, int screenHeight, ImageView picture,LetterChange letterChange) {
+    MakeWord(Context context, int screenWidth, int screenHeight, LetterChange letterChange, TestParam testParam) {
         this.context = context;
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
-        this.picture = picture;
-       this.letterChange=letterChange;
+        this.letterChange = letterChange;
+        this.testParam = testParam;
 
     }
 
     String showWord(int wordNumber) {
-        stringToChar = S.wordMassive[wordNumber];
-        wordtoscreen = S.wordMassive[wordNumber];
+        stringToChar = testParam.getWordFromArray(wordNumber);
+        wordtoscreen = testParam.getWordFromArray(wordNumber);
         createWord();
         return wordtoscreen;
     }
@@ -59,11 +61,11 @@ class MakeWord {
                 charArray[i] = 'Е';
             }
             x = setXPosition(screenWidth / charArray.length, i);
-            word.addElement(new Letter(context, x, y, charArray[i], size, i,upperCaseLetter));
+            word.addElement(new Letter(context, x, y, charArray[i], size, i, upperCaseLetter));
 
             int finalI = i;
             word.get(i).getLetterTextV().setOnClickListener(v -> {
-                letterChange.clickOnLetter( word.get(finalI),word);
+                letterChange.clickOnLetter(word.get(finalI), word);
             });
             letterChange.paintWord(word.get(finalI).getLetterTextV());
         }

@@ -10,10 +10,7 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.widget.Toast;
 
-import com.tamplleer.testrussian.S;
-import com.tamplleer.testrussian.activities.main.MainActivity;
 import com.tamplleer.testrussian.activities.result.EndGame;
-import com.tamplleer.testrussian.activities.splesh.SpleshScreenactivity;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,6 +25,10 @@ public class Audio {
     private static SoundPool mSoundPool;
     private AssetManager assetManager;
     private Map<String, Integer> soundMap;
+
+
+
+    private  int volume = 1;
 
     public Audio(Context context, AssetManager assetManager) {
         this.assetManager = assetManager;
@@ -54,7 +55,7 @@ public class Audio {
 
     public void playSound(int sound) {
         if (sound > 0) {
-            mSoundPool.play(sound, S.volL, S.volL, 1, 0, 1);
+            mSoundPool.play(sound, volume, volume, 1, 0, 1);
         }
     }
 
@@ -100,6 +101,13 @@ public class Audio {
 
     public int getSoundNumber(String soundName) {
         return soundMap.getOrDefault(soundName, 1);
+    }
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
     }
 
 

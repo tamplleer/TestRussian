@@ -2,8 +2,6 @@ package com.tamplleer.testrussian.activities.main;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -20,6 +18,8 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.tamplleer.testrussian.activities.main.components.AnimationObject;
+import com.tamplleer.testrussian.activities.main.components.ObjectsInLayout;
 import com.tamplleer.testrussian.utils.AppRater;
 import com.tamplleer.testrussian.utils.Audio;
 import com.tamplleer.testrussian.utils.DialogInMenu;
@@ -36,16 +36,18 @@ public class MainActivity extends AppCompatActivity {
     DialogInMenu dialog;
     AdRequest adRequest;
     private AdView mAdView;
-    public Button start;
+    public Button startTestButton;
     ImageButton soundButton;
     private Handler handler = new Handler();
     LottieAnimationView lottieAnimationView;
-
+    ObjectsInLayout objectsInLayout;
     // new variables
     Font font;
     TestOperations testOperations;
     boolean allWords = false;
     boolean rundomWords = true;
+
+    AnimationObject animationObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +58,17 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         S.mSettings = getSharedPreferences(S.APP_PREFERENCES1, Context.MODE_PRIVATE);
-
+        objectsInLayout = new ObjectsInLayout(this);
         font = new Font(this);
         audio = new Audio(this, getAssets());
         bminfo = findViewById(R.id.vopros);
-        start = findViewById(R.id.start);
+        startTestButton = findViewById(R.id.start);
         soundButton = findViewById(R.id.exit);
         lottieAnimationView = findViewById(R.id.loadingAnim);
+        animationObject = new AnimationObject();
 
         testOperations = new TestOperations(this, audio);
-        start.setTypeface(font.getFont1());
+        startTestButton.setTypeface(font.getFont1());
 
         AppRater.app_launched(this);
         MobileAds.initialize(this, "ca-app-pub-8909727970839097~4345378585");
@@ -77,11 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void changeVolume(View view) {
-        if (S.volL == 1) {
-            S.volL = 0;
+        if (audio.getVolume() == 1) {
+            audio.setVolume(0);
             soundButton.setBackgroundResource(R.drawable.ic_sound_off);
         } else {
-            S.volL = 1;
+            audio.setVolume(1);
             soundButton.setBackgroundResource(R.drawable.ic_sound_on);
 
         }
@@ -89,10 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void start(View view) {
         lottieAnimationView.playAnimation();
-        YoYo.with(Techniques.Bounce)
-                .duration(700)
-                .repeat(0)
-                .playOn(findViewById(R.id.start));
+        animationObject.bounce(startTestButton);
         testOperations.start(allWords);
     }
 
@@ -101,19 +101,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void randomWords(View view) {
-        YoYo.with(Techniques.Bounce)
-                .duration(1000)
-                .repeat(0)
-                .playOn(findViewById(R.id.start30));
+        animationObject.bounce((Button) findViewById(R.id.start30));
         testOperations.start(rundomWords);
     }
 
     public void next(View view) {
 
-        handler.post(() -> YoYo.with(Techniques.BounceInUp)
-                .duration(500)
-                .repeat(0)
-                .playOn(findViewById(R.id.next)));
+        handler.post(() -> animationObject.bounceInUp(findViewById(R.id.next)));
         testOperations.next();
     }
 
@@ -121,9 +115,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (S.mSettings.contains(S.APP_PREFERENCES_silence)) {
-            S.volL = S.mSettings.getInt(S.APP_PREFERENCES_silence, 0);
-
-            if (S.volL == 1) {
+            audio.setVolume(S.mSettings.getInt(S.APP_PREFERENCES_silence, 0));
+            if (audio.getVolume() == 1) {
                 soundButton.setBackgroundResource(R.drawable.ic_sound_on);
             } else soundButton.setBackgroundResource(R.drawable.ic_sound_off);
         }
@@ -147,18 +140,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void save() {
         SharedPreferences.Editor editor = S.mSettings.edit();
-        editor.putInt(S.APP_PREFERENCES_silence, S.volL);
+        editor.putInt(S.APP_PREFERENCES_silence, audio.getVolume());
         editor.putBoolean(S.APP_PREFERENCES_ADD, S.reclam);
         editor.apply();
 
     }
 
     public void vopros(View view) {
-        YoYo.with(Techniques.Bounce)
-                .duration(1000)
-                .repeat(0)
-                .playOn(bminfo);
-
+        animationObject.bounce(bminfo);
         dialog = new DialogInMenu(this, 0);
         dialog.ad.show();
     }

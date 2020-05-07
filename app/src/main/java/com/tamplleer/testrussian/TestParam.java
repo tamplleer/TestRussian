@@ -1,6 +1,6 @@
 package com.tamplleer.testrussian;
 
-public class Statistic {
+public class TestParam {
     public int getLengthInScore() {
         return lengthInScore;
     }
@@ -21,9 +21,14 @@ public class Statistic {
         return wordMassive;
     }
 
+    public String getWordFromArray(int number) {
+        return wordMassive[number];
+    }
+
     public void setWordMassive(String[] wordMassive) {
         this.wordMassive = wordMassive;
     }
+
 
     public int getWinResult() {
         return winResult;
@@ -46,7 +51,26 @@ public class Statistic {
     private  String[] wordMassive;
     private int winResult;
     private boolean[] answerArray;
-    Statistic(){
+    private int selectWordNumber;
+    private boolean answerRight;
+
+    public boolean isAnswerRight() {
+        return answerRight;
+    }
+
+    public void setAnswerRight(boolean answerRight) {
+        this.answerRight = answerRight;
+    }
+
+    public int getSelectWordNumber() {
+        return selectWordNumber;
+    }
+
+    public void setSelectWordNumber(int selectWordNumber) {
+        this.selectWordNumber = selectWordNumber;
+    }
+
+    public TestParam(){
 
     }
 
