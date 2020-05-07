@@ -50,13 +50,12 @@ public class MakeTest {
         objectsInLayout.getT().setText("");
         statistic.setWinResult(0);
         statistic.setSteps(27);
-        statistic.setWordMassive(null);
         statistic.setSelectWordNumber(0);
         statistic.setAnswerRight(true);
-       objectsInLayout.getScore().setText(statistic.getSteps() + 1 + "/" + statistic.getLengthInScore());
+        objectsInLayout.getScore().setText(statistic.getSteps() + 1 + "/" + statistic.getLengthInScore());
 
         audio.playSound(audio.getSoundNumber("anvil"));
-        makeWord.showWord(statistic.getSelectWordNumber());
+        statistic.setWordToScreen(makeWord.showWord(statistic.getSelectWordNumber()));
         objectsInLayout.getConstraintLayout().setBackgroundResource(R.drawable.background);
     }
 }

@@ -29,7 +29,6 @@ public class TestOperations {
     private static final int RUNDOMARRAY = 30;
     private RandomWord randomWord;
     private String[] word1;
-    private String wordtoscreen = "";
     private Handler handler = new Handler();
     private MakeWord makeWord;
     private ConstraintLayout constraintLayout;
@@ -39,9 +38,10 @@ public class TestOperations {
     //boolean answerRight;
     LetterChange letterChange;
     private int rightStrike = 0;
-    private boolean[] answerArray;
     private TestParam statistic;
     private AnimationObject animationObject;
+    private MakeTest makeTest;
+    private ObjectsInLayout objectsInLayout;
 
     /**
      * This class make operations with word
@@ -79,13 +79,15 @@ public class TestOperations {
         bmnext.setTypeface(font.getFont1());
         bmstart30.setTypeface(font.getFont1());
         button.setVisibility(View.VISIBLE);
-        letterChange = new LetterChange(context,audio);
-        statistic= new TestParam();
-        makeWord = new MakeWord(context, screenWidth, screenHeight, letterChange,statistic);
+        letterChange = new LetterChange(context, audio);
+        statistic = new TestParam();
+        makeWord = new MakeWord(context, screenWidth, screenHeight, letterChange, statistic);
         letterChange.setLetterColor(true);
         bmnext.setClickable(false);
 
         animationObject = new AnimationObject();
+        objectsInLayout = new ObjectsInLayout(context);
+        makeTest = new MakeTest(statistic, audio, objectsInLayout, context, makeWord);
     }
 
     /**
@@ -95,77 +97,57 @@ public class TestOperations {
      */
     //todo person can change how many word learn?!
     public void start(boolean typeTest) {//typeTest 30 or all word of array 30 -true all -false
-
-        bmnext.setVisibility(View.VISIBLE);
-        t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
-
-      statistic.setWinResult(0);
-        statistic.setSteps(27);
-        statistic.setWordMassive(null);
-        statistic.setSelectWordNumber(0);
-        answerArray = new boolean[word1.length];
-        statistic.setAnswerRight(true);
         if (typeTest) {
-            RandomWord randomWord = new RandomWord();
-            statistic.setAnswerArray(new boolean[30]);
-            statistic.setLengthInScore(30);
-            statistic.setWordMassive(randomWord.createArrayRandWords());
+            makeTest.crateRandomTest();
         } else {
-            statistic.setLengthInScore(word1.length);
-            statistic.setWordMassive(S.allWord.split(","));
+            makeTest.createAllWordsTest();
         }
-
-        handler.post(() -> score.setText(statistic.getSteps() + 1 + "/" + statistic.getLengthInScore()));
-        makeWord.showWord(statistic.getSelectWordNumber());
-        constraintLayout.setBackgroundResource(R.drawable.background);
-        t.setText("");
-        audio.playSound(audio.getSoundNumber("anvil"));
-        button.setVisibility(View.INVISIBLE);
     }
+
     public void next() {
         statistic.setAnswerRight(letterChange.isLetterColor());
-            letterChange.setLetterColor(false);
-           statistic.setSteps(statistic.getSteps()+1);
-            statistic.setSelectWordNumber(statistic.getSelectWordNumber()+1);
-            handler.post(() -> score.setText(statistic.getSteps() + 1 + "/" + statistic.getLengthInScore()));
-            if (statistic.isAnswerRight()) {
-                constraintLayout.setBackgroundResource(R.drawable.background);
-               statistic.setWinResult(statistic.getWinResult()+1);
-                t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
-                if (rightStrike > 0) audio.playSound(audio.getSoundNumber("rightMore"));
-                else audio.playSound(audio.getSoundNumber("right"));
-                rightStrike++;
-                answerArray[statistic.getSteps() - 1] = true;
-                animationObject.standUp(t);
+        letterChange.setLetterColor(false);
+        statistic.setSteps(statistic.getSteps() + 1);
+        statistic.setSelectWordNumber(statistic.getSelectWordNumber() + 1);
+        handler.post(() -> score.setText(statistic.getSteps() + 1 + "/" + statistic.getLengthInScore()));
+        if (statistic.isAnswerRight()) {
+            constraintLayout.setBackgroundResource(R.drawable.background);
+            statistic.setWinResult(statistic.getWinResult() + 1);
+            t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
+            if (rightStrike > 0) audio.playSound(audio.getSoundNumber("rightMore"));
+            else audio.playSound(audio.getSoundNumber("right"));
+            rightStrike++;
+            statistic.setAnswerInArray(true,statistic.getSteps() - 1);
+            animationObject.standUp(t);
 
 
-            } else {
-                t.setTextColor(context.getResources().getColor(R.color.Khaki));
-                animationObject.shake(((Activity) context).findViewById(R.id.text));
-                audio.playSound(audio.getSoundNumber("wrong"));
-                rightStrike = 0;
-                constraintLayout.setBackgroundResource(R.drawable.background_red_2);
-                answerArray[statistic.getSteps() - 1] = false;
-            }
+        } else {
+            t.setTextColor(context.getResources().getColor(R.color.Khaki));
+            animationObject.shake(((Activity) context).findViewById(R.id.text));
+            audio.playSound(audio.getSoundNumber("wrong"));
+            rightStrike = 0;
+            constraintLayout.setBackgroundResource(R.drawable.background_red_2);
+            statistic.setAnswerInArray(false,statistic.getSteps() - 1);
+        }
 
 
-            t.setText("" + wordtoscreen);
+        t.setText("" + statistic.getWordToScreen());
 
-            if (statistic.getSteps() == statistic.getLengthInScore()) {
-                Intent intent = new Intent(context,
-                        EndGame.class);
-                intent.putExtra("rightAnswer",statistic.getWinResult());
-                intent.putExtra("arrayRight",answerArray);
-                intent.putExtra("lengthInScore", statistic.getLengthInScore());
-                intent.putExtra("wordArray",statistic.getWordMassive());
-                context.startActivity(intent);
-                ((Activity) context).finish();
+        if (statistic.getSteps() == statistic.getLengthInScore()) {
+            Intent intent = new Intent(context,
+                    EndGame.class);
+            intent.putExtra("rightAnswer", statistic.getWinResult());
+            intent.putExtra("arrayRight", statistic.getAnswerArray());
+            intent.putExtra("lengthInScore", statistic.getLengthInScore());
+            intent.putExtra("wordArray", statistic.getWordMassive());
+            context.startActivity(intent);
+            ((Activity) context).finish();
 
-            } else {
-                letterChange.setLetterColor(statistic.isAnswerRight());
-                wordtoscreen = makeWord.showWord(statistic.getSelectWordNumber());
-            }
-            bmnext.setClickable(false);
+        } else {
+            letterChange.setLetterColor(statistic.isAnswerRight());
+            statistic.setWordToScreen(makeWord.showWord(statistic.getSelectWordNumber()));
+        }
+        bmnext.setClickable(false);
 
     }
 }

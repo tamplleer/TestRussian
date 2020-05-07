@@ -46,13 +46,26 @@ public class TestParam {
         this.answerArray = answerArray;
     }
 
+    public void setAnswerInArray(boolean answer, int number) {
+        answerArray[number] = answer;
+    }
+
     private int lengthInScore; //need to determine which audio play
     private int steps = 0;
-    private  String[] wordMassive;
+    private String[] wordMassive;
     private int winResult;
     private boolean[] answerArray;
     private int selectWordNumber;
     private boolean answerRight;
+    private String wordToScreen;
+
+    public String getWordToScreen() {
+        return wordToScreen;
+    }
+
+    public void setWordToScreen(String wordToScreen) {
+        this.wordToScreen = wordToScreen;
+    }
 
     public boolean isAnswerRight() {
         return answerRight;
@@ -70,7 +83,7 @@ public class TestParam {
         this.selectWordNumber = selectWordNumber;
     }
 
-    public TestParam(){
+    public TestParam() {
 
     }
 
