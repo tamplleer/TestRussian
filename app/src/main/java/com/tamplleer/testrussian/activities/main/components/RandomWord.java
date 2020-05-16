@@ -1,7 +1,5 @@
 package com.tamplleer.testrussian.activities.main.components;
 
-import com.tamplleer.testrussian.S;
-
 public class RandomWord {
     private static final int RANDOM_ARRAY = 30;
 
@@ -9,17 +7,16 @@ public class RandomWord {
     /**
      *
      */
-    public String[] createArrayRandWords(){
+    public String[] createArrayRandWords(String[] allWords){
         String[] wordMassive = new String[RANDOM_ARRAY];
-        String[] wordTmprArray =S.allWord.split(",");
         int random = 0;
 
         for (int i = 0; i < RANDOM_ARRAY; i++) {
-            random = (int) (Math.random() * wordTmprArray.length);
-            while (wordTmprArray[random].equals("0"))
-                random = (int) (Math.random() * wordTmprArray.length);
-            wordMassive[i] = wordTmprArray[random];
-            wordTmprArray[random] = "0";
+            random = (int) (Math.random() * allWords.length);
+            while (allWords[random].equals("0"))
+                random = (int) (Math.random() * allWords.length);
+            wordMassive[i] = allWords[random];
+            allWords[random] = "0";
         }
        return wordMassive;
     }

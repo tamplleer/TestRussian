@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.TestParam;
 import com.tamplleer.testrussian.activities.result.EndGame;
+import com.tamplleer.testrussian.firbase.database.DataBase;
 import com.tamplleer.testrussian.utils.Audio;
 
 public class TestOperations {
@@ -33,12 +34,12 @@ public class TestOperations {
         this.objectsInLayout = objectsInLayout;
         int screenWidth = objectsInLayout.getGetScreenSize().getScreenWidth();
         int screenHeight = objectsInLayout.getGetScreenSize().getScreenHeight();
-
+        DataBase dataBase = new DataBase();
         letterChange = new LetterChange(context, audio);
         testParams = new TestParam();
         makeWord = new MakeWord(context, screenWidth, screenHeight, letterChange, testParams);
         animationObject = new AnimationObject();
-        makeTest = new MakeTest(testParams, audio, objectsInLayout, context, makeWord);
+        makeTest = new MakeTest(testParams, audio, objectsInLayout, context, makeWord,dataBase);
     }
 
     /**

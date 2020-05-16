@@ -14,14 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.tamplleer.testrussian.R;
+import com.tamplleer.testrussian.S;
 import com.tamplleer.testrussian.activities.main.components.AnimationObject;
 import com.tamplleer.testrussian.activities.main.components.ObjectsInLayout;
+import com.tamplleer.testrussian.activities.main.components.TestOperations;
+import com.tamplleer.testrussian.firbase.database.DataBase;
 import com.tamplleer.testrussian.utils.AppRater;
 import com.tamplleer.testrussian.utils.Audio;
 import com.tamplleer.testrussian.utils.DialogInMenu;
-import com.tamplleer.testrussian.R;
-import com.tamplleer.testrussian.S;
-import com.tamplleer.testrussian.activities.main.components.TestOperations;
 
 import java.util.Objects;
 
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     DialogInMenu dialog;
     AdRequest adRequest;
     private AdView mAdView;
-
     private Handler handler = new Handler();
     private ObjectsInLayout objectsInLayout;
     private TestOperations testOperations;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         audio = new Audio(this, getAssets());
         animationObject = new AnimationObject();
 
-        testOperations = new TestOperations(this, audio, objectsInLayout);
+
 
         AppRater.app_launched(this);
         MobileAds.initialize(this, "ca-app-pub-8909727970839097~4345378585");
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         adRequest = new AdRequest.Builder()
                 .addTestDevice("90B58081B8CCAA1A4130F5271615A282")
                 .build();
+        testOperations = new TestOperations(this, audio, objectsInLayout);
     }
 
 
@@ -131,5 +132,7 @@ public class MainActivity extends AppCompatActivity {
         dialog = new DialogInMenu(this, 0);
         dialog.ad.show();
     }
+
+
 }
 
