@@ -2,7 +2,6 @@ package com.tamplleer.testrussian.activities.main.components;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,10 +16,12 @@ import java.util.Vector;
 public class LetterChange {
     private Audio audio;
     private TextView informText;
-    private Button bmnext;
-private Context context;
+    private Button buttonNext;
+    private Context context;
+    private AnimationObject animationObject;
     private boolean letterColor = false;
     private boolean letterAnswer = false;
+    //todo use new class to clean code
 
     public void setLetterColor(boolean letterColor) {
         this.letterColor = letterColor;
@@ -28,11 +29,12 @@ private Context context;
 
     private final static char[] BIG_LETTER = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
 
-    LetterChange(Context context,Audio audio) {
+    LetterChange(Context context, Audio audio) {
         this.audio = audio;
         informText = ((Activity) context).findViewById(R.id.text);
-        bmnext = ((Activity) context).findViewById(R.id.next);
-        this.context=context;
+        buttonNext = ((Activity) context).findViewById(R.id.next);
+        animationObject = new AnimationObject();
+        this.context = context;
     }
 
     void clickOnLetter(Letter letter, Vector<Letter> word) {
@@ -40,15 +42,12 @@ private Context context;
             paintWord(l.getLetterTextV());
 
         }
-        bmnext.setClickable(true);
-       TextView textView= letter.getLetterTextV();
+        buttonNext.setClickable(true);
+        TextView textView = letter.getLetterTextV();
         for (char c : BIG_LETTER) {
             if (letter.getCount() == c) {
                 paintLetter(letter.getLetterTextV());
-                YoYo.with(Techniques.Swing)
-                        .duration(700)
-                        .repeat(0)
-                        .playOn(textView);
+                animationObject.swing(textView);
                 letter.setViewParam();
                 touched(letter.getCount(), letter.getUpperCaseLetter(), letter.getType());
                 break;
@@ -62,7 +61,7 @@ private Context context;
     }
 
     private void touched(char count, int upperCaseLetter, int type) {
-        informText.setText("" + count + " ?");
+        informText.setText(String.format("%c ?", count));
         switch (count) {
             case 'А':
                 audio.playSound(audio.getSoundNumber("a"));
@@ -95,22 +94,22 @@ private Context context;
                 audio.playSound(1);
                 break;
         }
-        letterAnswer = type == upperCaseLetter;
+        letterAnswer = (type == upperCaseLetter);
     }
 
     private void paintLetter(TextView letter) {
         if (letterColor) {
-            letter.setTextColor(Color.rgb(178, 34, 34));
+            letter.setTextColor(context.getResources().getColor(R.color.FireBrick));
         } else {
-            letter.setTextColor(Color.rgb(47, 79, 79));
+            letter.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
         }
     }
 
     public void paintWord(TextView letter) {
         if (letterColor) {
-            letter.setTextColor(Color.rgb(47, 79, 79));
+            letter.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
         } else {
-            letter.setTextColor(Color.rgb(255, 228, 181));
+            letter.setTextColor(context.getResources().getColor(R.color.Moccasin));
         }
     }
 

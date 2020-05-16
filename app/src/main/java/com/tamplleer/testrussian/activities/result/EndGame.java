@@ -94,6 +94,7 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
         tt = findViewById(R.id.tt);
         mButton = findViewById(R.id.mButton);
         mButton.setEnabled(false);
+        mButton.setVisibility(View.INVISIBLE);
         t.setTypeface(font.getFont1());
         tt.setTypeface(font.getFont1());
         x = screenWidth / 3 + screenWidth / 10;
@@ -205,6 +206,7 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
     public void onRewardedVideoAdLoaded() {
         Toast.makeText(this, "Load", Toast.LENGTH_SHORT).show();
         mButton.setEnabled(true);
+        mButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -233,7 +235,7 @@ public class EndGame extends AppCompatActivity implements RewardedVideoAdListene
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
-        Toast.makeText(this, "Вы не посмотрели рекламму!",
+        Toast.makeText(this, "Error load",
                 Toast.LENGTH_LONG).show();
     }
 

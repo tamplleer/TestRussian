@@ -47,15 +47,13 @@ public class AppRater {
 
         Button rateButton = new Button(context);
         rateButton.setText("Оценить Ударения");
-        rateButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                        .parse("https://play.google.com/store/apps/details?id=com.tamplleer.testrussian")));
-                dialog.dismiss();
-                if (editor != null) {
-                    editor.putBoolean("dontshowagain", true);
-                    editor.commit();
-                }
+        rateButton.setOnClickListener(v -> {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                    .parse("https://play.google.com/store/apps/details?id=com.tamplleer.testrussian")));
+            dialog.dismiss();
+            if (editor != null) {
+                editor.putBoolean("dontshowagain", true);
+                editor.commit();
             }
         });
         linearLayout.addView(rateButton);

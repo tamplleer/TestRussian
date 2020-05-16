@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "596003598479-pa8t0cf2pn87s43d12b81nf8kdumf1rb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tamplleer.testrussian",
+            "certificate_hash": "676b5cc36d0df3f3c5e914f013bf73b3c41815f5"
+          }
+        },
+        {
+          "client_id": "596003598479-lrbv9c9ohfgbng3g3enb7rufs350ketf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tamplleer.testrussian",
+            "certificate_hash": "2f0680e3db927ca025c8938f53c3b2c997463168"
+          }
+        },
+        {
           "client_id": "596003598479-la2p7nbvqnv3icf2o8rnmopepm828pqe.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

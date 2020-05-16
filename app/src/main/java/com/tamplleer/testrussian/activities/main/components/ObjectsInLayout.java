@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,32 +16,31 @@ import com.tamplleer.testrussian.utils.Font;
 import com.tamplleer.testrussian.utils.GetScreenSize;
 
 public class ObjectsInLayout {
-    private ImageButton bminfo;
+    private ImageButton ButtonInfo;
     private AdView mAdView;
-    private Button start;
+    private Button startTestButton;
     private ImageButton soundButton;
     private LottieAnimationView lottieAnimationView;
     private Font font;
 
 
-    private TextView t, score;
-    private Button middleButton, bmstart30, bmnext;
+    private TextView mainInformText, score;
+    private Button ButtonMiddle, buttonStartRandom, buttonNext;
     private GetScreenSize getScreenSize;
-    private ImageView picture;
     private int screenWidth;
     private int screenHeight;
     private ConstraintLayout constraintLayout;
 
-    public ImageButton getBminfo() {
-        return bminfo;
+    public ImageButton getButtonInfo() {
+        return ButtonInfo;
     }
 
     public AdView getmAdView() {
         return mAdView;
     }
 
-    public Button getStart() {
-        return start;
+    public Button getStartTestButton() {
+        return startTestButton;
     }
 
     public ImageButton getSoundButton() {
@@ -57,33 +55,30 @@ public class ObjectsInLayout {
         return font;
     }
 
-    public TextView getT() {
-        return t;
+    public TextView getMainInformText() {
+        return mainInformText;
     }
 
     public TextView getScore() {
         return score;
     }
 
-    public Button getMiddleButton() {
-        return middleButton;
+    public Button getButtonMiddle() {
+        return ButtonMiddle;
     }
 
-    public Button getBmstart30() {
-        return bmstart30;
+    public Button getButtonStartRandom() {
+        return buttonStartRandom;
     }
 
-    public Button getBmnext() {
-        return bmnext;
+    public Button getButtonNext() {
+        return buttonNext;
     }
 
     public GetScreenSize getGetScreenSize() {
         return getScreenSize;
     }
 
-    public ImageView getPicture() {
-        return picture;
-    }
 
     public ConstraintLayout getConstraintLayout() {
         return constraintLayout;
@@ -99,8 +94,8 @@ public class ObjectsInLayout {
 
     public ObjectsInLayout(Context context) {
         font = new Font(context);
-        bminfo = ((Activity) context).findViewById(R.id.vopros);
-        start = ((Activity) context).findViewById(R.id.start);
+        ButtonInfo = ((Activity) context).findViewById(R.id.vopros);
+        startTestButton = ((Activity) context).findViewById(R.id.start);
         soundButton = ((Activity) context).findViewById(R.id.exit);
         lottieAnimationView = ((Activity) context).findViewById(R.id.loadingAnim);
 
@@ -109,25 +104,23 @@ public class ObjectsInLayout {
         screenWidth = getScreenSize.getScreenWidth();
         screenHeight = getScreenSize.getScreenHeight();
         constraintLayout = ((Activity) context).findViewById(R.id.constrainlayout);
-        picture = ((Activity) context).findViewById(R.id.imageView);
-        picture.setX(0);
-        picture.setY(0);
-        middleButton = ((Activity) context).findViewById(R.id.startGA);
 
-        bmstart30 = ((Activity) context).findViewById(R.id.start30);
+        ButtonMiddle = ((Activity) context).findViewById(R.id.startGA);
 
-        bmnext = ((Activity) context).findViewById(R.id.next);
-        bmnext.setVisibility(View.INVISIBLE);
-        t = ((Activity) context).findViewById(R.id.text);
+        buttonStartRandom = ((Activity) context).findViewById(R.id.start30);
+
+        buttonNext = ((Activity) context).findViewById(R.id.next);
+        buttonNext.setVisibility(View.INVISIBLE);
+        mainInformText = ((Activity) context).findViewById(R.id.text);
         score = ((Activity) context).findViewById(R.id.points);
-        t.setTextSize(screenWidth / 25);
-        t.setTypeface(font.getFont1());
+        mainInformText.setTextSize(screenWidth / 25);
+        mainInformText.setTypeface(font.getFont1());
         score.setTypeface(font.getFont1());
-        middleButton.setTypeface(font.getFont1());
-        bmnext.setTypeface(font.getFont1());
-        bmstart30.setTypeface(font.getFont1());
-        middleButton.setVisibility(View.VISIBLE);
-        bmnext.setClickable(false);
+        ButtonMiddle.setTypeface(font.getFont1());
+        buttonNext.setTypeface(font.getFont1());
+        buttonStartRandom.setTypeface(font.getFont1());
+        ButtonMiddle.setVisibility(View.VISIBLE);
+        buttonNext.setClickable(false);
     }
 
     void setClickable(Button button, boolean clickable) {

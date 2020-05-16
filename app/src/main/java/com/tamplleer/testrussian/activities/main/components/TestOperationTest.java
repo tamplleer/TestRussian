@@ -5,7 +5,7 @@ import android.os.Handler;
 
 import com.tamplleer.testrussian.TestParam;
 import com.tamplleer.testrussian.utils.Audio;
-
+@Deprecated
 public class TestOperationTest {
 
 

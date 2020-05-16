@@ -32,7 +32,7 @@ class MakeWord {
 
     }
 
-    String showWord(int wordNumber) {
+    String showWordCreateNewWord(int wordNumber) {
         stringToChar = testParam.getWordFromArray(wordNumber);
         wordtoscreen = testParam.getWordFromArray(wordNumber);
         createWord();

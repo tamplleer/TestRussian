@@ -44,18 +44,18 @@ public class MakeTest {
     }
 
     private void setDefaultParam() {
-        objectsInLayout.getBmnext().setVisibility(View.VISIBLE);
-        objectsInLayout.getMiddleButton().setVisibility(View.INVISIBLE);
-        objectsInLayout.getT().setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
-        objectsInLayout.getT().setText("");
+        objectsInLayout.getButtonNext().setVisibility(View.VISIBLE);
+        objectsInLayout.getButtonMiddle().setVisibility(View.INVISIBLE);
+        objectsInLayout.getMainInformText().setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
+        objectsInLayout.getMainInformText().setText("");
         statistic.setWinResult(0);
         statistic.setSteps(27);
-        statistic.setSelectWordNumber(0);
-        statistic.setAnswerRight(true);
+
+        statistic.setRightAnswer(true);
         objectsInLayout.getScore().setText(statistic.getSteps() + 1 + "/" + statistic.getLengthInScore());
 
         audio.playSound(audio.getSoundNumber("anvil"));
-        statistic.setWordToScreen(makeWord.showWord(statistic.getSelectWordNumber()));
+        statistic.setWordToScreen(makeWord.showWordCreateNewWord(statistic.getSteps()));
         objectsInLayout.getConstraintLayout().setBackgroundResource(R.drawable.background);
     }
 }

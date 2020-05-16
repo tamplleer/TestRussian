@@ -1,6 +1,7 @@
 package com.tamplleer.testrussian.utils;
 
 
+        import android.app.Activity;
         import android.app.AlertDialog;
         import android.content.Context;
 
@@ -13,19 +14,16 @@ package com.tamplleer.testrussian.utils;
 
 public class DialogInMenu {
     public AlertDialog.Builder ad;
-    EndGame endgame;
 
 
 
     public DialogInMenu(Context context,int type){
 
-        //"confirm exit";
-        endgame = new EndGame();
         ad = new AlertDialog.Builder(context, R.style.AlertDialogTheme);
         ad.setTitle(selectTitle(type));// заголовок
         ad.setMessage(selectMessage(type)); // сообщение
         if (type == 1){
-        ad.setNegativeButton(R.string.open, (dialog, arg1) -> endgame.loadAd());}
+        ad.setNegativeButton(R.string.open, (dialog, arg1) -> ((EndGame) context).loadAd());}
         ad.setPositiveButton(R.string.close, (dialog, arg1) -> dialog.cancel());
 
         ad.setCancelable(true);

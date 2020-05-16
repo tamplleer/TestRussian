@@ -3,42 +3,19 @@ package com.tamplleer.testrussian.activities.main.components;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.tamplleer.testrussian.R;
-import com.tamplleer.testrussian.S;
 import com.tamplleer.testrussian.TestParam;
 import com.tamplleer.testrussian.activities.result.EndGame;
 import com.tamplleer.testrussian.utils.Audio;
-import com.tamplleer.testrussian.utils.Font;
-import com.tamplleer.testrussian.utils.GetScreenSize;
 
 public class TestOperations {
-    TextView t, score;
-    Button button, bmstart30, bmnext;
-    GetScreenSize getScreenSize;
-    ImageView picture;
-    int screenWidth;
-    int screenHeight;
-    private static final int RUNDOMARRAY = 30;
-    private RandomWord randomWord;
-    private String[] word1;
-    private Handler handler = new Handler();
     private MakeWord makeWord;
-    private ConstraintLayout constraintLayout;
-    Context context;
+    private Context context;
     private Audio audio;
-    private Font font;
-    //boolean answerRight;
-    LetterChange letterChange;
+    private LetterChange letterChange;
     private int rightStrike = 0;
-    private TestParam statistic;
+    private TestParam testParams;
     private AnimationObject animationObject;
     private MakeTest makeTest;
     private ObjectsInLayout objectsInLayout;
@@ -50,44 +27,18 @@ public class TestOperations {
      * @param context
      * @param audio
      */
-    public TestOperations(Context context, Audio audio) {
+    public TestOperations(Context context, Audio audio, ObjectsInLayout objectsInLayout) {
         this.context = context;
         this.audio = audio;
+        this.objectsInLayout = objectsInLayout;
+        int screenWidth = objectsInLayout.getGetScreenSize().getScreenWidth();
+        int screenHeight = objectsInLayout.getGetScreenSize().getScreenHeight();
 
-        word1 = S.allWord.split(",");
-
-        font = new Font(context);
-        getScreenSize = new GetScreenSize(context);
-        screenWidth = getScreenSize.getScreenWidth();
-        screenHeight = getScreenSize.getScreenHeight();
-        constraintLayout = ((Activity) context).findViewById(R.id.constrainlayout);
-        picture = ((Activity) context).findViewById(R.id.imageView);
-        picture.setX(0);
-        picture.setY(0);
-        button = ((Activity) context).findViewById(R.id.startGA);
-
-        bmstart30 = ((Activity) context).findViewById(R.id.start30);
-
-        bmnext = ((Activity) context).findViewById(R.id.next);
-        bmnext.setVisibility(View.INVISIBLE);
-        t = ((Activity) context).findViewById(R.id.text);
-        score = ((Activity) context).findViewById(R.id.points);
-        t.setTextSize(screenWidth / 25);
-        t.setTypeface(font.getFont1());
-        score.setTypeface(font.getFont1());
-        button.setTypeface(font.getFont1());
-        bmnext.setTypeface(font.getFont1());
-        bmstart30.setTypeface(font.getFont1());
-        button.setVisibility(View.VISIBLE);
         letterChange = new LetterChange(context, audio);
-        statistic = new TestParam();
-        makeWord = new MakeWord(context, screenWidth, screenHeight, letterChange, statistic);
-        letterChange.setLetterColor(true);
-        bmnext.setClickable(false);
-
+        testParams = new TestParam();
+        makeWord = new MakeWord(context, screenWidth, screenHeight, letterChange, testParams);
         animationObject = new AnimationObject();
-        objectsInLayout = new ObjectsInLayout(context);
-        makeTest = new MakeTest(statistic, audio, objectsInLayout, context, makeWord);
+        makeTest = new MakeTest(testParams, audio, objectsInLayout, context, makeWord);
     }
 
     /**
@@ -96,7 +47,8 @@ public class TestOperations {
      * @param typeTest
      */
     //todo person can change how many word learn?!
-    public void start(boolean typeTest) {//typeTest 30 or all word of array 30 -true all -false
+    public void start(boolean typeTest) {
+        letterChange.setLetterColor(true);
         if (typeTest) {
             makeTest.crateRandomTest();
         } else {
@@ -105,49 +57,62 @@ public class TestOperations {
     }
 
     public void next() {
-        statistic.setAnswerRight(letterChange.isLetterColor());
+        setDefaultNextParam();
+
+        if (testParams.isRightAnswer()) rightAnswer();
+        else wrongAnswer();
+
+        if (testParams.getSteps() != testParams.getLengthInScore()) makeNextWord();
+        else changeActivitySaveParam();
+
+
+    }
+
+    private void makeNextWord() {
+        letterChange.setLetterColor(testParams.isRightAnswer());
+        testParams.setWordToScreen(makeWord.showWordCreateNewWord(testParams.getSteps()));
+        objectsInLayout.getButtonNext().setClickable(false);
+    }
+
+    private void setDefaultNextParam() {
+        testParams.setRightAnswer(letterChange.isLetterColor());
         letterChange.setLetterColor(false);
-        statistic.setSteps(statistic.getSteps() + 1);
-        statistic.setSelectWordNumber(statistic.getSelectWordNumber() + 1);
-        handler.post(() -> score.setText(statistic.getSteps() + 1 + "/" + statistic.getLengthInScore()));
-        if (statistic.isAnswerRight()) {
-            constraintLayout.setBackgroundResource(R.drawable.background);
-            statistic.setWinResult(statistic.getWinResult() + 1);
-            t.setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
-            if (rightStrike > 0) audio.playSound(audio.getSoundNumber("rightMore"));
-            else audio.playSound(audio.getSoundNumber("right"));
-            rightStrike++;
-            statistic.setAnswerInArray(true,statistic.getSteps() - 1);
-            animationObject.standUp(t);
+        testParams.setSteps(testParams.getSteps() + 1);
+        objectsInLayout.getScore().setText(String.format("%d/%d", testParams.getSteps() + 1, testParams.getLengthInScore()));
+        objectsInLayout.getMainInformText().setText(testParams.getWordToScreen());
+    }
 
+    private void changeActivitySaveParam() {
+        Intent intent = new Intent(context, EndGame.class);
+        intent.putExtra("rightAnswer", testParams.getWinResult());
+        intent.putExtra("arrayRight", testParams.getAnswerArray());
+        intent.putExtra("lengthInScore", testParams.getLengthInScore());
+        intent.putExtra("wordArray", testParams.getWordMassive());
+        context.startActivity(intent);
+        ((Activity) context).finish();
+    }
 
-        } else {
-            t.setTextColor(context.getResources().getColor(R.color.Khaki));
-            animationObject.shake(((Activity) context).findViewById(R.id.text));
-            audio.playSound(audio.getSoundNumber("wrong"));
-            rightStrike = 0;
-            constraintLayout.setBackgroundResource(R.drawable.background_red_2);
-            statistic.setAnswerInArray(false,statistic.getSteps() - 1);
-        }
+    private void rightAnswer() {
+        objectsInLayout.getMainInformText().setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
+        objectsInLayout.getConstraintLayout().setBackgroundResource(R.drawable.background);
+        animationObject.standUp(objectsInLayout.getMainInformText());
+        testParams.setWinResult(testParams.getWinResult() + 1);
 
+        if (rightStrike > 0) audio.playSound(audio.getSoundNumber("rightMore"));
+        else audio.playSound(audio.getSoundNumber("right"));
+        rightStrike++;
 
-        t.setText("" + statistic.getWordToScreen());
+        testParams.setAnswerInArray(true, testParams.getSteps() - 1);
+    }
 
-        if (statistic.getSteps() == statistic.getLengthInScore()) {
-            Intent intent = new Intent(context,
-                    EndGame.class);
-            intent.putExtra("rightAnswer", statistic.getWinResult());
-            intent.putExtra("arrayRight", statistic.getAnswerArray());
-            intent.putExtra("lengthInScore", statistic.getLengthInScore());
-            intent.putExtra("wordArray", statistic.getWordMassive());
-            context.startActivity(intent);
-            ((Activity) context).finish();
+    private void wrongAnswer() {
+        objectsInLayout.getMainInformText().setTextColor(context.getResources().getColor(R.color.Khaki));
+        objectsInLayout.getConstraintLayout().setBackgroundResource(R.drawable.background_red_2);
+        animationObject.shake(((Activity) context).findViewById(R.id.text));
 
-        } else {
-            letterChange.setLetterColor(statistic.isAnswerRight());
-            statistic.setWordToScreen(makeWord.showWord(statistic.getSelectWordNumber()));
-        }
-        bmnext.setClickable(false);
+        audio.playSound(audio.getSoundNumber("wrong"));
+        rightStrike = 0;
 
+        testParams.setAnswerInArray(false, testParams.getSteps() - 1);
     }
 }

@@ -55,8 +55,7 @@ public class TestParam {
     private String[] wordMassive;
     private int winResult;
     private boolean[] answerArray;
-    private int selectWordNumber;
-    private boolean answerRight;
+    private boolean rightAnswer;
     private String wordToScreen;
 
     public String getWordToScreen() {
@@ -67,20 +66,12 @@ public class TestParam {
         this.wordToScreen = wordToScreen;
     }
 
-    public boolean isAnswerRight() {
-        return answerRight;
+    public boolean isRightAnswer() {
+        return rightAnswer;
     }
 
-    public void setAnswerRight(boolean answerRight) {
-        this.answerRight = answerRight;
-    }
-
-    public int getSelectWordNumber() {
-        return selectWordNumber;
-    }
-
-    public void setSelectWordNumber(int selectWordNumber) {
-        this.selectWordNumber = selectWordNumber;
+    public void setRightAnswer(boolean rightAnswer) {
+        this.rightAnswer = rightAnswer;
     }
 
     public TestParam() {

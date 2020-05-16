@@ -8,11 +8,11 @@ package com.tamplleer.testrussian.activities.splesh;
 
   import com.tamplleer.testrussian.activities.main.MainActivity;
 
-public class SpleshScreenactivity extends AppCompatActivity {
+public class SpleshScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-                Intent intent = new Intent(SpleshScreenactivity.this,
+                Intent intent = new Intent(SpleshScreenActivity.this,
                         MainActivity.class);
                 startActivity(intent);
                 finish();

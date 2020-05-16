@@ -167,7 +167,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/battonshape"
-        android:onClick="vopros"
+        android:onClick="questionsButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.973"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -176,15 +176,6 @@
         app:layout_constraintVertical_bias="0.201"
         app:srcCompat="@android:drawable/ic_menu_help" />
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@color/DarkSlateGray"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-69dp" />
 
     <Button
         android:id="@+id/startGA"
