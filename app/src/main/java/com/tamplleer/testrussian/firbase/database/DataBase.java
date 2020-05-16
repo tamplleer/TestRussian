@@ -25,7 +25,6 @@ public class DataBase {
 /*
         mapper = new ObjectMapper();
         wordMap = new HashMap<>();
-
         try {
             wordMap = mapper.readValue(new File(".//allwords.json"), Map.class);
         } catch (IOException e) {
