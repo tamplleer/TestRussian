@@ -5,8 +5,7 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+import com.tamplleer.testrussian.AnimationObject;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.utils.Audio;
 import com.tamplleer.testrussian.word.Letter;

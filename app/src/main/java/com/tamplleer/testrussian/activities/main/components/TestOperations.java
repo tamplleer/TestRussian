@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.tamplleer.testrussian.AnimationObject;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.TestParam;
 import com.tamplleer.testrussian.activities.result.EndGame;
 import com.tamplleer.testrussian.firbase.database.DataBase;
+import com.tamplleer.testrussian.firbase.database.DataBaseWords;
 import com.tamplleer.testrussian.utils.Audio;
 
 public class TestOperations {
@@ -35,11 +37,14 @@ public class TestOperations {
         int screenWidth = objectsInLayout.getGetScreenSize().getScreenWidth();
         int screenHeight = objectsInLayout.getGetScreenSize().getScreenHeight();
         DataBase dataBase = new DataBase();
+        DataBaseWords dataBaseWords = new DataBaseWords(context);
+        dataBaseWords.insertWords();
+        dataBaseWords.readFromDataBase();
         letterChange = new LetterChange(context, audio);
         testParams = new TestParam();
         makeWord = new MakeWord(context, screenWidth, screenHeight, letterChange, testParams);
         animationObject = new AnimationObject();
-        makeTest = new MakeTest(testParams, audio, objectsInLayout, context, makeWord,dataBase);
+        makeTest = new MakeTest(testParams, audio, objectsInLayout, context, makeWord, dataBase);
     }
 
     /**
@@ -89,6 +94,7 @@ public class TestOperations {
         intent.putExtra("arrayRight", testParams.getAnswerArray());
         intent.putExtra("lengthInScore", testParams.getLengthInScore());
         intent.putExtra("wordArray", testParams.getWordMassive());
+        // audio.releaseSound();
         context.startActivity(intent);
         ((Activity) context).finish();
     }
@@ -98,7 +104,6 @@ public class TestOperations {
         objectsInLayout.getConstraintLayout().setBackgroundResource(R.drawable.background);
         animationObject.standUp(objectsInLayout.getMainInformText());
         testParams.setWinResult(testParams.getWinResult() + 1);
-
         if (rightStrike > 0) audio.playSound(audio.getSoundNumber("rightMore"));
         else audio.playSound(audio.getSoundNumber("right"));
         rightStrike++;

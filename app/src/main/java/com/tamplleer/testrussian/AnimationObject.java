@@ -1,4 +1,4 @@
-package com.tamplleer.testrussian.activities.main.components;
+package com.tamplleer.testrussian;
 
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -57,5 +57,17 @@ public class AnimationObject {
                 .duration(700)
                 .repeat(0)
                 .playOn(textView);
+    }
+    public void fadeInRight(ImageButton imageButton){
+        YoYo.with(Techniques.FadeInRight)
+                .duration(200)
+                .repeat(0)
+                .playOn(imageButton);
+    }
+    public void fadeInLeft(ImageButton imageButton){
+        YoYo.with(Techniques.FadeInLeft)
+                .duration(200)
+                .repeat(0)
+                .playOn(imageButton);
     }
 }

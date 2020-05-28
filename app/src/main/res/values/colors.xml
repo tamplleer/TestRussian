@@ -8,6 +8,8 @@
     <color name="Khaki">#F0E68C</color>
     <color name="DarkSlateGray">#2f4f4f</color>
     <color name="FireBrick">#b22222</color>
+    <color name="Green">#32cd32</color>
+    <color name="Red">#ff0000</color>
 
 
 </resources>

@@ -55,7 +55,7 @@ public class MakeTest {
         objectsInLayout.getMainInformText().setTextColor(context.getResources().getColor(R.color.DarkSlateGray));
         objectsInLayout.getMainInformText().setText("");
         statistic.setWinResult(0);
-        statistic.setSteps(0);
+        statistic.setSteps(28);
 
         statistic.setRightAnswer(true);
         objectsInLayout.getScore().setText(statistic.getSteps() + 1 + "/" + statistic.getLengthInScore());

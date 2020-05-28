@@ -8,6 +8,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.tamplleer.testrussian.activities.result.EndGame;
@@ -54,6 +55,7 @@ public class Audio {
     }
 
     public void playSound(int sound) {
+        Log.w("cat","play = "+sound);
         if (sound > 0) {
             mSoundPool.play(sound, volume, volume, 1, 0, 1);
         }
@@ -61,6 +63,7 @@ public class Audio {
 
     private int loadSound(String fileName) {
         AssetFileDescriptor afd;
+        Log.w("cat","load = "+fileName);
         try {
             afd = assetManager.openFd(fileName);
         } catch (IOException e) {
@@ -71,9 +74,13 @@ public class Audio {
         }
         return mSoundPool.load(afd, 1);
     }
+    public void releaseSound(){
+        mSoundPool.release();
+    }
 
     private void addSound(Context context) {
         createNewSoundPool();
+        Log.w("cat","add = ");
         soundMap.put("anvil", loadSound("anvil.mp3"));
         if (context instanceof EndGame) {
             soundMap.put("winSound", loadSound("uhuu.mp3"));
