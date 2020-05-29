@@ -8,8 +8,6 @@ import com.tamplleer.testrussian.AnimationObject;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.TestParam;
 import com.tamplleer.testrussian.activities.result.EndGame;
-import com.tamplleer.testrussian.firbase.database.DataBase;
-import com.tamplleer.testrussian.firbase.database.DataBaseWords;
 import com.tamplleer.testrussian.utils.Audio;
 
 public class TestOperations {
@@ -22,6 +20,7 @@ public class TestOperations {
     private AnimationObject animationObject;
     private MakeTest makeTest;
     private ObjectsInLayout objectsInLayout;
+
 
     /**
      * This class make operations with word
@@ -36,15 +35,13 @@ public class TestOperations {
         this.objectsInLayout = objectsInLayout;
         int screenWidth = objectsInLayout.getGetScreenSize().getScreenWidth();
         int screenHeight = objectsInLayout.getGetScreenSize().getScreenHeight();
-        DataBase dataBase = new DataBase();
-        DataBaseWords dataBaseWords = new DataBaseWords(context);
-        dataBaseWords.insertWords();
-        dataBaseWords.readFromDataBase();
+
+
         letterChange = new LetterChange(context, audio);
         testParams = new TestParam();
         makeWord = new MakeWord(context, screenWidth, screenHeight, letterChange, testParams);
         animationObject = new AnimationObject();
-        makeTest = new MakeTest(testParams, audio, objectsInLayout, context, makeWord, dataBase);
+        makeTest = new MakeTest(testParams, audio, objectsInLayout, context, makeWord);
     }
 
     /**
@@ -84,7 +81,9 @@ public class TestOperations {
         testParams.setRightAnswer(letterChange.isLetterColor());
         letterChange.setLetterColor(false);
         testParams.setSteps(testParams.getSteps() + 1);
-        objectsInLayout.getScore().setText(String.format("%d/%d", testParams.getSteps() + 1, testParams.getLengthInScore()));
+        if (testParams.getSteps() < testParams.getWordMassive().length) {
+            objectsInLayout.getScore().setText(String.format("%d/%d", testParams.getSteps() + 1, testParams.getLengthInScore()));
+        }
         objectsInLayout.getMainInformText().setText(testParams.getWordToScreen());
     }
 

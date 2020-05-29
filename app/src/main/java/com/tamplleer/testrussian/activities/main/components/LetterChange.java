@@ -20,7 +20,6 @@ public class LetterChange {
     private AnimationObject animationObject;
     private boolean letterColor = false;
     private boolean letterAnswer = false;
-    //todo use new class to clean code
 
     public void setLetterColor(boolean letterColor) {
         this.letterColor = letterColor;

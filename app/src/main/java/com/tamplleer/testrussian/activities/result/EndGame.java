@@ -1,7 +1,6 @@
 package com.tamplleer.testrussian.activities.result;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.SpannableStringBuilder;
@@ -38,12 +37,8 @@ public class EndGame extends AppCompatActivity {
     private boolean[] answerArray;
     int y, x;
     LetterEnd text1[];
-    int wordpokaz = 0;
-    int s = 0;
     boolean reclam;
-    // public static RewardedVideoAd mAd;
-    //  ImageButton mButton;
-    // new variables
+
     Font font;
     private int lengthInScore;
     private String[] wordMassive;
@@ -106,32 +101,27 @@ public class EndGame extends AppCompatActivity {
         super.onStart();
 
     }
-    private void makeListWords(){
+
+    private void makeListWords() {
         SpannableStringBuilder ss = new SpannableStringBuilder();
         int start = 0;
-ForegroundColorSpan colorStyle=new ForegroundColorSpan(Color.RED);
         for (int i = 0; i < 30; i++) {
-            ss.append(wordMassive[i]+"\n");
+            ss.append(wordMassive[i] + "\n");
             if (answerArray[i]) {
-                ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.Green)), start, ss.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-                start+=wordMassive[i].length()+1;
+                ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.Green)),
+                        start, start + wordMassive[i].length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                start += wordMassive[i].length() + 1;
+            } else {
+                start += wordMassive[i].length() + 1;
             }
-            else {
-                start+=wordMassive[i].length()+1;
-            }
-            text1[i] = new LetterEnd(this, x, y, wordMassive[i],
-                    screenHeight / 30, answerArray[i], false);
-            y += screenHeight / 43;
+
 
         }
         t.setText(ss);
     }
 
     public void endExit(View view) {
-        Intent intent = new Intent(EndGame.this,
-                MainActivity.class);
-
-
+        Intent intent = new Intent(EndGame.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -149,41 +139,6 @@ ForegroundColorSpan colorStyle=new ForegroundColorSpan(Color.RED);
         audio.setVolume(sharedPreference.getVolume());
     }
 
-    void nextBack() {
-        s = 0;
-        for (int i = 0; i < 30; i++) {
-            text1[i] = new LetterEnd(this, x, y, "        ", screenHeight / 30, answerArray[s], true);
-            y += screenHeight / 43;
-        }
-        y = screenHeight / 30;
-        for (int i = 0; i < 30; i++) {
-            s = i + wordpokaz * 30;
-            if (wordMassive.length > s) {
-
-                text1[i] = new LetterEnd(this, x, y, wordMassive[s], screenHeight / 30, answerArray[s], false);
-                y += screenHeight / 43;
-            }
-
-        }
-    }
-
-    public void nextClick(View view) {
-        animationObject.fadeInRight(findViewById(R.id.right));
-        if (30 < wordMassive.length && s < wordMassive.length) {
-            y = screenHeight / 30;
-            wordpokaz += 1;
-            nextBack();
-        }
-    }
-
-    public void iBack(View view) {
-        animationObject.fadeInLeft(findViewById(R.id.left));
-        if (30 < wordMassive.length && wordpokaz != 0) {
-            y = screenHeight / 30;
-            wordpokaz -= 1;
-            nextBack();
-        }
-    }
 
     public void mButton(View view) {
         DialogInMenu dialog;

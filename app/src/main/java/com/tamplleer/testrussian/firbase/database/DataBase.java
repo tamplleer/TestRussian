@@ -72,7 +72,7 @@ public class DataBase {
 
     public void set() {
         myRef.push().setValue("подУшка");
-    }
+    }//todo delete подУшка
 
     public String[] get() {
         return allWords;

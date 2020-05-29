@@ -1,5 +1,6 @@
 package com.tamplleer.testrussian.activities.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.tamplleer.testrussian.AnimationObject;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.S;
 import com.tamplleer.testrussian.SharedPreference;
+import com.tamplleer.testrussian.activities.database.DataBaseActivity;
 import com.tamplleer.testrussian.activities.main.components.Advertisement;
 import com.tamplleer.testrussian.activities.main.components.ObjectsInLayout;
 import com.tamplleer.testrussian.activities.main.components.TestOperations;
@@ -63,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start(View view) {
+        Intent intent = new Intent(MainActivity.this,
+                DataBaseActivity.class);
+        startActivity(intent);
+        finish();
         objectsInLayout.getLottieAnimationView().playAnimation();
         animationObject.bounce(objectsInLayout.getStartTestButton());
         testOperations.start(ALL_WORDS);
