@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.nightonke.boommenu.BoomButtons.HamButton;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.tamplleer.testrussian.AnimationObject;
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.S;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     AnimationObject animationObject;
     private SharedPreference sharedPreference;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -49,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         animationObject = new AnimationObject();
         advertisement = new Advertisement(this);
         testOperations = new TestOperations(this, audio, objectsInLayout);
-  
+        setMenuStrips();
+
     }
 
 
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             objectsInLayout.getSoundButton().setBackgroundResource(R.drawable.ic_sound_on);
         } else objectsInLayout.getSoundButton().setBackgroundResource(R.drawable.ic_sound_off);
         S.reclam = sharedPreference.getAdd();
-        if (S.reclam)advertisement.show();
+        if (S.reclam) advertisement.show();
 
 
     }
@@ -115,5 +119,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void setMenuStrips() {
+        BoomMenuButton bmb;
+        int[] drawableIcon = {R.drawable.ads,
+                R.drawable.ic_sound_on, R.drawable.ic_alienbig, R.drawable.ic_sound_off};
+        int[] stringName = {R.string.popup_button,
+                R.string.popup_button2, R.string.popup_button3, R.string.popup_button4};
+        int[] stringDescription = {R.string.popup_button_description,
+                R.string.popup_button2_description, R.string.popup_button3_description, R.string.popup_button3_description};
+        // int[] buttonColor={R.color.DarkSlateGray};
+        bmb = findViewById(R.id.bmb);
+        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+            HamButton.Builder builder = new HamButton.Builder()
+                    .normalColorRes(R.color.Khaki)
+                    .normalTextColor(getResources().getColor(R.color.DarkSlateGray))
+                    .subNormalTextColorRes(R.color.DarkSlateGray)
+                    .normalImageRes(drawableIcon[i])
+                    .normalTextRes(stringName[i])
+                    .subNormalTextRes(stringDescription[i])
+                    .listener(index -> {
+                       execute(index);
+                    });
+
+            bmb.addBuilder(builder);
+        }
+    }
+
+    private void execute(int index) {
+        final int allWords = 0;
+        final int randomWords = 1;
+        final int makeListWords = 2;
+        final int questions = 3;
+        switch (index) {
+            case allWords:
+                testOperations.start(ALL_WORDS);
+                break;
+            case randomWords:
+                testOperations.start(RANDOM_WORLD);
+                break;
+            case makeListWords: {
+                Intent intent = new Intent(MainActivity.this,
+                        DataBaseActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            break;
+            case questions:
+               {dialog = new DialogInMenu(this, 0);
+                   dialog.ad.show();}
+                   break;
+            default:
+                testOperations.start(RANDOM_WORLD);
+        }
+    }
 }
 

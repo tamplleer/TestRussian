@@ -11,17 +11,33 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loadingAnim"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="98dp"
+        android:layout_height="94dp"
         ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintHorizontal_bias="0.0"
+        ads:layout_constraintHorizontal_bias="0.856"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toTopOf="parent"
-        ads:layout_constraintVertical_bias="0.498"
-        app:lottie_rawRes="@raw/house"
+        ads:layout_constraintVertical_bias="0.753"
         app:lottie_autoPlay="false"
-        app:lottie_loop="false" />
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/house" />
+
+
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb"
+        ads:bmb_normalColor="@color/DarkSlateGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        ads:layout_constraintBottom_toTopOf="@+id/startGA"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/points"
+        app:bmb_buttonEnum="ham"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_4"
+        app:bmb_piecePlaceEnum="piecePlace_ham_4" />
 
     <TextView
         android:id="@+id/text"
@@ -29,6 +45,9 @@
         android:layout_height="wrap_content"
         android:forceHasOverlappingRendering="true"
         android:text=""
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/points"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -53,7 +72,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"></com.google.android.gms.ads.AdView>
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/exit"
@@ -194,5 +213,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.524" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

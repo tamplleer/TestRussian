@@ -2,7 +2,7 @@ package com.tamplleer.testrussian.firbase.database;
 
 import android.util.Log;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,29 +20,13 @@ public class DataBase {
     ArrayList<String> words;
     String[] allWords;
     Map<Integer, String> wordMap;
-    ObjectMapper mapper;
     int i;
 
     public DataBase() {
         myRef = FirebaseDatabase.getInstance().getReference("words");
-        mapper = new ObjectMapper();
         wordMap = new HashMap<>();
-/*
-        try {
-            wordMap = mapper.readValue(new File(assetManager.open("allwords.json")), Map.class);
-            allWords = new String[wordMap.size()];
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        i = 0;
-        wordMap.forEach((k, v) -> {
-
-            allWords[i] = v;
-            i++;
-        });*/
          load();
 
-// Read from the database
 
 
     }

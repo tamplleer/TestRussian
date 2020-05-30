@@ -39,10 +39,8 @@ dependencies {
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     implementation 'com.airbnb.android:lottie:3.0.0'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.7.2'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.7.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.7.2'
 
+    implementation 'com.nightonke:boommenu:2.1.1'
 
     testImplementation 'junit:junit:4.12'
 }
