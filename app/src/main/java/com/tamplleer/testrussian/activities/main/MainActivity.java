@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -68,24 +67,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void start(View view) {
-        Intent intent = new Intent(MainActivity.this,
-                DataBaseActivity.class);
-        startActivity(intent);
-        finish();
-        objectsInLayout.getLottieAnimationView().playAnimation();
-        animationObject.bounce(objectsInLayout.getStartTestButton());
-        testOperations.start(ALL_WORDS);
-    }
 
     public void starGA(View view) {
         testOperations.start(RANDOM_WORLD);
     }
 
-    public void randomWords(View view) {
-        animationObject.bounce((Button) findViewById(R.id.start30));
-        testOperations.start(RANDOM_WORLD);
-    }
 
     public void next(View view) {
         handler.post(() -> animationObject.bounceInUp(findViewById(R.id.next)));
@@ -112,13 +98,6 @@ public class MainActivity extends AppCompatActivity {
         sharedPreference.save(audio.getVolume());
     }
 
-    public void questionsButton(View view) {
-        animationObject.bounce(objectsInLayout.getButtonInfo());
-        dialog = new DialogInMenu(this, 0);
-        dialog.ad.show();
-    }
-
-
     private void setMenuStrips() {
         BoomMenuButton bmb;
         int[] drawableIcon = {R.drawable.ads,
@@ -138,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     .normalTextRes(stringName[i])
                     .subNormalTextRes(stringDescription[i])
                     .listener(index -> {
-                       execute(index);
+                        execute(index);
                     });
 
             bmb.addBuilder(builder);
@@ -151,9 +130,11 @@ public class MainActivity extends AppCompatActivity {
         final int makeListWords = 2;
         final int questions = 3;
         switch (index) {
-            case allWords:
+            case allWords: {
                 testOperations.start(ALL_WORDS);
-                break;
+                objectsInLayout.getLottieAnimationView().playAnimation();
+            }
+            break;
             case randomWords:
                 testOperations.start(RANDOM_WORLD);
                 break;
@@ -164,10 +145,11 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
             break;
-            case questions:
-               {dialog = new DialogInMenu(this, 0);
-                   dialog.ad.show();}
-                   break;
+            case questions: {
+                dialog = new DialogInMenu(this, 0);
+                dialog.ad.show();
+            }
+            break;
             default:
                 testOperations.start(RANDOM_WORLD);
         }

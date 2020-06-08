@@ -16,7 +16,7 @@ import com.tamplleer.testrussian.utils.Font;
 import com.tamplleer.testrussian.utils.GetScreenSize;
 
 public class ObjectsInLayout {
-    private ImageButton ButtonInfo;
+
     private AdView mAdView;
     private Button startTestButton;
     private ImageButton soundButton;
@@ -25,15 +25,12 @@ public class ObjectsInLayout {
 
 
     private TextView mainInformText, score;
-    private Button ButtonMiddle, buttonStartRandom, buttonNext;
+    private Button ButtonMiddle, buttonNext;
     private GetScreenSize getScreenSize;
     private int screenWidth;
     private int screenHeight;
     private ConstraintLayout constraintLayout;
 
-    public ImageButton getButtonInfo() {
-        return ButtonInfo;
-    }
 
     public AdView getmAdView() {
         return mAdView;
@@ -67,9 +64,6 @@ public class ObjectsInLayout {
         return ButtonMiddle;
     }
 
-    public Button getButtonStartRandom() {
-        return buttonStartRandom;
-    }
 
     public Button getButtonNext() {
         return buttonNext;
@@ -94,7 +88,6 @@ public class ObjectsInLayout {
 
     public ObjectsInLayout(Context context) {
         font = new Font(context);
-        ButtonInfo = ((Activity) context).findViewById(R.id.vopros);
         startTestButton = ((Activity) context).findViewById(R.id.start);
         soundButton = ((Activity) context).findViewById(R.id.exit);
         lottieAnimationView = ((Activity) context).findViewById(R.id.loadingAnim);
@@ -107,7 +100,6 @@ public class ObjectsInLayout {
 
         ButtonMiddle = ((Activity) context).findViewById(R.id.startGA);
 
-        buttonStartRandom = ((Activity) context).findViewById(R.id.start30);
 
         buttonNext = ((Activity) context).findViewById(R.id.next);
         buttonNext.setVisibility(View.INVISIBLE);
@@ -118,7 +110,6 @@ public class ObjectsInLayout {
         score.setTypeface(font.getFont1());
         ButtonMiddle.setTypeface(font.getFont1());
         buttonNext.setTypeface(font.getFont1());
-        buttonStartRandom.setTypeface(font.getFont1());
         ButtonMiddle.setVisibility(View.VISIBLE);
         buttonNext.setClickable(false);
     }

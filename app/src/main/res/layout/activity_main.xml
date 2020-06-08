@@ -6,7 +6,7 @@
     android:id="@+id/constrainlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/Khaki"
     tools:context="com.tamplleer.testrussian.activities.main.MainActivity">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -26,15 +26,16 @@
 
     <com.nightonke.boommenu.BoomMenuButton
         android:id="@+id/bmb"
-        ads:bmb_normalColor="@color/DarkSlateGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        ads:layout_constraintBottom_toTopOf="@+id/startGA"
+        android:layout_marginTop="596dp"
+        ads:bmb_normalColor="@color/DarkSlateGray"
         ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintHorizontal_bias="0.911"
         ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toBottomOf="@+id/points"
+        ads:layout_constraintTop_toTopOf="parent"
         app:bmb_buttonEnum="ham"
         app:bmb_buttonPlaceEnum="buttonPlace_ham_4"
         app:bmb_piecePlaceEnum="piecePlace_ham_4" />
@@ -76,44 +77,21 @@
 
     <ImageButton
         android:id="@+id/exit"
-        android:layout_width="50dp"
-        android:layout_height="42dp"
+        android:layout_width="68dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="612dp"
         android:background="@drawable/ic_sound_on"
         android:onClick="changeVolume"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <Button
-        android:id="@+id/start"
-        android:layout_width="114dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/battonshape"
-        android:onClick="start"
-        android:shadowColor="#42A8A1"
-        android:shadowDx="3"
-        android:shadowDy="1"
-        android:shadowRadius="5"
-        android:text="@string/WORD"
-        android:textColor="@color/Khaki"
-        android:textColorLink="@color/DarkSlateGray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.098" />
+        ads:layout_constraintEnd_toStartOf="@+id/next"
+        ads:layout_constraintHorizontal_bias="0.56"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/next"
-        android:layout_width="170dp"
-        android:layout_height="63dp"
+        android:layout_width="175dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
@@ -124,40 +102,12 @@
         android:shadowDx="3"
         android:shadowDy="1"
         android:shadowRadius="5"
-        android:text="@string/NEXT"
         android:textColor="@color/Khaki"
         app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.997" />
-
-    <Button
-        android:id="@+id/start30"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:layout_width="115dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/battonshape"
-        android:onClick="randomWords"
-        android:shadowColor="#42A8A1"
-        android:shadowDx="3"
-        android:shadowDy="1"
-        android:shadowRadius="5"
-        android:text="@string/word30"
-        android:textColor="@color/Khaki"
-        android:textColorLink="@color/DarkSlateGray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/points"
@@ -177,42 +127,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.016" />
 
-    <ImageButton
-        android:id="@+id/vopros"
-        android:layout_width="43dp"
-        android:layout_height="38dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/battonshape"
-        android:onClick="questionsButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.973"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.201"
-        app:srcCompat="@android:drawable/ic_menu_help" />
-
-
     <Button
         android:id="@+id/startGA"
-        android:layout_width="186dp"
-        android:layout_height="41dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="192dp"
+        android:layout_height="53dp"
         android:background="@drawable/battonshape"
         android:onClick="starGA"
         android:text="@string/Start"
         android:textColor="@color/Khaki"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.524" />
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="@+id/points" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
