@@ -7,7 +7,7 @@ package com.tamplleer.testrussian;
 
 public class S {
 
-    public static boolean reclam = true;
+    //public static boolean reclam = true;
 
 
 }

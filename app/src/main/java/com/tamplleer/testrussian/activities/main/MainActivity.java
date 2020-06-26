@@ -13,7 +13,6 @@ import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.tamplleer.testrussian.AnimationObject;
 import com.tamplleer.testrussian.R;
-import com.tamplleer.testrussian.S;
 import com.tamplleer.testrussian.SharedPreference;
 import com.tamplleer.testrussian.activities.database.DataBaseActivity;
 import com.tamplleer.testrussian.activities.main.components.Advertisement;
@@ -86,8 +85,7 @@ public class MainActivity extends AppCompatActivity {
         if (audio.getVolume() == 1) {
             objectsInLayout.getSoundButton().setBackgroundResource(R.drawable.ic_sound_on);
         } else objectsInLayout.getSoundButton().setBackgroundResource(R.drawable.ic_sound_off);
-        S.reclam = sharedPreference.getAdd();
-        if (S.reclam) advertisement.show();
+        if (sharedPreference.getAdd()) advertisement.show();
 
 
     }

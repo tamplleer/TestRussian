@@ -24,7 +24,8 @@ public class WordDbHelper extends SQLiteOpenHelper {
         String SQL_CREATE_WORDS_TABLE = "CREATE TABLE " + WordsContract.WordsEntry.TABLE_NAME + " ("
                 + WordsContract.WordsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + WordsContract.WordsEntry.COLUMN_WORD+ " TEXT NOT NULL, "
-                + WordsContract.WordsEntry.COLUMN_LIST_NAME + " TEXT NOT NULL); ";
+                + WordsContract.WordsEntry.COLUMN_LIST_NAME + " TEXT NOT NULL,"
+        +WordsContract.WordsEntry.COLUMN_LIST_ENABLE+" BOLEAN NOT NULL DEFAULT 1); ";
 
         // Запускаем создание таблицы
         db.execSQL(SQL_CREATE_WORDS_TABLE);

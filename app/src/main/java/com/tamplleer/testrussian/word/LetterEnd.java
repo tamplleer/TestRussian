@@ -12,7 +12,7 @@ import com.tamplleer.testrussian.R;
 /**
  * Created by tampl on 13.02.2018.
  */
-
+//todo delete class
 public class LetterEnd implements ILetter {
     private final static float ALPHA = 1;
     public LetterEnd(Context context, int x, int y, String count, int size, final boolean trueOrFalse, boolean zero) {

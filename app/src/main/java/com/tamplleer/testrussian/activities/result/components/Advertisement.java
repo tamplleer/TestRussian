@@ -12,21 +12,22 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.tamplleer.testrussian.R;
+import com.tamplleer.testrussian.SharedPreference;
 
 public class Advertisement {
     private static RewardedVideoAd mAd;
     private Context context;
     private ImageButton mButton;
+    private SharedPreference sharedPreference;
 
-    public static RewardedVideoAd getmAd() {
-        return mAd;
-    }
+
 
     public Advertisement(Context context) {
         this.context = context;
-        mButton = ((Activity) context).findViewById(R.id.mButton);
+        mButton = ((Activity) context).findViewById(R.id.advertisement_button);
         mButton.setEnabled(false);
         mButton.setVisibility(View.INVISIBLE);
+        sharedPreference = new SharedPreference(context);
         MobileAds.initialize(context, "ca-app-pub-8909727970839097/9184677267");
         mAd = MobileAds.getRewardedVideoAdInstance(context);
         setAdvertisementListener();
@@ -41,11 +42,12 @@ public class Advertisement {
         mAd.show();
     }
 
+
+
     private void setAdvertisementListener() {
         mAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
             public void onRewardedVideoAdLoaded() {
-                Toast.makeText(context, "Load", Toast.LENGTH_SHORT).show();
                 mButton.setEnabled(true);
                 mButton.setVisibility(View.VISIBLE);
 
@@ -62,7 +64,7 @@ public class Advertisement {
             @Override
             public void onRewardedVideoAdClosed() {
                 mButton.setEnabled(false);
-                // reclam = false; todo set reclam false
+                sharedPreference.saveEndGame(false);
                 Toast.makeText(context, "Вы больше не увидите рекламму!",
                         Toast.LENGTH_LONG).show();
             }
@@ -77,8 +79,6 @@ public class Advertisement {
 
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
-                Toast.makeText(context, "Error load ",
-                        Toast.LENGTH_LONG).show();
             }
 
             @Override

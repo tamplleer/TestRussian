@@ -1,11 +1,13 @@
 package com.tamplleer.testrussian;
 
+import com.google.firebase.database.annotations.NotNull;
+
 public class TestParam {
     public int getLengthInScore() {
         return lengthInScore;
     }
 
-    public void setLengthInScore(int lengthInScore) {
+    public void setLengthInScore(@NotNull int lengthInScore) {
         this.lengthInScore = lengthInScore;
     }
 
@@ -25,7 +27,7 @@ public class TestParam {
         return wordMassive[number];
     }
 
-    public void setWordMassive(String[] wordMassive) {
+    public void setWordMassive(@NotNull String[] wordMassive) {
         this.wordMassive = wordMassive;
     }
 
@@ -42,7 +44,7 @@ public class TestParam {
         return answerArray;
     }
 
-    public void setAnswerArray(boolean[] answerArray) {
+    public void setAnswerArray(@NotNull boolean[] answerArray) {
         this.answerArray = answerArray;
     }
 

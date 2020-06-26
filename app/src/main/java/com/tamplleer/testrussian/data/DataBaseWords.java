@@ -1,0 +1,145 @@
+package com.tamplleer.testrussian.data;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.util.Pair;
+
+import java.util.ArrayList;
+
+public class DataBaseWords {
+    private WordDbHelper mDbHelper;
+    String word;
+    Boolean enable;
+    String selection;
+    SQLiteDatabase db;
+    String[] projection = {
+            WordsContract.WordsEntry._ID,
+            WordsContract.WordsEntry.COLUMN_WORD,
+            WordsContract.WordsEntry.COLUMN_LIST_NAME,
+            WordsContract.WordsEntry.COLUMN_LIST_ENABLE};
+    Cursor cursor;
+
+
+    public DataBaseWords(Context context) {
+        mDbHelper = new WordDbHelper(context);
+        db = mDbHelper.getReadableDatabase();
+        ArrayList<String> list = new ArrayList<>();
+
+        selection = WordsContract.WordsEntry.COLUMN_LIST_NAME + "=?";
+
+
+    }
+
+    public ArrayList<String> readFromDataBase(String type) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        ArrayList<String> list = new ArrayList<>();
+        String[] projection = {
+                WordsContract.WordsEntry._ID,
+                WordsContract.WordsEntry.COLUMN_WORD,
+                WordsContract.WordsEntry.COLUMN_LIST_NAME,
+                WordsContract.WordsEntry.COLUMN_LIST_ENABLE};
+        String selection = WordsContract.WordsEntry.COLUMN_LIST_NAME + "=?";
+        String enable = WordsContract.WordsEntry.COLUMN_LIST_ENABLE + "=?";
+        String columnWhere = selection + " AND " + enable;
+
+        try (Cursor cursor = db.query(
+                WordsContract.WordsEntry.TABLE_NAME,   // таблица
+                projection,            // столбцы
+                columnWhere,                  // столбцы для условия WHERE
+                new String[]{type, String.valueOf(1)},                  // значения для условия WHERE
+                null,                  // Don't group the rows
+                null,                  // Don't filter by row groups
+                null)) {
+
+            while (cursor.moveToNext()) {
+                list.add(cursor.getString(cursor.getColumnIndex(WordsContract.WordsEntry.COLUMN_WORD)));
+                Log.d("cat", "Data base word : " +
+                        cursor.getString(cursor.getColumnIndex(WordsContract.WordsEntry.COLUMN_WORD)));
+            }
+        }
+        return list;
+    }
+
+    public void startRead(String type) {
+        cursor = db.query(
+                WordsContract.WordsEntry.TABLE_NAME,   // таблица
+                projection,            // столбцы
+                selection,                  // столбцы для условия WHERE
+                new String[]{type},                  // значения для условия WHERE
+                null,                  // Don't group the rows
+                null,                  // Don't filter by row groups
+                null);
+    }
+
+    public boolean isFinishDataBase() {
+        return cursor.moveToNext();
+    }
+
+    public void closeDataBase() {
+        cursor.close();
+    }
+
+    public Pair<String, Boolean> readFromDataBaseAllWord(String type) {
+        word = cursor.getString(cursor.getColumnIndex(WordsContract.WordsEntry.COLUMN_WORD));
+        enable = cursor.getInt(cursor.getColumnIndex(WordsContract.WordsEntry.COLUMN_LIST_ENABLE)) > 0;
+
+        return new Pair<>(word, enable);
+    }
+
+    public void insertWords(String word, String type) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(WordsContract.WordsEntry.COLUMN_WORD, word);
+        values.put(WordsContract.WordsEntry.COLUMN_LIST_NAME, type);
+        long newRowId = db.insert(WordsContract.WordsEntry.TABLE_NAME, null, values);
+    }
+
+
+    public void insertFromFireBase(String[] fireBaseData) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        if (fireBaseData != null) {
+            for (String s : fireBaseData) {
+                Log.d("cat", "Data base firebase : " + s);
+                values.put(WordsContract.WordsEntry.COLUMN_WORD, s);
+                values.put(WordsContract.WordsEntry.COLUMN_LIST_NAME, "main");
+                db.insert(WordsContract.WordsEntry.TABLE_NAME, null, values);
+            }
+
+
+        }
+    }
+
+    public void updateEnable(String word, String type, Boolean e) {
+        ContentValues values = new ContentValues();
+        values.put(WordsContract.WordsEntry.COLUMN_LIST_ENABLE, e);
+        String where = WordsContract.WordsEntry.COLUMN_WORD + " =? AND " + WordsContract.WordsEntry.COLUMN_LIST_NAME + " =? ";
+        db.update(WordsContract.WordsEntry.TABLE_NAME,
+                values,
+                where,
+                new String[]{word, type});
+    }
+    public void updateWord(String word, String type,String wordBefore) {
+        ContentValues values = new ContentValues();
+        values.put(WordsContract.WordsEntry.COLUMN_WORD, word);
+        String where = WordsContract.WordsEntry.COLUMN_WORD + " =? AND " + WordsContract.WordsEntry.COLUMN_LIST_NAME + " =? ";
+        db.update(WordsContract.WordsEntry.TABLE_NAME,
+                values,
+                where,
+                new String[]{wordBefore, type});
+    }
+
+    public void deleteElem(String word, String type) {
+        String values = WordsContract.WordsEntry.COLUMN_WORD +
+                " =? AND " +
+                WordsContract.WordsEntry.COLUMN_LIST_NAME +
+                "=?";
+        db.delete(WordsContract.WordsEntry.TABLE_NAME, values, new String[]{word, type});
+    }
+
+
+    //todo delete update, update table first time
+}

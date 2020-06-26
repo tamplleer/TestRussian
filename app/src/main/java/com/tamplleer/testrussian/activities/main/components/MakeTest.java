@@ -2,10 +2,11 @@ package com.tamplleer.testrussian.activities.main.components;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Toast;
 
 import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.TestParam;
-import com.tamplleer.testrussian.firbase.database.DataBaseWords;
+import com.tamplleer.testrussian.data.DataBaseWords;
 import com.tamplleer.testrussian.utils.Audio;
 
 public class MakeTest {
@@ -18,6 +19,7 @@ public class MakeTest {
     Context context;
     private MakeWord makeWord;
     private DataBaseWords dataBaseWords;
+
     MakeTest(TestParam statistic, Audio audio, ObjectsInLayout objectsInLayout, Context context, MakeWord makeWord) {
         this.statistic = statistic;
         this.objectsInLayout = objectsInLayout;
@@ -29,20 +31,29 @@ public class MakeTest {
 
     public void crateRandomTest() {
         allWord = dataBaseWords.readFromDataBase("main").toArray(new String[0]);
-        RandomWord randomWord = new RandomWord();
-        statistic.setAnswerArray(new boolean[RANDOM_ARRAY]);
-        statistic.setLengthInScore(RANDOM_ARRAY);
-        statistic.setWordMassive(randomWord.createArrayRandWords(allWord));
-        setDefaultParam();
+        if (allWord.length > 0) {
+            RandomWord randomWord = new RandomWord();
+            statistic.setAnswerArray(new boolean[RANDOM_ARRAY]);
+            statistic.setLengthInScore(RANDOM_ARRAY);
+            statistic.setWordMassive(randomWord.createArrayRandWords(allWord));
+            setDefaultParam();
+        } else {
+            Toast.makeText(context, "Проблема с загрузкой слов, переустановите приложение",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     public void createAllWordsTest() {
         allWord = dataBaseWords.readFromDataBase("main").toArray(new String[0]);
-
-        statistic.setAnswerArray(new boolean[allWord.length]); //NEED&???
-        statistic.setLengthInScore(allWord.length);
-        statistic.setWordMassive(allWord);
-        setDefaultParam();
+        if (allWord.length > 0) {
+            statistic.setAnswerArray(new boolean[allWord.length]); //NEED&???
+            statistic.setLengthInScore(allWord.length);
+            statistic.setWordMassive(allWord);
+            setDefaultParam();
+        } else {
+            Toast.makeText(context, "Проблема с загрузкой слов, переустановите приложение",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 

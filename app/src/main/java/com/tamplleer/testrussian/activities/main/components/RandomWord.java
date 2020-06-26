@@ -1,5 +1,7 @@
 package com.tamplleer.testrussian.activities.main.components;
 
+import com.google.firebase.database.annotations.NotNull;
+
 public class RandomWord {
     private static final int RANDOM_ARRAY = 30;
 
@@ -7,7 +9,7 @@ public class RandomWord {
     /**
      *
      */
-    public String[] createArrayRandWords(String[] allWords){
+    public String[] createArrayRandWords(@NotNull String[] allWords){
         String[] wordMassive = new String[RANDOM_ARRAY];
         int random = 0;
 

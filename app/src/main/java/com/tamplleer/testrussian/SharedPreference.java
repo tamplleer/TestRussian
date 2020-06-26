@@ -6,22 +6,35 @@ import android.content.SharedPreferences;
 public class SharedPreference {
     private SharedPreferences sharedPreferences;
     private final static String APP_PREFERENCES1 = "mySettings";
-    private final static String APP_PREFERENCES_silence = "silence";
+    private final static String APP_PREFERENCES_SILENCE = "silence";
     private final static String APP_PREFERENCES_ADD = "ads";
+    private final static String APP_PREFERENCE_FIRST_BOOT="firstBoot";
     public SharedPreference(Context context) {
         sharedPreferences = context.getSharedPreferences(APP_PREFERENCES1, Context.MODE_PRIVATE);
     }
 
     public void save(final int volume) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(APP_PREFERENCES_silence, volume);
-        editor.putBoolean(APP_PREFERENCES_ADD, S.reclam);
+        editor.putInt(APP_PREFERENCES_SILENCE, volume);
+        editor.putBoolean(APP_PREFERENCES_ADD, getAdd());
+        editor.apply();
+    }
+    public boolean getFirstBoot(){
+        if (sharedPreferences.contains(APP_PREFERENCE_FIRST_BOOT)) {
+            return sharedPreferences.getBoolean(APP_PREFERENCE_FIRST_BOOT, false);
+        }
+        return false;
+    }
+    public void setFirstBoot(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(APP_PREFERENCE_FIRST_BOOT, true);
+        editor.putBoolean(APP_PREFERENCES_ADD, true);
         editor.apply();
     }
 
     public int getVolume() {
-        if (sharedPreferences.contains(APP_PREFERENCES_silence)) {
-            return sharedPreferences.getInt(APP_PREFERENCES_silence, 0);
+        if (sharedPreferences.contains(APP_PREFERENCES_SILENCE)) {
+            return sharedPreferences.getInt(APP_PREFERENCES_SILENCE, 0);
         }
         return 0;
 
