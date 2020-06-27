@@ -12,29 +12,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.tamplleer.testrussian.R;
+import com.tamplleer.testrussian.activities.database.components.Spinner.SpinnerManager;
+import com.tamplleer.testrussian.activities.database.components.WordFragmentManager;
 import com.tamplleer.testrussian.activities.main.MainActivity;
 import com.tamplleer.testrussian.data.DataBaseWords;
 
 public class DataBaseActivity extends AppCompatActivity {
     DataBaseWords dataBaseWords;
     Button buttonLoadFireBase;
-    EditText editTextAddWord, editTextAddListType;
-    private WordFragment wordFragment;
+    EditText editTextAddWord;
+    private WordFragmentManager wordFragmentManager;
     private Handler handler = new Handler();
     private LottieAnimationView lottieAnimationView;
+
+
+    private SpinnerManager spinnerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_base);
         lottieAnimationView = findViewById(R.id.loadingAnim);
-        editTextAddListType = findViewById(R.id.list_type);
         editTextAddWord = findViewById(R.id.add_word);
+
         dataBaseWords = new DataBaseWords(this);
-        wordFragment = new WordFragment(this, dataBaseWords,getSupportFragmentManager());
+        wordFragmentManager = new WordFragmentManager(this, dataBaseWords, getSupportFragmentManager());
+
+        spinnerManager = new SpinnerManager(this,dataBaseWords,wordFragmentManager, getSupportFragmentManager());
         Thread thread = new Thread(() -> {
             handler.post(() -> {
                 showWordsInFragments("main");
+
                 // lottieAnimationView.playAnimation();
             });
 
@@ -43,6 +51,8 @@ public class DataBaseActivity extends AppCompatActivity {
         if (!thread.isAlive()) {
             Toast.makeText(this, "thread Interrupted", Toast.LENGTH_LONG).show();
         }
+
+       // setSpinnerList();
 
 
     }
@@ -58,7 +68,7 @@ public class DataBaseActivity extends AppCompatActivity {
 
         // wordFragment.createFragment(dataBaseWords.readFromDataBase(type));
 
-        wordFragment.createFragment(type);
+        wordFragmentManager.createFragment(type);
     }
 
 /*    public void loadFireBase(View view) {
@@ -67,21 +77,8 @@ public class DataBaseActivity extends AppCompatActivity {
     }*/
 
     public void addWord(View view) {
-        dataBaseWords.insertWords(editTextAddWord.getText().toString(), editTextAddListType.getText().toString());
-        wordFragment.addWord(editTextAddWord.getText().toString(), editTextAddListType.getText().toString());
-    }
-
-    public void showWords(View view) {
-
-        Thread thread = new Thread(() -> {
-            handler.post(() -> {
-                showWordsInFragments(editTextAddListType.getText().toString());
-                // lottieAnimationView.playAnimation();
-            });
-
-        });
-        thread.start();
-
+        dataBaseWords.insertWords(editTextAddWord.getText().toString(), spinnerManager.getTypeBefore());
+        wordFragmentManager.addWord(editTextAddWord.getText().toString(), spinnerManager.getTypeBefore());
     }
 
 
@@ -93,4 +90,10 @@ public class DataBaseActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+  /*  private void setSpinnerList() {
+
+    }*/
+
+
 }

@@ -13,7 +13,6 @@ public class DataBaseWords {
     private WordDbHelper mDbHelper;
     String word;
     Boolean enable;
-    String selection;
     SQLiteDatabase db;
     String[] projection = {
             WordsContract.WordsEntry._ID,
@@ -21,14 +20,13 @@ public class DataBaseWords {
             WordsContract.WordsEntry.COLUMN_LIST_NAME,
             WordsContract.WordsEntry.COLUMN_LIST_ENABLE};
     Cursor cursor;
+    private ArrayList<String> typesList = new ArrayList<>();
 
 
     public DataBaseWords(Context context) {
         mDbHelper = new WordDbHelper(context);
         db = mDbHelper.getReadableDatabase();
         ArrayList<String> list = new ArrayList<>();
-
-        selection = WordsContract.WordsEntry.COLUMN_LIST_NAME + "=?";
 
 
     }
@@ -63,12 +61,19 @@ public class DataBaseWords {
         return list;
     }
 
-    public void startRead(String type) {
+    public void startRead(String type, boolean isAllWordInDataBase) {
+        String selection = null;
+        String[] whereTerms = null;
+        if (!isAllWordInDataBase) {
+            selection = WordsContract.WordsEntry.COLUMN_LIST_NAME + "=?";
+            whereTerms = new String[]{type};
+        }
+
         cursor = db.query(
                 WordsContract.WordsEntry.TABLE_NAME,   // таблица
                 projection,            // столбцы
                 selection,                  // столбцы для условия WHERE
-                new String[]{type},                  // значения для условия WHERE
+                whereTerms,                  // значения для условия WHERE
                 null,                  // Don't group the rows
                 null,                  // Don't filter by row groups
                 null);
@@ -82,11 +87,15 @@ public class DataBaseWords {
         cursor.close();
     }
 
-    public Pair<String, Boolean> readFromDataBaseAllWord(String type) {
+    public Pair<String, Boolean> readFromDataBaseWord() {
         word = cursor.getString(cursor.getColumnIndex(WordsContract.WordsEntry.COLUMN_WORD));
         enable = cursor.getInt(cursor.getColumnIndex(WordsContract.WordsEntry.COLUMN_LIST_ENABLE)) > 0;
 
         return new Pair<>(word, enable);
+    }
+
+    public String readFromDataBaseAllWord() {
+        return cursor.getString(cursor.getColumnIndex(WordsContract.WordsEntry.COLUMN_LIST_NAME));
     }
 
     public void insertWords(String word, String type) {
@@ -122,7 +131,8 @@ public class DataBaseWords {
                 where,
                 new String[]{word, type});
     }
-    public void updateWord(String word, String type,String wordBefore) {
+
+    public void updateWord(String word, String type, String wordBefore) {
         ContentValues values = new ContentValues();
         values.put(WordsContract.WordsEntry.COLUMN_WORD, word);
         String where = WordsContract.WordsEntry.COLUMN_WORD + " =? AND " + WordsContract.WordsEntry.COLUMN_LIST_NAME + " =? ";
@@ -140,6 +150,31 @@ public class DataBaseWords {
         db.delete(WordsContract.WordsEntry.TABLE_NAME, values, new String[]{word, type});
     }
 
+    public ArrayList<String> findAllTypes() {
+        typesList.clear();
+        boolean coincidence;
+        startRead(null, true);
+        String type = "";
+        while (isFinishDataBase()) {
+            coincidence = false;
+            type = readFromDataBaseAllWord();
+            if (typesList.size() == 0) {
+                typesList.add(type);
+            } else {
+                for (String t : typesList) {
+                    if (type.equals(t)) {
+                        coincidence = true;
+                        break;
+                    }
+                }
+                if (!coincidence) typesList.add(type);
+            }
 
-    //todo delete update, update table first time
+
+        }
+        closeDataBase();
+        return typesList;
+    }
+
+
 }

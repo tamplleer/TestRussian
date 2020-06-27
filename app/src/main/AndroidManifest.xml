@@ -17,7 +17,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="p">
-        <activity android:name=".activities.database.DataBaseActivity"></activity>
+        <activity
+            android:name=".EducationActivity"
+            android:label="@string/title_activity_education"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.database.DataBaseActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -38,7 +42,7 @@
         </activity>
         <activity
             android:name=".activities.result.EndGame"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

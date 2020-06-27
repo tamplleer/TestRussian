@@ -94,7 +94,7 @@
         tools:layout_editor_absoluteY="35dp" />
 
     <ImageButton
-        android:id="@+id/mButton"
+        android:id="@+id/advertisement_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
