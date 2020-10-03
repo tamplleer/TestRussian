@@ -22,6 +22,9 @@ public class DataBaseWords {
     Cursor cursor;
     private ArrayList<String> typesList = new ArrayList<>();
 
+    public ArrayList<String> getTypesList() {
+        return typesList;
+    }
 
     public DataBaseWords(Context context) {
         mDbHelper = new WordDbHelper(context);
@@ -114,7 +117,7 @@ public class DataBaseWords {
             for (String s : fireBaseData) {
                 Log.d("cat", "Data base firebase : " + s);
                 values.put(WordsContract.WordsEntry.COLUMN_WORD, s);
-                values.put(WordsContract.WordsEntry.COLUMN_LIST_NAME, "main");
+                values.put(WordsContract.WordsEntry.COLUMN_LIST_NAME, "Банк заданий ЕГЭ");
                 db.insert(WordsContract.WordsEntry.TABLE_NAME, null, values);
             }
 

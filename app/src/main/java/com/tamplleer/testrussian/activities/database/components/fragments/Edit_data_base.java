@@ -1,4 +1,4 @@
-package com.tamplleer.testrussian.activities.database.components;
+package com.tamplleer.testrussian.activities.database.components.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.tamplleer.testrussian.R;
+import com.tamplleer.testrussian.activities.database.components.ICallBackFragment;
 
 import java.util.UUID;
 

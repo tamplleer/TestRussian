@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".activities.database.components.Edit_data_base">
+    tools:context=".activities.database.components.fragments.Edit_data_base">
 
     <!-- TODO: Update blank fragment layout -->
 

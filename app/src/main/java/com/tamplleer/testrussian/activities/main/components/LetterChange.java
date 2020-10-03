@@ -25,7 +25,7 @@ public class LetterChange {
         this.letterColor = letterColor;
     }
 
-    private final static char[] BIG_LETTER = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
+    public final static char[] BIG_LETTER = {'А', 'И', 'Е', 'Ё', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я'};
 
     LetterChange(Context context, Audio audio) {
         this.audio = audio;

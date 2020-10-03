@@ -9,9 +9,9 @@ import android.widget.Spinner;
 import androidx.fragment.app.FragmentManager;
 
 import com.tamplleer.testrussian.R;
-import com.tamplleer.testrussian.activities.database.components.Edit_data_base;
 import com.tamplleer.testrussian.activities.database.components.ICallBackFragment;
 import com.tamplleer.testrussian.activities.database.components.WordFragmentManager;
+import com.tamplleer.testrussian.activities.database.components.fragments.Edit_data_base;
 import com.tamplleer.testrussian.data.DataBaseWords;
 
 import java.util.UUID;
@@ -21,6 +21,7 @@ public class SpinnerManager implements ICallBackFragment {
     private Spinner spinnerType;
     private FragmentManager fragmentManager;
     private String typeBefore = "";
+    private int positionBefore = 0;
     private DataBaseWords dataBaseWords;
     private WordFragmentManager wordFragmentManager;
     private static final String DEFAULT_WORD = "гЕнезис";
@@ -40,11 +41,20 @@ public class SpinnerManager implements ICallBackFragment {
 
     @Override
     public void execute(String message, String newType, String type, UUID id) {
-        dataBaseWords.insertWords(DEFAULT_WORD, newType);
-        spinnerTypeAdapter.getTypesList().add(newType);
-        spinnerTypeAdapter.notifyDataSetChanged();
-        selectSpinnerType(newType);
+        if (isAlreadyExistType(newType)) {
+            dataBaseWords.insertWords(DEFAULT_WORD, newType);
+            spinnerTypeAdapter.addType(newType);
 
+        }
+        spinnerTypeAdapter.notifyDataSetChanged();
+        spinnerType.setSelection(spinnerTypeAdapter.getCount() - 2);
+    }
+
+    private boolean isAlreadyExistType(String type) {
+        for (String s : dataBaseWords.getTypesList()) {
+            if (type.equals(s)) return false;
+        }
+        return true;
     }
 
     private void onSelectedAdd() {
@@ -61,23 +71,35 @@ public class SpinnerManager implements ICallBackFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectSpinnerType(parent.getSelectedItem());
+                positionBefore = position;
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
 
     private void selectSpinnerType(Object type) {
         if (type == null) {
+            isAddWordAddNothing();
             onSelectedAdd();
+            //
         } else {
             if (!typeBefore.equals(type)) {
                 typeBefore = type.toString();
-                wordFragmentManager.createFragment(type.toString());
+                wordFragmentManager.createFragments(type.toString());
             }
+        }
+    }
+
+    private void isAddWordAddNothing() {
+        if (typeBefore != null) {
+            spinnerType.setSelection(positionBefore);
+
+        } else {
+            setSpinner();
         }
     }
 

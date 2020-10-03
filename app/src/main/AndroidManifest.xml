@@ -21,7 +21,9 @@
             android:name=".EducationActivity"
             android:label="@string/title_activity_education"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.database.DataBaseActivity" />
+        <activity
+            android:name=".activities.database.DataBaseActivity"
+            android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

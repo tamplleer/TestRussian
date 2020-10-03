@@ -59,4 +59,8 @@ public class SpinnerTypeAdapter extends BaseAdapter {
     public ArrayList<String> getTypesList() {
         return typesList;
     }
+
+    public void addType(String type) {
+        typesList.add(type);
+    }
 }

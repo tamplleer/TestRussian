@@ -1,4 +1,4 @@
-package com.tamplleer.testrussian.activities.database;
+package com.tamplleer.testrussian.activities.database.components.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.tamplleer.testrussian.R;
+import com.tamplleer.testrussian.activities.database.components.ICallBackFragment;
 
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class Fragment_data_base extends Fragment {
     // private DataBaseWords dataBaseWords;
     private String type;
     private Button buttonDelete, buttonEdit;
-    private CallBack callBack;
+    private ICallBackFragment callBack;
     private UUID key;
 
     @Override
@@ -48,7 +49,7 @@ public class Fragment_data_base extends Fragment {
     }
 
 
-    public void setParams(Pair<String, Boolean> params, String type, CallBack callBack, UUID key) {
+    public void setParams(Pair<String, Boolean> params, String type, ICallBackFragment callBack, UUID key) {
         this.type = type;
         this.stringWord = params.first;
         this.checked = params.second;

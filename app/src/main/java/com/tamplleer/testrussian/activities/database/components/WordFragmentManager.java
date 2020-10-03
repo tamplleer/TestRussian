@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.util.Pair;
 
 import com.tamplleer.testrussian.R;
+import com.tamplleer.testrussian.activities.database.components.fragments.Edit_data_base;
+import com.tamplleer.testrussian.activities.database.components.fragments.Fragment_data_base;
 import com.tamplleer.testrussian.data.DataBaseWords;
 
 import java.util.HashMap;
@@ -36,7 +38,7 @@ public class WordFragmentManager implements ICallBackFragment {
 
     }
 
-    public void createFragment(String type) {
+    public void createFragments(String type) {
 
 
         FragmentManager fragmentManager = ((Activity) context).getFragmentManager();

@@ -1,10 +1,8 @@
 package com.tamplleer.testrussian.activities.main.components;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ImageView;
 
-import com.tamplleer.testrussian.S;
 import com.tamplleer.testrussian.TestParam;
 import com.tamplleer.testrussian.word.Letter;
 

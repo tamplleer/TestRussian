@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,11 +14,11 @@ import com.tamplleer.testrussian.R;
 import com.tamplleer.testrussian.activities.database.components.Spinner.SpinnerManager;
 import com.tamplleer.testrussian.activities.database.components.WordFragmentManager;
 import com.tamplleer.testrussian.activities.main.MainActivity;
+import com.tamplleer.testrussian.activities.main.components.LetterChange;
 import com.tamplleer.testrussian.data.DataBaseWords;
 
 public class DataBaseActivity extends AppCompatActivity {
     DataBaseWords dataBaseWords;
-    Button buttonLoadFireBase;
     EditText editTextAddWord;
     private WordFragmentManager wordFragmentManager;
     private Handler handler = new Handler();
@@ -34,14 +33,17 @@ public class DataBaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_data_base);
         lottieAnimationView = findViewById(R.id.loadingAnim);
         editTextAddWord = findViewById(R.id.add_word);
-
         dataBaseWords = new DataBaseWords(this);
         wordFragmentManager = new WordFragmentManager(this, dataBaseWords, getSupportFragmentManager());
+        spinnerManager = new SpinnerManager(this, dataBaseWords, wordFragmentManager, getSupportFragmentManager());
+        startThreadAndLoadFragments();
 
-        spinnerManager = new SpinnerManager(this,dataBaseWords,wordFragmentManager, getSupportFragmentManager());
+    }
+
+    private void startThreadAndLoadFragments() {
         Thread thread = new Thread(() -> {
             handler.post(() -> {
-                showWordsInFragments("main");
+                showWordsInFragments("Банк заданий ЕГЭ");
 
                 // lottieAnimationView.playAnimation();
             });
@@ -51,10 +53,6 @@ public class DataBaseActivity extends AppCompatActivity {
         if (!thread.isAlive()) {
             Toast.makeText(this, "thread Interrupted", Toast.LENGTH_LONG).show();
         }
-
-       // setSpinnerList();
-
-
     }
 
     @Override
@@ -66,19 +64,37 @@ public class DataBaseActivity extends AppCompatActivity {
 
     private void showWordsInFragments(String type) {
 
-        // wordFragment.createFragment(dataBaseWords.readFromDataBase(type));
-
-        wordFragmentManager.createFragment(type);
+        wordFragmentManager.createFragments(type);
     }
 
-/*    public void loadFireBase(View view) {
-        // dataBaseWords.insertFromFireBase();
-        showWords(editTextAddListType.getText().toString());
-    }*/
-
     public void addWord(View view) {
-        dataBaseWords.insertWords(editTextAddWord.getText().toString(), spinnerManager.getTypeBefore());
-        wordFragmentManager.addWord(editTextAddWord.getText().toString(), spinnerManager.getTypeBefore());
+        if (testIsBigLetterInWord()){
+            dataBaseWords.insertWords(editTextAddWord.getText().toString(), spinnerManager.getTypeBefore());
+            wordFragmentManager.addWord(editTextAddWord.getText().toString(), spinnerManager.getTypeBefore());
+            editTextAddWord.setText("");
+            editTextAddWord.clearFocus();
+        }
+        else {
+            Toast.makeText(this, "В слове должна быть большая гласная бука, чтобы указать на ударение!", Toast.LENGTH_LONG).show();
+            editTextAddWord.setHighlightColor(R.color.Green);
+        }
+
+    }
+
+    private boolean testIsBigLetterInWord() {
+
+        for (char c : editTextAddWord.getText().toString().toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                for (char c1 : LetterChange.BIG_LETTER) {
+                    if (c1 == c) {
+                        return true;
+
+                    }
+                }
+            }
+
+        }
+        return false;
     }
 
 
@@ -90,10 +106,6 @@ public class DataBaseActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-  /*  private void setSpinnerList() {
-
-    }*/
 
 
 }
